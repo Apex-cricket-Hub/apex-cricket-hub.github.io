@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,viewport-fit=cover">
   
-<title>APEX Cricket Hub v49 V9 • Pro Cricket Tournament Hub</title>
+<title>APEX Cricket Hub v49 V10 • Pro Cricket Tournament Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
 :root{
@@ -2075,6 +2075,214 @@ body.theme-light #view_score .score-section-title {
 }
 </style>
 
+
+<style id="apex-v10-light-metallic-bounce-desktop">
+/* === 1. LIGHT THEME: METALLIC GRADIENT EVERYWHERE (Matching Dark Theme Style, Slightly Lighter Fill, Crisp White Page Bg) === */
+body.theme-light {
+  background: #ffffff !important;
+  --bg: #ffffff !important;
+  --text: #0f172a !important;
+  --muted: #334155 !important;
+  --accent: #0284c7 !important;
+  --card-border: rgba(37, 99, 235, 0.28) !important;
+}
+body.theme-light header {
+  background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 65%, #e0f2fe 100%) !important;
+  border-bottom: 1.5px solid rgba(37, 99, 235, 0.28) !important;
+  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.08) !important;
+}
+body.theme-light .nav-container {
+  background: linear-gradient(180deg, rgba(239, 246, 255, 0.96), rgba(219, 234, 254, 0.95)) !important;
+  border-bottom: 1.5px solid rgba(37, 99, 235, 0.24) !important;
+}
+body.theme-light .card,
+body.theme-light .qualification-intelligence-card,
+body.theme-light .setup-section,
+body.theme-light .admin-unlock-box,
+body.theme-light .setup-mode-box {
+  background: linear-gradient(155deg, #f5f9ff 0%, #e4f0ff 58%, #dcebff 100%) !important;
+  border: 1.5px solid rgba(37, 99, 235, 0.28) !important;
+  box-shadow: 0 10px 26px rgba(30, 64, 175, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
+  color: #0f172a !important;
+}
+body.theme-light .hs-item,
+body.theme-light .hs-card,
+body.theme-light .match-item,
+body.theme-light .cric-scorecard,
+body.theme-light .fixture-card,
+body.theme-light .stat,
+body.theme-light .podium-card,
+body.theme-light .reward-item,
+body.theme-light .standings-info-compact,
+body.theme-light .qi-pro-card {
+  background: linear-gradient(145deg, #ffffff 0%, #ebf4ff 62%, #dbeafe 100%) !important;
+  border: 1px solid rgba(59, 130, 246, 0.30) !important;
+  box-shadow: 0 6px 16px rgba(30, 64, 175, 0.09), inset 0 1px 0 #ffffff !important;
+  color: #0f172a !important;
+}
+body.theme-light .hs-hero-v9 {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 52%, #0284c7 100%) !important;
+  border: 1px solid rgba(147, 197, 253, 0.6) !important;
+  box-shadow: 0 14px 32px rgba(29, 78, 216, 0.24), inset 0 1px 1px rgba(255, 255, 255, 0.45) !important;
+}
+body.theme-light .hs-hero-v9 h1,
+body.theme-light .hs-hero-v9 p,
+body.theme-light .hs-hero-v9 .hs-kicker {
+  color: #ffffff !important;
+}
+body.theme-light #mainNav button {
+  background: linear-gradient(145deg, #ffffff 0%, #e0edff 100%) !important;
+  border: 1px solid rgba(59, 130, 246, 0.32) !important;
+  color: #1e3a8a !important;
+  box-shadow: 0 3px 9px rgba(30, 64, 175, 0.10), inset 0 1px 0 #ffffff !important;
+}
+body.theme-light #mainNav button.active {
+  background: linear-gradient(145deg, #38bdf8 0%, #2563eb 55%, #1d4ed8 100%) !important;
+  border-color: #93c5fd !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.34), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+}
+body.theme-light .btn-secondary {
+  background: linear-gradient(145deg, #ffffff 0%, #e0eeff 100%) !important;
+  border: 1px solid rgba(59, 130, 246, 0.35) !important;
+  color: #0f172a !important;
+  box-shadow: 0 3px 8px rgba(30, 64, 175, 0.10), inset 0 1px 0 #ffffff !important;
+}
+/* Replace harsh black table header in Light Theme with rich Metallic Blue Gradient matching Dark Theme */
+body.theme-light .tablewrap table thead th {
+  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 48%, #1d4ed8 100%) !important;
+  color: #ffffff !important;
+  border-bottom: 2px solid #93c5fd !important;
+  text-shadow: 0 1px 2px rgba(15, 23, 42, 0.28);
+}
+body.theme-light .tablewrap table thead th.sort-active-th {
+  background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 55%, #0369a1 100%) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 -2px 0 #e0f2fe !important;
+}
+body.theme-light .tablewrap table tbody td {
+  background: #ffffff;
+  color: #0f172a !important;
+  border-bottom-color: rgba(59, 130, 246, 0.14) !important;
+}
+body.theme-light .tablewrap table tbody tr:nth-child(even) td {
+  background: #eff6ff !important;
+}
+body.theme-light .qualification-table td:first-child,
+body.theme-light #view_awards .tablewrap table td:first-child {
+  background: #f5f9ff !important;
+}
+body.theme-light .qualification-table tbody tr:nth-child(even) td:first-child,
+body.theme-light #view_awards .tablewrap table tbody tr:nth-child(even) td:first-child {
+  background: #e8f2ff !important;
+}
+
+/* === 2. TIGHTER QUALIFICATION INTELLIGENCE & MVP STICKY PLAYER COLUMN (NO WASTED GAP) === */
+.qualification-table th:first-child,
+.qualification-table td:first-child,
+#view_awards .tablewrap table th:first-child,
+#view_awards .tablewrap table td:first-child {
+  min-width: 118px !important;
+  width: 126px !important;
+  max-width: 140px !important;
+  padding-left: 8px !important;
+  padding-right: 6px !important;
+}
+@media(max-width: 600px) {
+  .qualification-table th:first-child,
+  .qualification-table td:first-child,
+  #view_awards .tablewrap table th:first-child,
+  #view_awards .tablewrap table td:first-child {
+    min-width: 112px !important;
+    width: 118px !important;
+    max-width: 132px !important;
+  }
+  .qualification-table .player-chip,
+  #view_awards .tablewrap .player-chip {
+    max-width: 122px !important;
+    gap: 5px !important;
+  }
+  .qualification-table .team-avatar-sm,
+  #view_awards .tablewrap .team-avatar-sm {
+    width: 24px !important;
+    height: 24px !important;
+    flex: 0 0 24px !important;
+  }
+}
+
+/* === 3. INLINE CAP BADGES IN STANDINGS (EVEN ROW HEIGHT FOR #1 LEADER) === */
+.standings-main-table .standings-player-name {
+  display: inline-flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 2px 4px !important;
+  -webkit-line-clamp: unset !important;
+}
+.standings-main-table .live-cap-badge {
+  width: 17px !important;
+  height: 14px !important;
+  margin-left: 2px !important;
+  flex: 0 0 auto !important;
+  vertical-align: middle !important;
+}
+.standings-main-table .live-cap-badge svg {
+  width: 17px !important;
+  height: 14px !important;
+}
+
+/* === 4. BOUNCY SPRING MICRO-ANIMATIONS (BUTTONS, TABS, CARDS & MODALS ONLY) === */
+.btn, #mainNav button, .stage-btn, .hs-item, .hs-profile-pill {
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, background 0.2s ease !important;
+}
+.btn:active, #mainNav button:active, .stage-btn:active, .hs-item:active, .hs-profile-pill:active {
+  transform: scale(0.94) !important;
+}
+@keyframes apexModalBounceIn {
+  0% { opacity: 0; transform: scale(0.86) translateY(14px); }
+  65% { opacity: 1; transform: scale(1.03) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.admin-unlock-modal.show .admin-unlock-box,
+.setup-mode-modal.show .setup-mode-box {
+  animation: apexModalBounceIn 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* === 5. DESKTOP MODE BIGGER LOGOS & SPACIOUS LAYOUT === */
+@media(min-width: 900px) {
+  .standings-main-table .team-avatar-sm,
+  .qualification-table .team-avatar-sm,
+  #view_awards .tablewrap .team-avatar-sm {
+    width: 38px !important;
+    height: 38px !important;
+    flex: 0 0 38px !important;
+    font-size: 13px !important;
+  }
+  .cric-scorecard .team-avatar,
+  .match-item .team-avatar,
+  .fixture-card .team-avatar {
+    width: 46px !important;
+    height: 46px !important;
+    flex: 0 0 46px !important;
+    font-size: 15px !important;
+  }
+  .standings-main-table td, .standings-main-table th {
+    padding: 12px 10px !important;
+    font-size: 14px !important;
+  }
+  .standings-main-table .standings-player-name {
+    font-size: 15px !important;
+  }
+  .qualification-table th:first-child,
+  .qualification-table td:first-child,
+  #view_awards .tablewrap table th:first-child,
+  #view_awards .tablewrap table td:first-child {
+    min-width: 175px !important;
+    width: 190px !important;
+    max-width: 220px !important;
+  }
+}
+</style>
+
 </head>
 
  <body>
@@ -2374,23 +2582,41 @@ Group B: Player C, Player D"></textarea></div>
      </div>
     </div>
     <div style="margin-top:20px">
-     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px"><div class="card-title" style="font-size:16px;margin:0">📊 Overall Player Statistics</div><button type="button" class="btn btn-secondary btn-sm" onclick="shareGenericTableImage('#view_awards .tablewrap table','MVP & Player Stats')">📤 Share Stats Image</button></div>
+     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <div class="card-title" style="font-size:16px;margin:0">📊 Overall Player Statistics</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+       <button type="button" class="btn btn-primary btn-sm" onclick="shareGenericTableImage('#view_awards .tablewrap table','MVP & Player Stats')">📤 Share Stats</button>
+       <button type="button" class="btn btn-secondary btn-sm" onclick="downloadGenericTableImage('#view_awards .tablewrap table','MVP & Player Stats')">⬇️ Download</button>
+       <div style="display:flex;align-items:center;gap:5px"><span style="font-size:11px;font-weight:800;color:var(--muted)">SORT:</span>
+        <select id="mvpSortSelect" onchange="setMvpSortKey(this.value)" style="width:auto;padding:4px 8px;font-size:12px;font-weight:700">
+         <option value="mvp">MVP Points</option>
+         <option value="runs">Runs (Orange Cap)</option>
+         <option value="wickets">Wickets (Purple Cap)</option>
+         <option value="s6">Maximum Sixes</option>
+         <option value="sr">Strike Rate (SR)</option>
+         <option value="econ">Best Economy</option>
+         <option value="matches">Matches Played</option>
+         <option value="name">Alphabetical (A - Z)</option>
+        </select>
+       </div>
+      </div>
+     </div>
      <div class="tablewrap">
       <table>
        <thead>
-        <tr>
-         <th class="align-left sortable" style="min-width:160px;padding-left:14px" onclick="toggleStatsSort('name')">Player</th>
-         <th class="align-center sortable" onclick="toggleStatsSort('matches')">Matches</th>
-         <th class="align-center sortable" onclick="toggleStatsSort('runs')">Runs</th>
-         <th class="align-center sortable" onclick="toggleStatsSort('balls')">Balls</th>
+        <tr id="mvpStatsHeadRow">
+         <th data-sort-col="name" class="align-left sortable" style="min-width:130px;padding-left:10px" onclick="toggleStatsSort('name')">Player</th>
+         <th data-sort-col="matches" class="align-center sortable" onclick="toggleStatsSort('matches')">Matches</th>
+         <th data-sort-col="runs" class="align-center sortable" onclick="toggleStatsSort('runs')">Runs</th>
+         <th data-sort-col="balls" class="align-center sortable" onclick="toggleStatsSort('balls')">Balls</th>
          <th class="align-center">4s</th>
-         <th class="align-center sortable" onclick="toggleStatsSort('s6')">6s</th>
-         <th class="align-center sortable" onclick="toggleStatsSort('sr')">SR</th>
-         <th class="align-center sortable" onclick="toggleStatsSort('wickets')">Wickets</th>
+         <th data-sort-col="s6" class="align-center sortable" onclick="toggleStatsSort('s6')">6s</th>
+         <th data-sort-col="sr" class="align-center sortable" onclick="toggleStatsSort('sr')">SR</th>
+         <th data-sort-col="wickets" class="align-center sortable" onclick="toggleStatsSort('wickets')">Wickets</th>
          <th class="align-center">Runs Con.</th>
          <th class="align-center">Overs</th>
-         <th class="align-center sortable" onclick="toggleStatsSort('econ')">Econ</th>
-         <th class="align-center sortable" onclick="toggleStatsSort('mvp')">MVP Pts</th>
+         <th data-sort-col="econ" class="align-center sortable" onclick="toggleStatsSort('econ')">Econ</th>
+         <th data-sort-col="mvp" class="align-center sortable" onclick="toggleStatsSort('mvp')">MVP Pts</th>
         </tr>
        </thead>
        <tbody id="playerStatsBody"></tbody>
@@ -3048,6 +3274,7 @@ function initFirebaseAuth(){
     if(!firebase.apps.length){ __fbApp = firebase.initializeApp(FIREBASE_CONFIG); }
     else { __fbApp = firebase.app(); }
     __fbAuth = firebase.auth();
+    try{ __fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(()=>{}); }catch(e){}
     try{ __fbDb = firebase.firestore(); }catch(e){ __fbDb = null; }
     __fbReady = true;
     console.log('Firebase Auth ready');
@@ -3055,22 +3282,26 @@ function initFirebaseAuth(){
       __fbUser = user || null;
       if(user){
         ensureRecoveryStores();
-        db.session = db.session || {};
-        db.session.accountId = 'fb_'+user.uid;
         db.accounts = db.accounts || {};
         const id = 'fb_'+user.uid;
+        const prev = db.accounts[id] || {};
         db.accounts[id] = {
+          ...prev,
           id: id,
           contact: user.email || user.phoneNumber || user.uid,
-          name: user.displayName || (user.email ? user.email.split('@')[0] : 'Organiser'),
+          name: prev.name || user.displayName || (user.email ? user.email.split('@')[0] : 'Organiser'),
+          userId: prev.userId || (user.displayName || (user.email ? user.email.split('@')[0] : 'Player')).replace(/\s+/g,'').slice(0,12),
           uid: user.uid,
           provider: (user.providerData && user.providerData[0] && user.providerData[0].providerId) || 'firebase',
-          createdAt: (db.accounts[id] && db.accounts[id].createdAt) || Date.now()
+          createdAt: prev.createdAt || Date.now()
         };
+        hsSaveSession(id);
         try{ await fbUpsertProfile(user); }catch(e){ console.warn(e); }
-        try{ window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db)); }catch(e){}
       }else{
-        if(db && db.session) db.session.accountId = null;
+        // Only clear session on explicit user sign-out (prevents desktop-mode reload / hydration wipeout)
+        if(window.__explicitLogoutInProgress){
+          if(db && db.session) db.session.accountId = null;
+        }
       }
       try{ if(document.body.classList.contains('home-hub')) renderHomeHub(); }catch(e){}
     });
@@ -3600,17 +3831,30 @@ function hsHashPass(s){
   }
   return ('00000000'+(h1>>>0).toString(16)).slice(-8)+('00000000'+(h2>>>0).toString(16)).slice(-8);
 }
+const APEX_AUTH_PROFILE_KEY = 'apex_auth_profile_v1';
 function hsGetSession(){
   ensureRecoveryStores();
   try{
-    if(!db.session || !db.session.accountId){
-      const raw=window.__safeStorage.getItem((typeof APP_STORAGE_KEY!=='undefined'?APP_STORAGE_KEY:'apex')+'_hs_session');
-      if(raw){
-        const o=JSON.parse(raw);
-        if(o && o.accountId && db.accounts && db.accounts[o.accountId]){
-          db.session = db.session||{};
-          db.session.accountId = o.accountId;
-        }
+    const idCur = db.session && db.session.accountId;
+    if(idCur && db.accounts && db.accounts[idCur]) return db.accounts[idCur];
+    const profRaw = window.__safeStorage.getItem(APEX_AUTH_PROFILE_KEY);
+    if(profRaw){
+      const prof = JSON.parse(profRaw);
+      if(prof && prof.id){
+        db.accounts = db.accounts || {};
+        db.accounts[prof.id] = { ...(db.accounts[prof.id]||{}), ...prof };
+        db.session = db.session || {};
+        db.session.accountId = prof.id;
+        return db.accounts[prof.id];
+      }
+    }
+    const raw=window.__safeStorage.getItem((typeof APP_STORAGE_KEY!=='undefined'?APP_STORAGE_KEY:'apex')+'_hs_session');
+    if(raw){
+      const o=JSON.parse(raw);
+      if(o && o.accountId && db.accounts && db.accounts[o.accountId]){
+        db.session = db.session||{};
+        db.session.accountId = o.accountId;
+        return db.accounts[o.accountId];
       }
     }
   }catch(e){}
@@ -3623,8 +3867,14 @@ function hsSaveSession(accountId){
   db.session.accountId = accountId||null;
   try{
     const key=(typeof APP_STORAGE_KEY!=='undefined'?APP_STORAGE_KEY:'apex')+'_hs_session';
-    if(accountId) window.__safeStorage.setItem(key, JSON.stringify({accountId:accountId, ts:Date.now()}));
-    else window.__safeStorage.removeItem(key);
+    if(accountId){
+      window.__safeStorage.setItem(key, JSON.stringify({accountId:accountId, ts:Date.now()}));
+      const accObj = db.accounts && db.accounts[accountId];
+      if(accObj) window.__safeStorage.setItem(APEX_AUTH_PROFILE_KEY, JSON.stringify(accObj));
+    } else {
+      window.__safeStorage.removeItem(key);
+      window.__safeStorage.removeItem(APEX_AUTH_PROFILE_KEY);
+    }
   }catch(e){}
   try{
     window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db));
@@ -3764,21 +4014,22 @@ async function fetchCloudData(){
     const protectedIds=protectLocalAheadOfCloud(localBeforeFetch,data);
     const dirtyIds=isAdmin ? getDirtyTournamentIds() : [];
     const deletedDirtyIds=isAdmin ? getDeletedDirtyIds() : [];
+    const preserveLocalAuth = (targetObj) => {
+      try{
+        if(localBeforeFetch){
+          if(localBeforeFetch.accounts && Object.keys(localBeforeFetch.accounts).length) targetObj.accounts = { ...(targetObj.accounts||{}), ...localBeforeFetch.accounts };
+          if(localBeforeFetch.session && localBeforeFetch.session.accountId) targetObj.session = { ...localBeforeFetch.session };
+          if(localBeforeFetch.communities && Object.keys(localBeforeFetch.communities).length) targetObj.communities = { ...(targetObj.communities||{}), ...localBeforeFetch.communities };
+        }
+      }catch(e){}
+    };
     if(!isAdmin && protectedIds.length===0){
       const newStr=JSON.stringify(data);
       if(newStr!==lastCloudDataStr){
         lastCloudDataStr=newStr;
-        
-        try{
-          if(localBeforeFetch){
-            if(localBeforeFetch.accounts) data.accounts = localBeforeFetch.accounts;
-            if(localBeforeFetch.session) data.session = localBeforeFetch.session;
-            if(localBeforeFetch.communities) data.communities = localBeforeFetch.communities;
-          }
-        }catch(e){}
-
+        preserveLocalAuth(data);
         db=data; ensureRecoveryStores();
-        window.__safeStorage.setItem(APP_STORAGE_KEY,newStr);
+        window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db));
         preserveUrlTournament(db);
         renderAll();
       }
@@ -3786,6 +4037,7 @@ async function fetchCloudData(){
       return;
     }
     const merged={...data,tournaments:{...(data.tournaments||{})},deletedTournaments:{...(data.deletedTournaments||{})},deletedTombstones:{...(data.deletedTombstones||{})}};
+    preserveLocalAuth(merged);
     deletedDirtyIds.forEach(id=>{ const a=getDeletedDirtyAction(id); if(a==='delete' && db.deletedTournaments?.[id]){ merged.deletedTournaments[id]=db.deletedTournaments[id]; merged.deletedTombstones[id]=db.deletedTombstones?.[id]||{deletedAt:Date.now()}; delete merged.tournaments[id]; } else if(a==='purge'){ delete merged.tournaments[id]; delete merged.deletedTournaments[id]; merged.deletedTombstones[id]=db.deletedTombstones?.[id]||{deletedAt:Date.now(),permanent:true}; } else if(a==='restore' && db.tournaments?.[id]){ merged.tournaments[id]=db.tournaments[id]; delete merged.deletedTournaments[id]; delete merged.deletedTombstones[id]; }});
     dirtyIds.forEach(id=>{ if(db?.tournaments?.[id]) merged.tournaments[id]=db.tournaments[id]; });
     if(dirtyIds.length){
@@ -3800,6 +4052,7 @@ async function fetchCloudData(){
     const newStr=JSON.stringify(data);
     if(newStr!==lastCloudDataStr){
       lastCloudDataStr=newStr;
+      preserveLocalAuth(data);
       db=data; ensureRecoveryStores();
       try{ if(typeof seedHunterPremierLeagueIfMissing==='function') seedHunterPremierLeagueIfMissing(); }catch(e){}
       window.__safeStorage.setItem(APP_STORAGE_KEY,JSON.stringify(db));
@@ -4550,6 +4803,12 @@ function toggleStandingsSort(key){
   renderAll();
 }
 
+function setMvpSortKey(key){
+  statsSort.key = key || 'mvp';
+  statsSort.asc = (statsSort.key === 'name' || statsSort.key === 'econ');
+  const t = getActiveTournament();
+  if(t) renderAwardsAndLeaderboards(t);
+}
 function toggleStatsSort(key){
   if(statsSort.key === key) statsSort.asc = !statsSort.asc;
   else { statsSort.key = key; statsSort.asc = (key === 'name' || key === 'econ'); }
@@ -4577,6 +4836,30 @@ function getScoreEntryStage(t){
   const preferred=Number(window.scoreEntryStageNum);
   return t.stages.find(s=>s.stageNum===preferred) || t.stages.find(s=>s.stageNum===t.currentStage) || t.stages[0];
 }
+
+function buildScoreFixtureOptionsHtml(stage, query){
+  const list = (stage?.fixtures || []).filter(f => f && f.p1 && f.p2);
+  const q = String(query || '').trim().toLowerCase().replace(/\bv\b/gi,'vs').replace(/\s+/g,' ').trim();
+  const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
+  const filtered = list.filter(f => {
+    if(!tokens.length) return true;
+    const hay = `m${f.id} match ${f.id} ${f.p1||''} ${f.p2||''} ${f.group||''} ${f.completed?'done completed':'pending'} vs`.toLowerCase();
+    return tokens.every(tok => hay.includes(tok));
+  });
+  const pending = filtered.filter(f => !f.completed).sort((a,b)=>(Number(a.id)||0)-(Number(b.id)||0));
+  const done = filtered.filter(f => f.completed).sort((a,b)=>(Number(b.id)||0)-(Number(a.id)||0));
+  const fmt = (f) => {
+    const grp = (f.group && !/^league$/i.test(String(f.group))) ? ` [${f.group}]` : '';
+    if(!f.completed) return `<option value="${f.id}">⏳ M${f.id}${grp} • ${esc(f.p1)} vs ${esc(f.p2)}</option>`;
+    const sc = (f.r1!=null && f.r2!=null) ? ` (${f.r1}/${f.w1??0} vs ${f.r2}/${f.w2??0})` : (f.isNR ? ' (NR)' : '');
+    return `<option value="${f.id}">✅ M${f.id}${grp} • ${esc(f.p1)} vs ${esc(f.p2)}${sc}</option>`;
+  };
+  let html = `<option value="">-- Choose Fixture (${pending.length} Pending · ${done.length} Done) --</option>`;
+  if(pending.length) html += `<optgroup label="⏳ Pending Matches (${pending.length})">` + pending.map(fmt).join('') + `</optgroup>`;
+  if(done.length) html += `<optgroup label="✅ Completed Matches (${done.length})">` + done.map(fmt).join('') + `</optgroup>`;
+  return html;
+}
+
 function selectScoreEntryStage(stageNum){
   const n=Number(stageNum); if(!Number.isFinite(n)) return;
   window.scoreEntryStageNum=n;
@@ -4584,7 +4867,7 @@ function selectScoreEntryStage(stageNum){
   const stage=getScoreEntryStage(t); const fixSel=document.getElementById('scoreFixtureSelect');
   if(!fixSel||!stage) return;
   const previous=fixSel.value;
-  fixSel.innerHTML=`<option value="">-- Choose Fixture from ${esc(stage.name||'Selected Stage')} --</option>`+(stage.fixtures||[]).filter(f=>f.p1&&f.p2).map(f=>`<option value="${f.id}">Match ${f.id} (${f.matchType||f.group||''}): ${esc(f.p1)} vs ${esc(f.p2)} ${f.completed?'✓':''}</option>`).join('');
+  fixSel.innerHTML = buildScoreFixtureOptionsHtml(stage, document.getElementById('scoreFixtureFilter')?.value || '');
   if(previous && [...fixSel.options].some(o=>o.value===previous)) fixSel.value=previous;
   renderAll();
 }
@@ -4980,8 +5263,7 @@ function renderAll(){
     if(fixSel){
       const previousFixture=fixSel.value;
       const sst=getScoreEntryStage(t)||activeStage;
-      fixSel.innerHTML = `<option value="">-- Choose Fixture from ${esc(sst.name||'Selected Stage')} --</option>` +
-        (sst.fixtures || []).filter(f=>f.p1&&f.p2).map(f => `<option value="${f.id}">Match ${f.id} (${f.matchType || f.group || ''}): ${esc(f.p1)} vs ${esc(f.p2)} ${f.completed ? '✓':''}</option>`).join('');
+      fixSel.innerHTML = buildScoreFixtureOptionsHtml(sst, document.getElementById('scoreFixtureFilter')?.value || '');
       if(previousFixture && Array.from(fixSel.options).some(o=>o.value===previousFixture)) fixSel.value=previousFixture;
     }
 
@@ -7359,6 +7641,7 @@ function renderStandingsTables(t, stage){
       <span class="muted" style="font-size:12px">${isGrouped?'Each group is its own table · QI is per group only.':'Tap column headers to sort:'}</span>
       <div class="standings-export-actions">
         <button class="btn btn-sm btn-primary" type="button" onclick="shareOrDownloadStandingsTable()">📤 Share Table + Link</button>
+        <button class="btn btn-sm btn-secondary" type="button" onclick="downloadStandingsImageOnly()">⬇️ Download PNG</button>
         <button class="btn btn-sm btn-secondary" type="button" onclick="copyTournamentShareLink()">🔗 Copy Link</button>
         ${(isAdmin || developerMode) ? '<button class="btn btn-sm btn-secondary" type="button" onclick="downloadStandingsCSV()">📊 CSV</button>' : ''}
         <div style="display:flex;align-items:center;gap:6px"><span style="font-size:11px;font-weight:700;color:var(--muted)">SORT:</span>
@@ -7393,7 +7676,7 @@ function renderStandingsTables(t, stage){
     </div>
     <div class="table-details-toggle"><button class="btn btn-secondary btn-sm" type="button" onclick="document.querySelector('.standings-main-table')?.classList.toggle('show-details'); this.textContent=this.textContent.includes('Show')?'▲ Hide RF / OF / RA / OB':'▼ Show RF / OF / RA / OB'">▼ Show RF / OF / RA / OB</button></div>
     <div class="card qualification-intelligence-card" style="margin-top:14px;background:rgba(255,255,255,0.02);border:1px solid var(--card-border);${isKnockoutStage?"display:none;":""}">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px"><div style="font-size:14px;font-weight:900;color:var(--accent)">🧠 Qualification Intelligence</div><button type="button" class="btn btn-secondary btn-sm" onclick="shareGenericTableImage('.qualification-table','Qualification Intelligence')">📤 Share QI Image</button></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px"><div style="font-size:14px;font-weight:900;color:var(--accent)">🧠 Qualification Intelligence</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="btn btn-primary btn-sm" onclick="shareGenericTableImage('.qualification-table','Qualification Intelligence')">📤 Share QI</button><button type="button" class="btn btn-secondary btn-sm" onclick="downloadGenericTableImage('.qualification-table','Qualification Intelligence')">⬇️ Download</button></div></div>
       ${stageQualifyConfigured?`<div class="muted" style="font-size:11px;margin:-2px 0 9px">Qualification engine active: ${((stage.groups&&Object.keys(stage.groups).length>=2)||(t.groups&&Object.keys(t.groups||{}).length>=2))?'Top '+qualifyK+' qualify per group (QI runs separately in each group).':'Top '+qualifyK+' qualify.'}</div>`:`<div style="font-size:11px;color:var(--muted);margin:-2px 0 9px;padding:8px 9px;border-radius:8px;background:rgba(255,255,255,.03)">Qualification target for this stage is not set yet. This is a fresh ${esc(stage.name||"stage")} table. Set this stage's qualification target when you are ready, and the engine will calculate Best/Worst positions, status and outlook.</div>`}
       <div class="tablewrap qualification-table-wrap">
         <table class="qualification-table"><thead><tr>
@@ -7491,16 +7774,17 @@ function drawTableToCanvas(titleStr, subStr, headers, rows){
   const c = document.createElement('canvas');
   c.width = Math.ceil(totalW*dpr); c.height = Math.ceil(totalH*dpr);
   const ctx = c.getContext('2d'); ctx.scale(dpr,dpr); ctx.textBaseline='middle';
-  const bg = isLight ? '#f8fafc' : '#0b1426';
+  const bgGrad = ctx.createLinearGradient(0, 0, totalW, totalH);
+  if(isLight){ bgGrad.addColorStop(0, '#ffffff'); bgGrad.addColorStop(0.55, '#eff6ff'); bgGrad.addColorStop(1, '#dbeafe'); }
+  else { bgGrad.addColorStop(0, '#0f1d38'); bgGrad.addColorStop(0.5, '#091224'); bgGrad.addColorStop(1, '#040814'); }
   const cardBg = isLight ? '#ffffff' : '#111f3a';
-  const zebraBg = isLight ? '#f1f5f9' : '#162746';
-  const headBg = isLight ? '#0f172a' : '#1d4ed8';
+  const zebraBg = isLight ? '#eef6ff' : '#162746';
   const text = isLight ? '#0f172a' : '#ffffff';
-  const muted = isLight ? '#475569' : '#cbd5e1';
+  const muted = isLight ? '#334155' : '#cbd5e1';
   const accent = isLight ? '#0284c7' : '#38bdf8';
   const goodC = isLight ? '#15803d' : '#4ade80';
   const badC = isLight ? '#be123c' : '#fb7185';
-  ctx.fillStyle = bg; ctx.fillRect(0,0,totalW,totalH);
+  ctx.fillStyle = bgGrad; ctx.fillRect(0,0,totalW,totalH);
   ctx.fillStyle = text; ctx.font = '900 22px system-ui, sans-serif';
   ctx.fillText(titleStr, padX, 30);
   ctx.fillStyle = muted; ctx.font = '700 13px system-ui, sans-serif';
@@ -7508,7 +7792,11 @@ function drawTableToCanvas(titleStr, subStr, headers, rows){
   ctx.fillStyle = accent; ctx.font = '800 11px system-ui, sans-serif';
   ctx.fillText('APEX CRICKET HUB • Everything Your Tournament Needs', padX, 78);
   let y = titleH;
-  ctx.fillStyle = headBg; ctx.fillRect(padX, y, totalW-padX*2, headerH);
+  const headGrad = ctx.createLinearGradient(padX, y, totalW-padX, y+headerH);
+  if(isLight){ headGrad.addColorStop(0, '#2563eb'); headGrad.addColorStop(0.5, '#1d4ed8'); headGrad.addColorStop(1, '#1e40af'); }
+  else { headGrad.addColorStop(0, '#1d4ed8'); headGrad.addColorStop(0.55, '#1e3a8a'); headGrad.addColorStop(1, '#0f172a'); }
+  ctx.fillStyle = headGrad; ctx.fillRect(padX, y, totalW-padX*2, headerH);
+  ctx.fillStyle = 'rgba(255,255,255,0.16)'; ctx.fillRect(padX, y, totalW-padX*2, 2);
   ctx.fillStyle = '#ffffff'; ctx.font = '900 13px system-ui, sans-serif';
   let x = padX;
   headers.forEach((h,i)=>{
@@ -7579,13 +7867,42 @@ async function shareGenericTableImage(tableSelector, label){
   const text = `${t.name||'Tournament'} — ${label}\nLive link: ${url}`;
   try{
     if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
-      await navigator.share({title:`${t.name||'Tournament'} • ${label}`, text, url, files:[file]});
+      // Omit duplicate url key because url is already embedded cleanly inside text
+      await navigator.share({title:`${t.name||'Tournament'} • ${label}`, text, files:[file]});
       return;
     }
   }catch(err){ if(err && err.name==='AbortError') return; }
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=file.name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);
   showToast('🖼️ '+label+' image downloaded!','success');
+}
+function downloadGenericTableImage(tableSelector, label){
+  const t = getActiveTournament();
+  const table = document.querySelector(tableSelector);
+  if(!t || !table){ showToast('Table not available to download yet.','error'); return; }
+  const headers = [...table.querySelectorAll('thead th')].map(th=>th.innerText.replace(/\s+/g,' ').trim());
+  const rows = [];
+  table.querySelectorAll('tbody tr').forEach(tr=>{
+    const cells=[...tr.children];
+    if(!cells.length) return;
+    if(tr.classList.contains('group-divider-row')){ rows.push({isGroup:true, cells:[tr.innerText.replace(/\s+/g,' ').trim()]}); return; }
+    rows.push({isGroup:false, cells:cells.map(c=>c.innerText.replace(/\s+/g,' ').trim())});
+  });
+  const c = drawTableToCanvas((t.name||'Tournament')+' • '+label, 'Complete Live Table', headers, rows);
+  if(!c) return;
+  const blob = dataUrlToBlob(c.toDataURL('image/png'));
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${sanitizeFileName(t.name||'Tournament')}_${sanitizeFileName(label)}.png`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  showToast('⬇️ '+label+' PNG downloaded!','success');
+}
+function downloadStandingsImageOnly(){
+  const c=drawStandingsCanvas(); const t=getActiveTournament(); if(!c||!t) return;
+  const blob=dataUrlToBlob(c.toDataURL('image/png'));
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${sanitizeFileName(t.name||'Tournament')}_Standings.png`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  showToast('⬇️ Standings PNG downloaded!','success');
 }
 function getTournamentShareUrl(t){
   if(!t) return '';
@@ -7622,9 +7939,8 @@ async function shareOrDownloadStandingsTable(){
   const isPublicUrl=/^https?:$/i.test(new URL(window.location.href).protocol);
   try{
     if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
-      const payload={title:`${t.name||'Tournament'} • Apex Cricket Hub`,text:shareText};
-      if(url && isPublicUrl) payload.url=url;
-      payload.files=[file];
+      // Omit duplicate payload.url since shareText already contains the direct tournament URL
+      const payload={title:`${t.name||'Tournament'} • Apex Cricket Hub`,text:shareText,files:[file]};
       await navigator.share(payload); showToast('📤 Standings image + tournament link ready to share.','success'); return;
     }
   }catch(err){ if(err && err.name==='AbortError') return; }
@@ -8348,6 +8664,20 @@ function renderAwardsAndLeaderboards(t){
     document.getElementById('bestBowlStat').textContent = bestBowl.wkts + '/' + bestBowl.runs;
   }
 
+  const mvpSel = document.getElementById('mvpSortSelect');
+  if(mvpSel) mvpSel.value = statsKey;
+  document.querySelectorAll('#mvpStatsHeadRow th[data-sort-col]').forEach(th=>{
+    const col = th.getAttribute('data-sort-col');
+    const baseLabel = th.dataset.baseLabel || th.textContent.replace(/[▲▼]/g,'').trim();
+    th.dataset.baseLabel = baseLabel;
+    if(col === statsKey){
+      th.classList.add('sort-active-th');
+      th.textContent = baseLabel + (statsSort.asc ? ' ▲' : ' ▼');
+    } else {
+      th.classList.remove('sort-active-th');
+      th.textContent = baseLabel;
+    }
+  });
   const pStatsBody = document.getElementById('playerStatsBody');
   if(!pStatsBody) return;
   pStatsBody.innerHTML = arr.map(p => {
@@ -8622,15 +8952,8 @@ function filterScoreFixtureDropdown(){
   if(!select) return;
 
   const previous=select.value;
-  /* Order-independent fixture search: A vs B, B vs A, and A v B all match the same fixture. */
-  const normalizedQ = q.replace(/\bv\b/gi,'vs').replace(/\s+/g,' ').trim();
-  const tokens = normalizedQ.split(/\s+/).filter(Boolean);
-  const matches = (activeStage.fixtures || []).filter(f => {
-    const haystack = `match ${f.id} ${f.p1||''} ${f.p2||''} vs`.toLowerCase();
-    return !normalizedQ || tokens.every(tok => haystack.includes(tok));
-  });
-  select.innerHTML = `<option value="">-- Choose Fixture from Active Stage --</option>` +
-    matches.map(f => `<option value="${f.id}">Match ${f.id}: ${esc(f.p1)} vs ${esc(f.p2)} ${f.completed ? '✓':''}</option>`).join('');
+  const stageForScore = getScoreEntryStage(t) || activeStage;
+  select.innerHTML = buildScoreFixtureOptionsHtml(stageForScore, q);
   if(previous && Array.from(select.options).some(o=>o.value===previous)) select.value=previous;
 }
 
@@ -10798,7 +11121,9 @@ function homeCard(id, t, bucket){
 }
 
 function logoutAccountHome(){
-  if(__fbReady){ fbLogout().catch(function(){}); }
+  window.__explicitLogoutInProgress = true;
+  if(__fbReady){ fbLogout().catch(function(){}).finally(()=>{ window.__explicitLogoutInProgress = false; }); }
+  else { setTimeout(()=>{ window.__explicitLogoutInProgress = false; }, 300); }
   hsSaveSession(null);
   try{ saveDB(); }catch(e){}
   showToast('Logged out.','success');
@@ -11495,7 +11820,10 @@ function createTestTournamentFromDev() {
     const uid = (document.getElementById('profUserId')?.value || '').replace(/\s+/g,'').slice(0, 12);
     if(fn) acc.name = fn;
     if(uid) acc.userId = uid;
-    try{ window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db)); }catch(e){}
+    try{
+      window.__safeStorage.setItem(APEX_AUTH_PROFILE_KEY, JSON.stringify(acc));
+      window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db));
+    }catch(e){}
     showToast('✅ Profile updated!', 'success');
     closeProfilePopup();
     if(document.body.classList.contains('home-hub')) renderHomeHub();
