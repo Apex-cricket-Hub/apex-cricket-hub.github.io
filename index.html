@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,viewport-fit=cover">
   
-<title>APEX Cricket Hub v49 V10 • Pro Cricket Tournament Hub</title>
+<title>APEX Cricket Hub v49 V12 • Pro Cricket Tournament Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
 :root{
@@ -2283,6 +2283,221 @@ body.theme-light #view_awards .tablewrap table tbody tr:nth-child(even) td:first
 }
 </style>
 
+
+<style id="apex-v11-final-polish">
+/* === 1. FIX LIGHT THEME POSITIVE/NEGATIVE NRR COLORS === */
+body.theme-light .standings-main-table td.good {
+  color: #15803d !important;
+  background: linear-gradient(90deg, rgba(22, 163, 74, 0.16), rgba(22, 163, 74, 0.05)) !important;
+  font-weight: 900 !important;
+  box-shadow: inset 3px 0 0 #16a34a !important;
+}
+body.theme-light .standings-main-table td.bad {
+  color: #dc2626 !important;
+  background: linear-gradient(90deg, rgba(220, 38, 38, 0.15), rgba(220, 38, 38, 0.04)) !important;
+  font-weight: 900 !important;
+  box-shadow: inset 3px 0 0 #dc2626 !important;
+}
+
+/* === 2. ZERO EXTRA SPACE ON EXTREME RIGHT OF TABLES === */
+@media(min-width: 601px) {
+  .standings-main-table,
+  .qualification-table,
+  #view_awards .tablewrap table {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+}
+
+/* === 3. DESKTOP MODE PERFORMANCE (ELIMINATE BLUR/ANIMATION LAG) === */
+@media(min-width: 900px) {
+  .card, .nav-container {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .view-panel {
+    animation: none !important;
+  }
+}
+
+/* === 4. RICHER MEDIUM-BLUE METALLIC GRADIENT FILLS EVERYWHERE IN LIGHT THEME (WHITE PAGE BG) === */
+body.theme-light {
+  background: #ffffff !important;
+  --bg: #ffffff !important;
+}
+body.theme-light .card,
+body.theme-light .qualification-intelligence-card,
+body.theme-light .setup-section,
+body.theme-light .admin-unlock-box,
+body.theme-light .setup-mode-box {
+  background: linear-gradient(155deg, #e0edff 0%, #edf5ff 46%, #f8fbff 100%) !important;
+  border: 1.5px solid rgba(37, 99, 235, 0.36) !important;
+  box-shadow: 0 10px 26px rgba(29, 78, 216, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+body.theme-light .hs-item,
+body.theme-light .hs-card,
+body.theme-light .match-item,
+body.theme-light .cric-scorecard,
+body.theme-light .fixture-card,
+body.theme-light .stat,
+body.theme-light .podium-card,
+body.theme-light .reward-item,
+body.theme-light .standings-info-compact,
+body.theme-light .qi-pro-card,
+body.theme-light .qi-live-calc-box {
+  background: linear-gradient(145deg, #d8e9ff 0%, #ebf4ff 52%, #ffffff 100%) !important;
+  border: 1.5px solid rgba(37, 99, 235, 0.34) !important;
+  box-shadow: 0 6px 16px rgba(29, 78, 216, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+body.theme-light #view_score [style*="rgba(15,23,42,0.6)"] {
+  background: linear-gradient(145deg, #dbeafe 0%, #eff6ff 60%, #ffffff 100%) !important;
+  border: 1.5px solid rgba(37, 99, 235, 0.35) !important;
+}
+body.theme-light #view_score #lblSmartP1,
+body.theme-light #view_score #lblSmartP2 {
+  color: #0f172a !important;
+}
+body.theme-light .btn-secondary {
+  background: linear-gradient(145deg, #dbeafe 0%, #eff6ff 55%, #ffffff 100%) !important;
+  border: 1.5px solid rgba(37, 99, 235, 0.38) !important;
+  color: #0f172a !important;
+}
+
+/* === 5. COMPACT TOOLBAR + 3D POP-UP HIGHLIGHT FOR ACTIVE SORT === */
+.standings-toolbar-compact .btn {
+  padding: 4px 8px !important;
+  font-size: 10.5px !important;
+  min-height: 28px !important;
+  border-radius: 8px !important;
+}
+.standings-toolbar-compact .sort-active-select {
+  border-radius: 9px !important;
+  border: 1.5px solid #38bdf8 !important;
+  background: linear-gradient(145deg, #0ea5e9, #1d4ed8) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+  transform: translateY(-1px);
+}
+.standings-toolbar-compact .sort-active-select option {
+  background: #0f172a;
+  color: #ffffff;
+}
+body.theme-light .standings-toolbar-compact .sort-active-select option {
+  background: #ffffff;
+  color: #0f172a;
+}
+.tablewrap table thead th.sort-active-th {
+  position: relative;
+  transform: translateY(-2px);
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+  z-index: 4;
+}
+
+/* === 6. BOUNCY SPRING MICRO-ANIMATIONS EVERYWHERE (INCLUDING HOME HUB) === */
+.btn, #mainNav button, .stage-btn, .hs-item, .hs-card, .hs-back, .hs-corner, .hs-profile-pill,
+.comp-type-chip, .group-view-chip, .qi-name-btn, .setup-mode-card {
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, border-color 0.2s ease !important;
+}
+.btn:active, #mainNav button:active, .stage-btn:active, .hs-item:active, .hs-card:active,
+.hs-back:active, .hs-corner:active, .hs-profile-pill:active, .comp-type-chip:active, .group-view-chip:active {
+  transform: scale(0.94) !important;
+}
+@media(hover: hover) {
+  .hs-item:hover, .hs-card:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+}
+@keyframes apexCardPopIn {
+  0% { opacity: 0; transform: translateY(10px) scale(0.97); }
+  70% { opacity: 1; transform: translateY(-2px) scale(1.008); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+body.home-hub .hs-item, body.home-hub .hs-card {
+  animation: apexCardPopIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+/* === 7. DECORATED THICKER INPUT BORDERS IN SETUP & RECORD SCORE === */
+#view_setup input:not([type="checkbox"]):not([type="radio"]),
+#view_setup select,
+#view_setup textarea,
+#view_score input:not([type="checkbox"]):not([type="radio"]),
+#view_score select,
+#view_score textarea {
+  border: 2px solid rgba(56, 189, 248, 0.45) !important;
+  border-radius: 10px !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+body.theme-light #view_setup input:not([type="checkbox"]):not([type="radio"]),
+body.theme-light #view_setup select,
+body.theme-light #view_setup textarea,
+body.theme-light #view_score input:not([type="checkbox"]):not([type="radio"]),
+body.theme-light #view_score select,
+body.theme-light #view_score textarea {
+  border: 2px solid rgba(37, 99, 235, 0.48) !important;
+  background: #ffffff !important;
+  box-shadow: inset 0 1px 3px rgba(30, 64, 175, 0.08), 0 2px 5px rgba(30, 64, 175, 0.06) !important;
+}
+#view_setup input:focus, #view_setup select:focus, #view_setup textarea:focus,
+#view_score input:focus, #view_score select:focus, #view_score textarea:focus {
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.28) !important;
+}
+</style>
+
+
+<style id="apex-v12-polish">
+/* Fix white background behind score inside Light Theme scorecards */
+body.theme-light .cric-score-box {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+/* Compact QI Summary Card & AI Suggestion Styling */
+.qi-pro-compact .qi-pro-pill {
+  padding: 6px 4px !important;
+}
+.qi-pro-compact .qi-pro-pill b {
+  font-size: 12.5px !important;
+}
+.qi-pro-compact .qi-pro-win,
+.qi-pro-compact .qi-pro-lose {
+  padding: 9px 8px !important;
+}
+.qi-pro-compact .qi-pro-wl-title {
+  font-size: 14px !important;
+}
+.qi-ai-tip {
+  font-size: 10.5px;
+  line-height: 1.4;
+  padding: 6px 9px;
+  border-radius: 9px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.14), rgba(99, 102, 241, 0.10));
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: var(--text);
+}
+body.theme-light .qi-ai-tip {
+  background: linear-gradient(135deg, #e0f2fe, #ede9fe);
+  border-color: #7dd3fc;
+  color: #0f172a;
+}
+.qi-pro-others summary {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--accent);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.qi-pro-others summary::-webkit-details-marker { display: none; }
+body.theme-light .qi-calc-res-box {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border-color: rgba(37, 99, 235, 0.25) !important;
+}
+</style>
+
 </head>
 
  <body>
@@ -2391,14 +2606,17 @@ body.theme-light #view_awards .tablewrap table tbody tr:nth-child(even) td:first
 
   <section id="view_standings" class="view-panel">
     <div class="card">
-     <div class="card-header">
-      <div>
+     <div class="card-header standings-top-header" style="margin-bottom:8px;gap:6px">
+      <div id="standingsHeaderMeta" class="standings-header-meta">
        <div class="card-title">🏆 Tournament Standings</div>
-       <div class="muted">
+       <div class="muted" style="font-size:12px">
         Win: <b id="lblWinPts">3</b> pts • Tie: <b id="lblTiePts">1</b> pt • Bonus Win: <b id="lblBonusPts">+1</b> pt • Ranked by Points &amp; NRR
        </div>
       </div>
-      <div id="stageSelector" class="stage-tabs"></div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;width:100%;justify-content:space-between">
+       <div id="stageSelector" class="stage-tabs" style="margin-bottom:0"></div>
+       <button type="button" id="toggleStandingsBannerBtn" class="btn btn-secondary btn-sm" style="font-size:10px;padding:4px 8px" onclick="toggleStandingsHeaderMeta()">▲ Hide Info</button>
+      </div>
      </div>
      <div class="standings-info-compact">
       <div class="standings-info-summary">
@@ -2664,10 +2882,19 @@ Group B: Player C, Player D"></textarea></div>
      <div class="form-group">
       <div class="score-section-title"><span class="step">1</span> Select the stage &amp; fixture to record</div>
       <div class="form-group" style="margin-bottom:8px"><label>Select Stage</label><select id="scoreStageSelect" onchange="selectScoreEntryStage(this.value)"></select></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-       <label style="margin:0">Select Scheduled Fixture</label> <span class="muted" style="font-size:11px">Filter fixture options below:</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+       <label style="margin:0">Select Scheduled Fixture</label>
+       <div style="display:inline-flex;align-items:center;gap:5px">
+        <span class="muted" style="font-size:10px;font-weight:800">SHOW:</span>
+        <select id="scoreFixtureStatusFilter" onchange="filterScoreFixtureDropdown()" style="width:auto;padding:4px 8px;font-size:11px;font-weight:800">
+         <option value="pending" selected>⏳ Pending Only</option>
+         <option value="completed">✅ Completed Only</option>
+         <option value="both">📋 Both (Pending + Done)</option>
+        </select>
+       </div>
       </div>
-      <input type="text" id="scoreFixtureFilter" placeholder="🔍 Quick filter fixture (type name or match #)..." oninput="filterScoreFixtureDropdown()" style="margin-bottom:6px;font-size:12px;padding:7px 10px"> <select id="scoreFixtureSelect" onchange="loadFixtureIntoScorer()"></select>
+      <input type="text" id="scoreFixtureFilter" placeholder="🔍 Quick filter fixture (type name or match #)..." oninput="filterScoreFixtureDropdown()" style="margin-bottom:6px;font-size:12px;padding:7px 10px">
+      <select id="scoreFixtureSelect" onchange="loadFixtureIntoScorer()"></select>
      </div>
      <div style="margin:10px 0;background:rgba(56,189,248,0.04);border:1px solid rgba(56,189,248,0.22);border-radius:12px;padding:10px 12px">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px">
@@ -3168,8 +3395,11 @@ document.addEventListener('touchend', e => {
 }, {passive: true});
 
 function handleHorizontalTabSwipe(xDiff, yDiff, targetEl){
+  if(window.innerWidth >= 900) return; // Desktop mode: disable swipe tab switching
   if(!document.body.classList.contains('in-app') || setupMode === 'new') return;
-  if(targetEl && targetEl.closest('.tablewrap, .qualification-table-wrap, .stage-tabs, nav, .group-view-chips, .hs-menu, .bracket-stage-shell, input, select, textarea')) return;
+  if(uiState && uiState.viewId === 'view_score') return; // Never swipe away while recording scores
+  if(document.activeElement && /^(INPUT|SELECT|TEXTAREA)$/i.test(document.activeElement.tagName)) return;
+  if(targetEl && targetEl.closest('.tablewrap, .qualification-table-wrap, .stage-tabs, nav, .group-view-chips, .hs-menu, .bracket-stage-shell, input, select, textarea, button, #view_score, #view_setup')) return;
   if(yDiff > 35 || Math.abs(xDiff) < 120) return;
 
   const navButtons = Array.from(document.querySelectorAll('#mainNav button:not(.hidden)'));
@@ -3232,16 +3462,19 @@ function getAvatarHtmlFallback(name, sizeClass=''){
 }
 
 const APP_STORAGE_KEY = 'cricket_ipl_commander_v7';
-async function getAuthedFirebaseUrl(){
+const FIREBASE_BASE_URL = 'https://apex-cricket-engine-default-rtdb.firebaseio.com/tournament_hub';
+const FIREBASE_URL = FIREBASE_BASE_URL + '.json';
+async function getAuthedFirebaseUrl(subPath, forceRefresh){
+  const base = subPath ? (FIREBASE_BASE_URL + '/' + String(subPath).replace(/^\/+/, '') + '.json') : FIREBASE_URL;
   try{
-    if(__fbUser && typeof __fbUser.getIdToken === 'function'){
-      const tok = await __fbUser.getIdToken();
-      if(tok) return FIREBASE_URL + '?auth=' + encodeURIComponent(tok);
+    const fbU = __fbUser || (__fbAuth && __fbAuth.currentUser) || null;
+    if(fbU && typeof fbU.getIdToken === 'function'){
+      const tok = await fbU.getIdToken(!!forceRefresh);
+      if(tok) return base + '?auth=' + encodeURIComponent(tok);
     }
   }catch(e){}
-  return FIREBASE_URL;
+  return base;
 }
-const FIREBASE_URL = 'https://apex-cricket-engine-default-rtdb.firebaseio.com/tournament_hub.json';
 
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDeo5cDF8I3mEeSPSHRhm955GaML8RxH4g",
@@ -3296,7 +3529,13 @@ function initFirebaseAuth(){
           createdAt: prev.createdAt || Date.now()
         };
         hsSaveSession(id);
+        window.__cloudAuthWarned = false;
         try{ await fbUpsertProfile(user); }catch(e){ console.warn(e); }
+        try{
+          if(isAdmin && (getDirtyTournamentIds().length || getDeletedDirtyIds().length)){
+            setTimeout(()=>{ queueCloudPush(); }, 150);
+          }
+        }catch(e){}
       }else{
         // Only clear session on explicit user sign-out (prevents desktop-mode reload / hydration wipeout)
         if(window.__explicitLogoutInProgress){
@@ -3532,10 +3771,21 @@ function toggleStandingsDetails(){
   if(btn){btn.setAttribute('aria-expanded',String(uiState.standingsDetails));btn.textContent=uiState.standingsDetails?'ℹ️ Hide Details ▴':'ℹ️ Details ▾';}
   saveUIState();
 }
+function toggleStandingsHeaderMeta(){
+  uiState.hideStandingsHeader = !uiState.hideStandingsHeader;
+  syncStandingsDetailsUI();
+  saveUIState();
+}
 function syncStandingsDetailsUI(){
   const panel=document.getElementById('standingsDetails'),btn=document.getElementById('standingsDetailsBtn');
   if(panel) panel.classList.toggle('hidden',!uiState.standingsDetails);
   if(btn){btn.setAttribute('aria-expanded',String(uiState.standingsDetails));btn.textContent=uiState.standingsDetails?'ℹ️ Hide Details ▴':'ℹ️ Details ▾';}
+  const meta=document.getElementById('standingsHeaderMeta'), hBtn=document.getElementById('toggleStandingsBannerBtn');
+  const compact=document.querySelector('.standings-info-compact');
+  const hide=!!uiState.hideStandingsHeader;
+  if(meta) meta.classList.toggle('hidden', hide);
+  if(compact) compact.classList.remove('hidden'); // Always keep live stage/matches bar visible
+  if(hBtn) hBtn.textContent = hide ? '▼ Show Info' : '▲ Hide Info';
 }
 
 function seedHunterPremierLeagueIfMissing(force){
@@ -3796,6 +4046,7 @@ function ensureRecoveryStores(){
   if(!db.communities || typeof db.communities!=='object') db.communities={};
   if(!db.accounts || typeof db.accounts!=='object') db.accounts={};
   if(!db.session || typeof db.session!=='object') db.session={accountId:null};
+  if(!db.userDirectory || typeof db.userDirectory!=='object') db.userDirectory={};
 }
 function isTournamentComplete(t){
   if(!t) return false;
@@ -3819,6 +4070,165 @@ function getTournamentHomeBucket(t){
 function daysSince(ts){
   if(!ts) return 9999;
   return (Date.now()-Number(ts))/(1000*60*60*24);
+}
+
+
+/* === GLOBAL UNIQUE @UserID DIRECTORY, CAREER RECORD & PLAYER CLAIM ENGINE (V12) === */
+function normalizeUserId(raw){
+  return String(raw || '').replace(/[^a-zA-Z0-9_]/g, '').slice(0, 12);
+}
+function canonicalUserIdKey(raw){
+  return normalizeUserId(raw).toLowerCase();
+}
+async function fetchUserDirectoryCloud(){
+  try{
+    const res = await fetch(await getAuthedFirebaseUrl('user_directory'), {cache:'no-store'});
+    if(res.ok){
+      const d = await res.json();
+      if(d && typeof d === 'object'){
+        ensureRecoveryStores();
+        db.userDirectory = { ...(db.userDirectory||{}), ...d };
+      }
+    }
+  }catch(e){}
+  return db.userDirectory || {};
+}
+async function checkUserIdAvailable(rawId, excludeAccountId){
+  const clean = normalizeUserId(rawId);
+  const key = clean.toLowerCase();
+  if(clean.length < 3) return { ok:false, reason:'User ID must be 3–12 characters (letters, numbers, _).' };
+  const dir = await fetchUserDirectoryCloud();
+  const entry = dir[key];
+  if(entry && entry.accountId && entry.accountId !== excludeAccountId){
+    return { ok:false, reason:`User ID "@${clean}" is already taken. Please choose another unique User ID.` };
+  }
+  const localHit = Object.values(db.accounts||{}).find(a => a && a.id !== excludeAccountId && canonicalUserIdKey(a.userId) === key);
+  if(localHit){
+    return { ok:false, reason:`User ID "@${clean}" is already taken. Please choose another unique User ID.` };
+  }
+  return { ok:true, clean, key };
+}
+async function syncUserDirectoryEntry(acc){
+  if(!acc || !acc.userId) return;
+  const clean = normalizeUserId(acc.userId);
+  const key = clean.toLowerCase();
+  if(!key) return;
+  ensureRecoveryStores();
+  const record = {
+    userId: clean,
+    displayName: acc.name || clean,
+    accountId: acc.id,
+    updatedAt: Date.now()
+  };
+  db.userDirectory[key] = record;
+  try{
+    await fetch(await getAuthedFirebaseUrl('user_directory/' + encodeURIComponent(key)), {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(record)
+    });
+  }catch(e){}
+}
+function propagateDisplayNameToLinkedTournaments(userId, newDisplayName){
+  const key = canonicalUserIdKey(userId);
+  if(!key || !newDisplayName) return;
+  Object.values(db.tournaments || {}).forEach(t => {
+    if(!t || !t.playerLinks) return;
+    Object.entries(t.playerLinks).forEach(([slotName, linkedUid]) => {
+      if(canonicalUserIdKey(linkedUid) === key){
+        t.playerDisplayOverrides = t.playerDisplayOverrides || {};
+        t.playerDisplayOverrides[slotName] = newDisplayName;
+      }
+    });
+  });
+}
+function computeUserCareerRecord(acc){
+  const empty = { tournamentsPlayed:0, matches:0, runs:0, balls:0, wickets:0, runsConceded:0, ballsBowled:0, sixes:0, mvp:0, bestBat:null, bestBowl:null, titles:0, history:[] };
+  if(!acc) return empty;
+  const uidKey = canonicalUserIdKey(acc.userId);
+  if(!uidKey) return empty;
+  const res = { ...empty, history:[] };
+  Object.values(db.tournaments || {}).forEach(t => {
+    if(!t || (!developerMode && isTestTournament(t))) return;
+    const links = t.playerLinks || {};
+    const matchedSlots = Object.entries(links).filter(([, linked]) => canonicalUserIdKey(linked) === uidKey).map(([slot]) => slot);
+    if(!matchedSlots.length) return;
+    let tMatches=0, tRuns=0, tWkts=0, tSixes=0, tMvp=0;
+    const slotSet = new Set(matchedSlots.map(s=>s.toLowerCase()));
+    (t.stages || []).forEach(st => (st.fixtures || []).filter(f => f && f.completed && !f.isNR && !f.isForfeit).forEach(f => {
+      const checkSide = (name, r, w, o, s6, oppW, oppR, oppO) => {
+        if(!name || !slotSet.has(String(name).toLowerCase())) return;
+        const rr = Number(r)||0, ww = Number(w)||0, bb = Number(o)||0, sx = Number(s6)||0;
+        const wTaken = Number(oppW)||0, rConc = Number(oppR)||0, bBowl = Number(oppO)||0;
+        tMatches++; tRuns += rr; tWkts += wTaken; tSixes += sx;
+        const mvpAdd = rr + (wTaken * 20) + (sx * 2);
+        tMvp += mvpAdd;
+        res.balls += bb; res.runsConceded += rConc; res.ballsBowled += bBowl;
+        if(!res.bestBat || rr > res.bestBat.runs) res.bestBat = { runs:rr, wkts:ww, tourney:t.name };
+        if(wTaken > 0 && (!res.bestBowl || wTaken > res.bestBowl.wkts || (wTaken===res.bestBowl.wkts && rConc < res.bestBowl.runs))){
+          res.bestBowl = { wkts:wTaken, runs:rConc, tourney:t.name };
+        }
+      };
+      if(Array.isArray(f.legs) && f.legs.length){
+        f.legs.filter(l=>l&&l.completed&&!l.isNR&&!l.isForfeit).forEach(l=>{
+          checkSide(l.p1, l.r1, l.w1, l.o1, l.s6_1, l.w2, l.r2, l.o2);
+          checkSide(l.p2, l.r2, l.w2, l.o2, l.s6_2, l.w1, l.r1, l.o1);
+        });
+      } else {
+        checkSide(f.p1, f.r1, f.w1, f.o1, f.s6_1, f.w2, f.r2, f.o2);
+        checkSide(f.p2, f.r2, f.w2, f.o2, f.s6_2, f.w1, f.r1, f.o1);
+      }
+    }));
+    res.tournamentsPlayed++;
+    res.matches += tMatches; res.runs += tRuns; res.wickets += tWkts; res.sixes += tSixes; res.mvp += tMvp;
+    const comp = typeof getTournamentCompletion === 'function' ? getTournamentCompletion(t) : { complete:false };
+    if(comp.complete && comp.champion && slotSet.has(String(comp.champion).toLowerCase())) res.titles++;
+    res.history.push({ id:t.id, name:t.name, slot:matchedSlots[0], matches:tMatches, runs:tRuns, wickets:tWkts, mvp:tMvp, champion: !!(comp.complete && comp.champion && slotSet.has(String(comp.champion).toLowerCase())) });
+  });
+  return res;
+}
+async function requestClaimTournamentSlot(tournamentId, playerSlotName){
+  const acc = hsGetSession();
+  if(!acc){ showToast('Please Sign In first to claim your stats.', 'error'); return; }
+  if(!acc.userId){ showToast('Set your unique @UserID in Profile first.', 'error'); openProfilePopup(); return; }
+  const t = db?.tournaments?.[tournamentId];
+  if(!t) return;
+  t.playerLinks = t.playerLinks || {};
+  if(t.playerLinks[playerSlotName]){
+    showToast('This player slot is already linked to @' + t.playerLinks[playerSlotName], 'info');
+    return;
+  }
+  t.pendingClaims = Array.isArray(t.pendingClaims) ? t.pendingClaims : [];
+  if(t.pendingClaims.some(c => c.slotName === playerSlotName && canonicalUserIdKey(c.userId) === canonicalUserIdKey(acc.userId))){
+    showToast('Claim already pending organiser approval.', 'info');
+    return;
+  }
+  t.pendingClaims.push({ slotName: playerSlotName, userId: acc.userId, displayName: acc.name || acc.userId, accountId: acc.id, requestedAt: Date.now() });
+  try{
+    window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db));
+    await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(t.id) + '/pendingClaims'), {
+      method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(t.pendingClaims)
+    });
+  }catch(e){}
+  showToast('🙋 Claim sent to tournament organiser for @' + acc.userId + '!', 'success');
+  renderQualificationQuery();
+}
+function approvePlayerClaim(idx){
+  if(!isAdmin && !developerMode) return;
+  const t = getActiveTournament(); if(!t || !Array.isArray(t.pendingClaims)) return;
+  const claim = t.pendingClaims[idx]; if(!claim) return;
+  t.playerLinks = t.playerLinks || {};
+  t.playerLinks[claim.slotName] = normalizeUserId(claim.userId);
+  t.pendingClaims.splice(idx, 1);
+  saveDB(); renderAll();
+  showToast('✅ Linked ' + claim.slotName + ' to @' + claim.userId, 'success');
+}
+function rejectPlayerClaim(idx){
+  if(!isAdmin && !developerMode) return;
+  const t = getActiveTournament(); if(!t || !Array.isArray(t.pendingClaims)) return;
+  t.pendingClaims.splice(idx, 1);
+  saveDB(); renderAll();
+  showToast('Claim dismissed.', 'info');
 }
 
 function hsHashPass(s){
@@ -4020,6 +4430,7 @@ async function fetchCloudData(){
           if(localBeforeFetch.accounts && Object.keys(localBeforeFetch.accounts).length) targetObj.accounts = { ...(targetObj.accounts||{}), ...localBeforeFetch.accounts };
           if(localBeforeFetch.session && localBeforeFetch.session.accountId) targetObj.session = { ...localBeforeFetch.session };
           if(localBeforeFetch.communities && Object.keys(localBeforeFetch.communities).length) targetObj.communities = { ...(targetObj.communities||{}), ...localBeforeFetch.communities };
+          targetObj.userDirectory = { ...(localBeforeFetch.userDirectory||{}), ...(targetObj.userDirectory||{}) };
         }
       }catch(e){}
     };
@@ -4078,26 +4489,108 @@ async function pushCloudData(){
   if(!isAdmin || (!dirtyIds.length && !deletedIds.length)) return true;
   cloudSyncBusy=true; updateCloudStatus('◌');
   try{
-    const getRes=await fetch(await getAuthedFirebaseUrl(),{cache:'no-store'});
-    if(!getRes.ok) throw new Error('Cloud read failed: '+getRes.status);
-    const cloud=await getRes.json()||{tournaments:{}};
-    const merged={...cloud,tournaments:{...(cloud.tournaments||{})},deletedTournaments:{...(cloud.deletedTournaments||{})},deletedTombstones:{...(cloud.deletedTombstones||{})}};
-    dirtyIds.forEach(id=>{ const localT=db?.tournaments?.[id]; if(!localT)return; const cloudT=merged.tournaments[id]; const lt=Number(localT?._sync?.updatedAt)||0, ct=Number(cloudT?._sync?.updatedAt)||0; if(!cloudT||lt>=ct) merged.tournaments[id]=localT; });
-    deletedIds.forEach(id=>{
-      const action=getDeletedDirtyAction(id), deleted=db?.deletedTournaments?.[id], tomb=db?.deletedTombstones?.[id];
-      if(action==='restore'){ if(db?.tournaments?.[id]) merged.tournaments[id]=db.tournaments[id]; delete merged.deletedTournaments[id]; delete merged.deletedTombstones[id]; }
-      else if(action==='purge'){ delete merged.tournaments[id]; delete merged.deletedTournaments[id]; merged.deletedTombstones[id]=tomb||{deletedAt:Date.now(),permanent:true}; }
-      else { if(deleted) merged.deletedTournaments[id]=deleted; if(tomb) merged.deletedTombstones[id]=tomb; delete merged.tournaments[id]; }
-    });
-    merged.activeId=db.activeId;
-    const putRes=await fetch(await getAuthedFirebaseUrl(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(merged)});
-    if(!putRes.ok) throw new Error('Cloud write failed: '+putRes.status);
-    const verifyRes=await fetch(await getAuthedFirebaseUrl(),{cache:'no-store'}); if(!verifyRes.ok) throw new Error('Cloud verify failed: '+verifyRes.status);
-    const verified=await verifyRes.json();
-    for(const id of dirtyIds){ const localT=db?.tournaments?.[id], cloudT=verified?.tournaments?.[id]; if(localT&&cloudT&&JSON.stringify(localT)===JSON.stringify(cloudT)){ const meta=getCloudSyncMeta(); meta.dirty=meta.dirty||{}; delete meta.dirty[id]; meta.lastSyncedAt=Date.now(); setCloudSyncMeta(meta); } }
-    if(deletedIds.length) clearDeletedDirtyIds(deletedIds);
-    lastCloudDataStr=JSON.stringify(verified); window.__safeStorage.setItem(APP_STORAGE_KEY,JSON.stringify(db)); updateCloudStatus('☁'); return true;
-  }catch(e){ updateCloudStatus('◌'); return false; } finally{ cloudSyncBusy=false; }
+    // 1. Targeted per-tournament PUT so two devices never overwrite each other's tournaments
+    //    AND clock-safe monotonic revision so intentional erases/edits always win over stale cloud!
+    const isLocalFile = (location.protocol === 'content:' || location.protocol === 'file:');
+    const fbCurrent = __fbUser || (__fbAuth && __fbAuth.currentUser) || null;
+    if(isLocalFile && !fbCurrent){
+      updateCloudStatus('offline');
+      if(!window.__cloudAuthWarned){
+        window.__cloudAuthWarned = true;
+        try{ showToast('ℹ️ Local preview mode: saved on this device. Open apex-cricket-hub.github.io & sign in to sync across devices.', 'info'); }catch(_){}
+      }
+      return false;
+    }
+    const writeWithRetry401 = async (path, method, payload) => {
+      const opts = { method };
+      if(payload !== undefined){ opts.headers = {'Content-Type':'application/json'}; opts.body = JSON.stringify(payload); }
+      let res = await fetch(await getAuthedFirebaseUrl(path, false), opts);
+      if(res.status === 401){
+        // Force-refresh Firebase ID token and retry once
+        res = await fetch(await getAuthedFirebaseUrl(path, true), opts);
+      }
+      if(res.status === 401){
+        // Fallback: try root merge PUT if DB rules allow root only
+        const err = new Error('AUTH_401');
+        err.status = 401;
+        throw err;
+      }
+      if(!res.ok) throw new Error('Cloud write failed (' + res.status + ')');
+      return res;
+    };
+
+    for(const id of dirtyIds){
+      const localT = db?.tournaments?.[id];
+      if(!localT) continue;
+      let cloudUpdatedAt = 0, cloudRev = 0;
+      try{
+        const chkRes = await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(id) + '/_sync', false), {cache:'no-store'});
+        if(chkRes.ok){
+          const cs = await chkRes.json();
+          cloudUpdatedAt = Number(cs?.updatedAt)||0;
+          cloudRev = Number(cs?.revision)||0;
+        }
+      }catch(e){}
+      localT._sync = {
+        updatedAt: Math.max(Date.now(), cloudUpdatedAt + 1),
+        revision: Math.max(Number(localT._sync?.revision)||0, cloudRev) + 1,
+        updatedBy: getCloudDeviceId()
+      };
+      await writeWithRetry401('tournaments/' + encodeURIComponent(id), 'PUT', localT);
+      const meta = getCloudSyncMeta();
+      meta.dirty = meta.dirty || {};
+      delete meta.dirty[id];
+      meta.lastSyncedAt = Date.now();
+      setCloudSyncMeta(meta);
+    }
+
+    // 2. Targeted delete/restore/purge updates
+    if(deletedIds.length){
+      for(const id of deletedIds){
+        const action=getDeletedDirtyAction(id), deleted=db?.deletedTournaments?.[id], tomb=db?.deletedTombstones?.[id];
+        if(action==='restore'){
+          if(db?.tournaments?.[id]){
+            await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(id)), {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(db.tournaments[id])});
+          }
+          await fetch(await getAuthedFirebaseUrl('deletedTournaments/' + encodeURIComponent(id)), {method:'DELETE'});
+          await fetch(await getAuthedFirebaseUrl('deletedTombstones/' + encodeURIComponent(id)), {method:'DELETE'});
+        } else if(action==='purge'){
+          await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(id)), {method:'DELETE'});
+          await fetch(await getAuthedFirebaseUrl('deletedTournaments/' + encodeURIComponent(id)), {method:'DELETE'});
+          await fetch(await getAuthedFirebaseUrl('deletedTombstones/' + encodeURIComponent(id)), {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(tomb||{deletedAt:Date.now(),permanent:true})});
+        } else {
+          if(deleted) await fetch(await getAuthedFirebaseUrl('deletedTournaments/' + encodeURIComponent(id)), {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(deleted)});
+          if(tomb) await fetch(await getAuthedFirebaseUrl('deletedTombstones/' + encodeURIComponent(id)), {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(tomb)});
+          await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(id)), {method:'DELETE'});
+        }
+      }
+      clearDeletedDirtyIds(deletedIds);
+    }
+
+    window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db));
+    lastCloudDataStr = ''; // allow next fetchCloudData to refresh cleanly
+    updateCloudStatus('☁');
+    return true;
+  }catch(e){
+    console.error('pushCloudData error:', e);
+    updateCloudStatus('offline');
+    if(e && (e.status === 401 || e.message === 'AUTH_401')){
+      if(!window.__cloudAuthWarned){
+        window.__cloudAuthWarned = true;
+        const msg = (location.protocol === 'content:' || location.protocol === 'file:')
+          ? 'ℹ️ Local file preview: saved locally. Open live site (apex-cricket-hub.github.io) & Sign In to sync to cloud.'
+          : '🔒 Cloud sync paused (401): Please Sign In on Home so your device has an active cloud session.';
+        try{ showToast(msg, 'error'); }catch(_){}
+      }
+      return false;
+    }
+    if(!window.__lastSyncErrAt || Date.now() - window.__lastSyncErrAt > 15000){
+      window.__lastSyncErrAt = Date.now();
+      try{ showToast('⚠️ Cloud sync delayed (' + (e.message||'network') + '). Will retry when online.', 'error'); }catch(_){}
+    }
+    setTimeout(()=>{ if(navigator.onLine && isAdmin && !window.__cloudAuthWarned && (getDirtyTournamentIds().length || getDeletedDirtyIds().length)) queueCloudPush(); }, 8000);
+    return false;
+  } finally{ cloudSyncBusy=false; }
 }
 
 function updateCloudStatus(text){
@@ -4373,14 +4866,15 @@ function renderQualificationQuery(){
 
   const fixtures = (pool?.fixtures) || (stage.fixtures||[]).filter(f=>poolPlayers.includes(String(f.p1))&&poolPlayers.includes(String(f.p2)));
   const winPts=resolvePtsConfig(t.winPts,3), tiePts=resolvePtsConfig(t.tiePts,1), bonusPts=effectiveBonusPts(t), nrPts=resolvePtsConfig(t.nrPts,1);
+  const oversQuota = Math.max(1, Number(t.overs)||Number(stage.overs)||5);
   let pack={base:x, scenarios:[], myRem:[]};
   try{
     if(typeof qiV2BuildScenarios==='function'){
-      const oq = Number(t.overs)||Number(stage.overs)||5;
-      pack = qiV2BuildScenarios(fixtures, poolPlayers, x.name, k, winPts, tiePts, bonusPts, nrPts, oq);
+      pack = qiV2BuildScenarios(fixtures, poolPlayers, x.name, k, winPts, tiePts, bonusPts, nrPts, oversQuota);
     }
   }catch(e){ console.warn(e); }
   const b = Object.assign({}, x, pack.base||{});
+  const basePct = (b.pct!=null) ? Number(b.pct) : (b.status==='Q'?100:b.status==='E'?0:50);
   const pct = (b.pct!=null) ? b.pct : (b.status==='Q'?100:b.status==='E'?0:null);
   const statusWord = b.status==='Q' ? 'QUALIFIED (Q)' : b.status==='E' ? 'ELIMINATED (E)' : 'IN CONTENTION';
   const statusBig = (pct!=null && b.status!=='Q' && b.status!=='E')
@@ -4390,126 +4884,254 @@ function renderQualificationQuery(){
   const nrrStr = (Number(b.nrr)>=0?'+':'') + (Number(b.nrr)||0).toFixed(3);
   const left = b.rem!=null ? b.rem : (pack.myRem||[]).length;
 
-  const ownWin = (pack.scenarios||[]).find(s=>s.kind==='own-win');
-  const ownLose = (pack.scenarios||[]).find(s=>s.kind==='own-lose');
-  let pathLine = '';
-  if(b.status==='Q') pathLine = 'Safe — you cannot fall out of the top '+k+'.';
-  else if(b.status==='E') pathLine = 'Eliminated — cannot finish in the top '+k+'.'+(b.bestPos?(' Best possible: #'+b.bestPos+'.'):'')+' Other results cannot change this.';
-  else if(ownWin && ownLose){
-    const wLabel = ownWin.status==='Q'?'safe':ownWin.status==='E'?'still out':'in the race';
-    const lLabel = ownLose.status==='Q'?'safe':ownLose.status==='E'?'out':'in the race';
-    pathLine = 'If you win: '+wLabel+'. If you lose: '+lLabel+'.';
-    if(ownWin.marginLine) pathLine += ' '+ownWin.marginLine;
-    if(left===0) pathLine = 'You have no matches left. Your points and NRR are fixed. '+pathLine;
-  } else if((pack.margins||[]).length){
-    pathLine = pack.margins.map(m=>qiV2FormatMarginGuide(m.rival, m, m.role==='defence'?'defence':'hunter', m.matchOpp||(ownWin&&ownWin.opp)||null)).filter(Boolean).join(' ');
-  } else if(left===0){
-    pathLine = 'You have no matches left. Your points and NRR are fixed. Your final place depends on other results.';
-  } else {
-    pathLine = b.outlook || 'Still in the race for the top '+k+'.';
-  }
+  // Unique remaining opponents for interactive Next Opponent Selector + Smart AI Matchup Suggestion
+  const myRemFixtures = pack.myRem || [];
+  const oppMap = new Map();
+  myRemFixtures.forEach(f => {
+    const opp = String(f.p1) === String(x.name) ? String(f.p2) : String(f.p1);
+    if(!oppMap.has(opp)) oppMap.set(opp, f);
+  });
+  const uniqueOpps = [...oppMap.keys()];
 
-  let nextHtml = '<div class="muted" style="font-size:12px;padding:8px 0">No remaining matches for this player.</div>';
-  if(ownWin || ownLose){
-    const opp = (pack.myRem&&pack.myRem[0]) ? (String(pack.myRem[0].p1)===String(x.name)?pack.myRem[0].p2:pack.myRem[0].p1) : '';
-        const wSt = ownWin
-      ? (ownWin.nrrPath ? 'Win + NRR needed'
-        : ownWin.status==='Q' ? 'Clinched'
-        : ownWin.status==='E' ? 'Out'
-        : ('Alive · Max '+(ownWin.maxPts!=null?ownWin.maxPts:'—')+' pts'))
-      : '—';
-    const lSt = ownLose
-      ? (ownLose.status==='Q'?'Clinched':ownLose.status==='E'?'Out':('Bubble · Max '+(ownLose.maxPts!=null?ownLose.maxPts:'—')+' pts'))
-      : '—';
-        let wMg = '';
-    if(ownWin && ownWin.note){
-      wMg += '<div class="qi-pro-wl-mg" style="text-align:left;font-size:11px;margin-bottom:6px">'+esc(ownWin.note)+'</div>';
+  // Compute Smart AI Matchup Suggestion across unique unplayed opponents
+  let aiBest = null;
+  const oppOutcomes = {};
+  uniqueOpps.forEach(opp => {
+    const f = oppMap.get(opp);
+    const iAmP1 = String(f.p1) === String(x.name);
+    const ifW = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, iAmP1?'w1':'w2')[x.name] || {};
+    const ifL = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, iAmP1?'w2':'w1')[x.name] || {};
+    const wPct = ifW.pct!=null ? Number(ifW.pct) : (ifW.status==='Q'?100:0);
+    const lPct = ifL.pct!=null ? Number(ifL.pct) : (ifL.status==='Q'?100:0);
+    const swing = Math.round((wPct - lPct) * 10) / 10;
+    const boost = Math.round((wPct - basePct) * 10) / 10;
+    oppOutcomes[opp] = { f, ifW, ifL, wPct, lPct, swing, boost };
+    if(!aiBest || swing > aiBest.swing || (swing === aiBest.swing && boost > aiBest.boost)){
+      aiBest = { opp, swing, boost, wPct, lPct };
     }
-    if(ownWin && ownWin.nrrPath && (pack.margins||[]).length && typeof qiV2MarginGuideHtml==='function'){
-      const m = pack.margins.find(x=>x.role==='hunter'||x.role==='hunter-ahead') || pack.margins[0];
-      if(m) wMg += qiV2MarginGuideHtml(m.rival, m, 'hunter', m.matchOpp || ownWin.opp || null);
-    } else if(ownWin && ownWin.marginLine && ownWin.status!=='E' && !ownWin.nrrPath){
-      wMg += '<div class="qi-pro-wl-mg" style="text-align:left;font-size:11px">'+esc(ownWin.marginLine)+'</div>';
-    }
-    nextHtml = `<div class="qi-pro-next-label">NEXT: vs ${esc(String(opp))}</div>
+  });
+
+  window.__qiSelectedNextOppMap = window.__qiSelectedNextOppMap || {};
+  const mapKey = (t.id||'') + '|' + (stage.stageNum||1) + '|' + x.name;
+  let selectedOpp = window.__qiSelectedNextOppMap[mapKey];
+  if(!selectedOpp || !uniqueOpps.includes(selectedOpp)) selectedOpp = (aiBest && aiBest.opp) || uniqueOpps[0] || '';
+  window.__qiSelectedNextOppMap[mapKey] = selectedOpp;
+
+  let nextHtml = '<div class="muted" style="font-size:11.5px;padding:6px 0">No remaining matches for this player.</div>';
+  if(selectedOpp && oppOutcomes[selectedOpp]){
+    const sel = oppOutcomes[selectedOpp];
+    const wSt = sel.ifW.status==='Q' ? 'Clinched (100%)' : sel.ifW.status==='E' ? 'Out (0%)' : `${sel.wPct}% · Max ${sel.ifW.maxPts??'—'} pts`;
+    const lSt = sel.ifL.status==='Q' ? 'Safe (100%)' : sel.ifL.status==='E' ? 'Eliminated (0%)' : `${sel.lPct}% · Max ${sel.ifL.maxPts??'—'} pts`;
+    const oppOptsHtml = uniqueOpps.map(op => {
+      const rRow = ranked.find(rr=>rr.name===op);
+      const ptsLbl = rRow ? ` (${rRow.pts} pts)` : '';
+      return `<option value="${esc(op)}" ${op===selectedOpp?'selected':''}>vs ${esc(op)}${ptsLbl}</option>`;
+    }).join('');
+    const aiTipHtml = (aiBest && uniqueOpps.length > 1 && b.status==='In Contention')
+      ? `<div class="qi-ai-tip">💡 <b>AI Suggestion:</b> Playing <b>vs ${esc(aiBest.opp)}</b> next carries your highest qualification impact (${aiBest.boost>=0?'+':''}${aiBest.boost}% on win · ${aiBest.swing}% total swing).</div>`
+      : '';
+    nextHtml = `
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:900;color:var(--accent);letter-spacing:.05em">NEXT OPPONENT</span>
+        <select id="qiNextOppSelect" data-map-key="${esc(mapKey)}" style="width:auto;min-width:155px;padding:4px 8px;font-size:11.5px;font-weight:800" onchange="onQiNextOppChange(this)">${oppOptsHtml}</select>
+      </div>
+      ${aiTipHtml}
       <div class="qi-pro-wl">
-        <div class="qi-pro-win"><div class="qi-pro-wl-title">WIN</div><div class="qi-pro-wl-sub">${esc(wSt)}</div>${wMg}</div>
+        <div class="qi-pro-win"><div class="qi-pro-wl-title">WIN</div><div class="qi-pro-wl-sub">${esc(wSt)}</div></div>
         <div class="qi-pro-lose"><div class="qi-pro-wl-title">LOSE</div><div class="qi-pro-wl-sub">${esc(lSt)}</div></div>
       </div>`;
   }
 
-  const others = (pack.scenarios||[]).filter(s=>s.kind==='other'||s.kind==='threat');
+  // Deduplicated Smart 1-Line "Results That Matter" (Collapsed by default!)
+  const otherRem = (pack.allRem || []).filter(f => String(f.p1)!==String(x.name) && String(f.p2)!==String(x.name));
+  const seenPairs = new Set();
+  const smartOthers = [];
+  otherRem.forEach(f => {
+    const pairKey = [String(f.p1), String(f.p2)].sort().join('||');
+    if(seenPairs.has(pairKey)) return;
+    seenPairs.add(pairKey);
+    const rA = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w1')[x.name] || {};
+    const rB = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w2')[x.name] || {};
+    const pA = rA.pct!=null ? Number(rA.pct) : (rA.status==='Q'?100:0);
+    const pB = rB.pct!=null ? Number(rB.pct) : (rB.status==='Q'?100:0);
+    const swing = Math.round(Math.abs(pA - pB) * 10) / 10;
+    const fav = pA >= pB ? f.p1 : f.p2;
+    const otherSide = pA >= pB ? f.p2 : f.p1;
+    const bestP = Math.max(pA, pB), altP = Math.min(pA, pB);
+    smartOthers.push({ p1:f.p1, p2:f.p2, fav, otherSide, bestP, altP, swing });
+  });
+  smartOthers.sort((a,b) => b.swing - a.swing);
   let othersHtml = '';
-  if(others.length){
-    const rows = others.map(s=>{
-      const st = s.status==='Q'?'Q':s.status==='E'?'E':(s.pct!=null?s.pct+'%':'Alive');
-      const extra = s.marginLine ? '<div class="qi-pro-other-mg">'+esc(s.marginLine)+'</div>' : '';
-      return `<div class="qi-pro-other-row"><div><span>${esc(s.title)}</span>${extra}</div><span class="qi-pro-other-st">${esc(String(st))}</span></div>`;
+  if(smartOthers.length && b.status === 'In Contention'){
+    const rowsHtml = smartOthers.slice(0, 8).map(o => {
+      if(o.swing < 1.0){
+        return `<div class="qi-pro-other-row"><span>${esc(o.p1)} vs ${esc(o.p2)}</span><span class="muted" style="font-size:10.5px;font-weight:700">~${o.bestP}% either way</span></div>`;
+      }
+      return `<div class="qi-pro-other-row"><span>Cheer for <b>${esc(o.fav)}</b> <span class="muted">(vs ${esc(o.otherSide)})</span></span><span class="qi-pro-other-st" style="color:var(--green)">+${o.swing.toFixed(1)}% <span class="muted" style="font-weight:600">(${o.bestP}% vs ${o.altP}%)</span></span></div>`;
     }).join('');
-    othersHtml = `<details class="qi-pro-others" open><summary>Results that matter (${others.length})</summary>${rows}</details>`;
+    othersHtml = `<details class="qi-pro-others"><summary>📌 Results That Matter (${smartOthers.length} key matches) — tap to expand</summary><div style="margin-top:6px">${rowsHtml}</div></details>`;
   }
 
+  // Collapsed-by-default NRR Margins ONLY for selected opponent / key cut rival (hides trivial 0+ rows!)
   let nrrHtml = '';
   try{
-    const oversQuota = Number(t.overs)||Number(stage.overs)||5;
-    const meaningfulMargins = (pack.margins||[]).filter(m=>{
-      if(!m) return false;
-      if(m.defendMargin!=null && Number(m.defendMargin)<=0 && m.chaseOvers==null) return false;
-      return true;
-    });
-    const showMargins = meaningfulMargins.length && b.status!=='E' && b.status!=='Q'
-      && ((Number(b.rem)||0)>0 || (pack.threats||[]).some(th=>!th.locked));
-    if(showMargins){
-      pack.margins = meaningfulMargins;
-      nrrHtml = '<div class="qi-pro-sec">NRR MARGINS</div><div class="qi-pro-nrr">' +
-        (ownWin && ownWin.nrrPath ? '<div class="muted" style="font-size:11px;margin-bottom:6px">These margins only matter after a win puts you on the cut points. NRR alone without those points will not qualify you.</div>' : '') +
-        pack.margins.slice(0,6).map(m=>{
-          const mode = m.role==='defence' ? 'defence' : 'hunter';
-          const html = (typeof qiV2MarginGuideHtml==='function')
-            ? qiV2MarginGuideHtml(m.rival, m, mode, m.matchOpp || (ownWin&&ownWin.opp) || null)
-            : esc(String(m.rival||''));
-          return '<div class="qi-pro-nrr-chip '+(m.role==='defence'?'mid':'ok')+'" style="line-height:1.45;white-space:normal">'+html+'</div>';
-        }).join('') + '</div>';
-    } else {
-      const hints = (typeof qiV2NrrMarginHints==='function')
-        ? qiV2NrrMarginHints(fixtures, poolPlayers, x.name, winPts, tiePts, bonusPts, nrPts, oversQuota) : [];
-      if(hints.length){
-        nrrHtml = `<div class="qi-pro-sec">NRR RACES</div><div class="qi-pro-nrr">` +
-          hints.slice(0,4).map(h=>`<div class="qi-pro-nrr-chip ${h.kind||''}">${esc(h.line)}</div>`).join('') +
-          `</div>`;
+    if(b.status === 'In Contention' && ranked.length > 1){
+      const cutRival = ranked[Math.min(ranked.length-1, Math.max(0, k-1))];
+      const targetRival = (selectedOpp && ranked.find(r=>r.name===selectedOpp)) || (cutRival && cutRival.name!==x.name ? cutRival : ranked.find(r=>r.name!==x.name));
+      if(targetRival && targetRival.name !== x.name){
+        const isDirect = selectedOpp && targetRival.name === selectedOpp;
+        const mg = qiV2MarginVsLocked(x, targetRival, oversQuota, isDirect);
+        if(mg){
+          let innerGuide = '';
+          if(mg.alreadyAhead){
+            const nonTrivialBat2 = (mg.shieldTable||[]).filter(r=>r.bat2MinRuns!=null && r.bat2MinRuns > 0);
+            const nonTrivialBat1 = (mg.shieldTable||[]).filter(r=>r.bat1MinBalls!=null && r.bat1MinBalls > 6);
+            if(!nonTrivialBat2.length && !nonTrivialBat1.length){
+              innerGuide = `<div class="nrr-guide">🛡️ <b>Strong NRR Cushion vs ${esc(targetRival.name)}</b> (Your NRR ${nrrStr} vs ${(targetRival.nrr>=0?'+':'')+targetRival.nrr.toFixed(3)}). Completing your ${oversQuota}.0 overs even in a close defeat keeps you ahead.</div>`;
+            } else {
+              mg.shieldTable = (mg.shieldTable||[]).filter(r => (r.bat2MinRuns!=null && r.bat2MinRuns>0) || (r.bat1MinBalls!=null && r.bat1MinBalls>6));
+              innerGuide = qiV2MarginGuideHtml(targetRival.name, mg, 'defence', selectedOpp || targetRival.name);
+            }
+          } else {
+            innerGuide = qiV2MarginGuideHtml(targetRival.name, mg, 'hunter', selectedOpp || targetRival.name);
+          }
+          nrrHtml = `<details class="qi-pro-others" style="margin-top:8px"><summary>📊 NRR Margins vs ${esc(targetRival.name)} — tap to expand</summary><div style="margin-top:8px">${innerGuide}</div></details>`;
+        }
       }
     }
   }catch(e){}
 
+  // Optional 1-tap Player Claim button if logged in and slot not yet linked
+  const curAcc = hsGetSession();
+  const linkedUid = t.playerLinks && t.playerLinks[x.name];
+  const claimHtml = linkedUid
+    ? `<span class="pill pill-done" style="font-size:9.5px;margin-left:auto">@${esc(linkedUid)}</span>`
+    : (curAcc && curAcc.userId ? `<button type="button" class="btn btn-secondary btn-sm" style="margin-left:auto;font-size:9.5px;padding:3px 7px" onclick="requestClaimTournamentSlot('${esc(t.id)}', ${JSON.stringify(String(x.name))})">🙋 Claim @${esc(curAcc.userId)}</button>` : '');
+
   qAnswer.innerHTML = `
-    <div class="qi-pro-card">
-      <div class="qi-pro-head">
+    <div class="qi-pro-card qi-pro-compact">
+      <div class="qi-pro-head" style="margin-bottom:8px">
         <div class="qi-pro-name-row">${typeof getAvatarHtml==='function'?getAvatarHtml(x.name,'team-avatar-sm'):''}
-          <div>
-            <div class="qi-pro-name">${esc(x.name)}</div>
-            <div class="qi-pro-meta">${x.pts} pts · NRR ${nrrStr} · ${left} left · Now #${pos}</div>
+          <div style="min-width:0">
+            <div class="qi-pro-name" style="font-size:16px">${esc(x.name)}</div>
+            <div class="qi-pro-meta">${x.pts} pts · NRR ${nrrStr} · ${left} left · #${pos}</div>
           </div>
+          ${claimHtml}
         </div>
       </div>
-      <div class="qi-pro-status ${statusCls}">${esc(statusBig)}<div class="qi-pro-status-sub">Top ${k} qualify</div></div>
-      <div class="qi-pro-pills">
+      <div class="qi-pro-status ${statusCls}" style="padding:8px 10px;font-size:13.5px;margin-bottom:8px">${esc(statusBig)} <span style="font-size:10px;opacity:.8">• Top ${k} qualify</span></div>
+      <div class="qi-pro-pills" style="margin-bottom:8px">
         <div class="qi-pro-pill"><span>Best</span><b>#${bestPos}</b></div>
-        <div class="qi-pro-pill"><span>Cut</span><b>top ${k}</b></div>
+        <div class="qi-pro-pill"><span>Cut</span><b>Top ${k}</b></div>
         <div class="qi-pro-pill"><span>Worst</span><b>#${worstPos}</b></div>
-        <div class="qi-pro-pill"><span>Max pts</span><b>${b.maxPts!=null?b.maxPts:x.maxPts}</b></div>
+        <div class="qi-pro-pill"><span>Max Pts</span><b>${b.maxPts!=null?b.maxPts:x.maxPts}</b></div>
       </div>
-      ${(b.magicWin!=null || b.elimNumber!=null) ? `<div class="qi-pro-magic">
-        ${b.magicWin!=null ? `<span><b>Wins to cut:</b> ${b.magicWin===0?'Already on/above cut line':b.magicWin}</span>` : ''}
+      ${(b.magicWin!=null || b.elimNumber!=null) ? `<div class="qi-pro-magic" style="padding:6px 9px;margin-bottom:8px;font-size:10.5px">
+        ${b.magicWin!=null ? `<span><b>Wins to cut:</b> ${b.magicWin===0?'On/above cut line':b.magicWin}</span>` : ''}
         ${b.elimNumber!=null ? `<span><b>Losses to E risk:</b> ${b.elimNumber}</span>` : ''}
         ${b.cutPts!=null ? `<span><b>Cut pts:</b> ${b.cutPts}</span>` : ''}
       </div>` : ''}
-      <p class="qi-pro-path">${esc(pathLine)}</p>
-      <div class="qi-pro-sec">NEXT MATCH</div>
       ${nextHtml}
       ${othersHtml}
       ${nrrHtml}
-      <p class="qi-pro-foot">Based on remaining fixtures · W/L/T/NR scenarios · NRR guidance when points can level</p>
+      ${buildLiveNrrCalcWidgetHtml(x, ranked, k, oversQuota, selectedOpp)}
+      <p class="qi-pro-foot">Weighted cricket simulation (3,000 trials / exact tree) · ICC All-Out NRR math (${oversQuota} overs)</p>
     </div>`;
+  try{ updateLiveNrrCalcWidget(); }catch(e){}
+}
+
+function onQiNextOppChange(selEl){
+  if(!selEl) return;
+  const key = selEl.getAttribute('data-map-key') || '';
+  const val = selEl.value || '';
+  window.__qiSelectedNextOppMap = window.__qiSelectedNextOppMap || {};
+  if(key) window.__qiSelectedNextOppMap[key] = val;
+  renderQualificationQuery();
+}
+function buildLiveNrrCalcWidgetHtml(me, ranked, qualifyK, oversQuota, nextOpp){
+  const rivals = (ranked || []).filter(r => r && r.name !== me.name);
+  if(!rivals.length) return '';
+  window.__liveNrrCalcCtx = {
+    me, rivalsMap: Object.fromEntries(rivals.map(r=>[r.name, r])),
+    oversQuota: Math.max(1, Number(oversQuota)||5),
+    nextOpp: String(nextOpp || '')
+  };
+  const cutIdx = Math.min(rivals.length - 1, Math.max(0, qualifyK - 1));
+  const defaultRival = (rivals.find(r => r.name === nextOpp) || rivals[cutIdx] || rivals[0]).name;
+  const defaultScore = oversQuota <= 6 ? 60 : oversQuota <= 12 ? 100 : oversQuota <= 25 ? 160 : 270;
+  const opts = rivals.map((r,i)=>{
+    const nrrS = (Number(r.nrr)>=0?'+':'')+(Number(r.nrr)||0).toFixed(3);
+    const isH2H = nextOpp && r.name === nextOpp ? ' • Next Opp' : '';
+    return `<option value="${esc(r.name)}" ${r.name===defaultRival?'selected':''}>${esc(r.name)} (${r.pts} pts, NRR ${nrrS}${isH2H})</option>`;
+  }).join('');
+  return `
+    <div class="qi-live-calc-box" style="margin-top:10px;padding:12px;border-radius:14px;border:1.5px solid rgba(56,189,248,0.45);background:rgba(56,189,248,0.06)">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:8px">
+        <span style="font-size:11px;font-weight:900;letter-spacing:.05em;color:var(--accent);text-transform:uppercase">🎯 Live Ball-by-Ball NRR Calculator</span>
+        <span class="pill pill-pending" style="font-size:9.5px">${oversQuota} Overs</span>
+      </div>
+      <div class="grid-2" style="gap:8px;margin-bottom:8px;align-items:end">
+        <div class="form-group" style="margin:0">
+          <label style="font-size:10px;white-space:nowrap">Target Rival</label>
+          <select id="liveNrrRivalSel" onchange="updateLiveNrrCalcWidget()" style="padding:7px 8px;font-size:11.5px;font-weight:700">${opts}</select>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label style="font-size:10px;white-space:nowrap">Scenario Mode</label>
+          <select id="liveNrrModeSel" onchange="updateLiveNrrCalcWidget()" style="padding:7px 8px;font-size:11.5px;font-weight:700">
+            <option value="hunter">⚔️ Win &amp; Pass NRR</option>
+            <option value="shield">🛡️ Lose Safely (Shield)</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <label style="margin:0;font-size:10.5px;font-weight:800;white-space:nowrap">1st Innings Score:</label>
+        <input id="liveNrrScoreInput" type="number" min="1" max="600" value="${defaultScore}" oninput="updateLiveNrrCalcWidget()" style="width:84px;padding:6px 8px;font-size:13px;font-weight:800;text-align:center">
+        <span class="muted" style="font-size:10px;line-height:1.25">Type any score (e.g. 58 or 78)</span>
+      </div>
+      <div id="liveNrrCalcOutput" class="grid-2" style="gap:8px;font-size:11.5px;line-height:1.45"></div>
+    </div>`;
+}
+
+function updateLiveNrrCalcWidget(){
+  const ctx = window.__liveNrrCalcCtx;
+  const out = document.getElementById('liveNrrCalcOutput');
+  if(!ctx || !out) return;
+  const rivalName = document.getElementById('liveNrrRivalSel')?.value;
+  const mode = document.getElementById('liveNrrModeSel')?.value || 'hunter';
+  const score = parseInt(document.getElementById('liveNrrScoreInput')?.value, 10);
+  const rival = ctx.rivalsMap[rivalName];
+  if(!rival || !Number.isFinite(score) || score < 1){
+    out.innerHTML = '<div class="muted">Enter a valid 1st innings score (1+).</div>';
+    return;
+  }
+  const isDirect = ctx.nextOpp && ctx.nextOpp === rivalName;
+  const Q = ctx.oversQuota;
+  const res = qiV2SolveSingleScore(ctx.me, rival, Q, score, mode, isDirect);
+  const h2hTag = isDirect ? ' <span class="pill pill-done" style="font-size:9px">Direct H2H Double-Swing</span>' : '';
+  const boxStyle = 'padding:8px 10px;border-radius:10px;border:1px solid var(--card-border);background:rgba(255,255,255,0.04)';
+  if(mode === 'hunter'){
+    const bat1Txt = res.defendMargin != null
+      ? `Restrict to <b>${res.defendMaxConcede} or fewer</b> in ${Q}.0 ov (or All Out) — win by <b>${res.defendMargin}+ runs</b>.`
+      : `Restricting to 0 still falls short from ${score} in 1 match.`;
+    const bat2Txt = res.chaseMaxBalls != null
+      ? `Chase <b>${res.chaseTarget}</b> in <b>${res.chaseMaxOvers} ov (${res.chaseMaxBalls} balls)</b> or fewer.`
+      : `Cannot pass NRR in a single chase of ${res.chaseTarget}.`;
+    out.innerHTML = `
+      <div class="qi-calc-res-box" style="${boxStyle}"><div style="font-size:10px;font-weight:900;color:var(--accent);margin-bottom:3px">🏏 BAT 1ST (SCORE ${score})</div>${h2hTag ? '<div style="margin-bottom:3px">'+h2hTag+'</div>' : ''}${bat1Txt}</div>
+      <div class="qi-calc-res-box" style="${boxStyle}"><div style="font-size:10px;font-weight:900;color:var(--green);margin-bottom:3px">⚡ BAT 2ND (OPP ${score})</div>${bat2Txt}</div>`;
+  } else {
+    const bat2Txt = res.bat2MinRuns != null
+      ? (res.bat2MinRuns === 0
+          ? `Your NRR buffer is huge — finishing ${Q}.0 overs keeps you ahead of <b>${esc(rivalName)}</b>.`
+          : `Score <b>${res.bat2MinRuns}+ runs</b> in ${Q}.0 ov (lose by &le;<b>${res.bat2MaxLossMargin}</b>) to stay ahead.`)
+      : `Losing chasing ${score} drops NRR below ${esc(rivalName)} — must win.`;
+    const bat1Txt = res.bat1MinBalls != null
+      ? `Drag their chase of ${score+1} to <b>${res.bat1MinOvers} ov (${res.bat1MinBalls} balls)+</b> to stay safe.`
+      : `Losing after scoring ${score} drops NRR below ${esc(rivalName)} — must defend.`;
+    out.innerHTML = `
+      <div class="qi-calc-res-box" style="${boxStyle}"><div style="font-size:10px;font-weight:900;color:var(--accent);margin-bottom:3px">🛡️ CHASE LOSS (OPP ${score})</div>${h2hTag ? '<div style="margin-bottom:3px">'+h2hTag+'</div>' : ''}${bat2Txt}</div>
+      <div class="qi-calc-res-box" style="${boxStyle}"><div style="font-size:10px;font-weight:900;color:var(--gold);margin-bottom:3px">⏱️ DEFEND LOSS (SCORE ${score})</div>${bat1Txt}</div>`;
+  }
 }
 function populateQualificationQuery(t){
   const sel=document.getElementById('queryPlayer'); if(!sel||!t) return;
@@ -4633,8 +5255,10 @@ function switchNav(viewId, btnId, options={}){
     target.style.opacity = '';
     target.classList.remove('slide-from-left','slide-from-right','page-turn-next','page-turn-prev');
     void target.offsetWidth;
-    if(window.__lastSwipeDir === 'left') target.classList.add('page-turn-next');
-    else if(window.__lastSwipeDir === 'right') target.classList.add('page-turn-prev');
+    if(window.innerWidth < 900){
+      if(window.__lastSwipeDir === 'left') target.classList.add('page-turn-next');
+      else if(window.__lastSwipeDir === 'right') target.classList.add('page-turn-prev');
+    }
     window.__lastSwipeDir = null;
   }
 }
@@ -4837,8 +5461,9 @@ function getScoreEntryStage(t){
   return t.stages.find(s=>s.stageNum===preferred) || t.stages.find(s=>s.stageNum===t.currentStage) || t.stages[0];
 }
 
-function buildScoreFixtureOptionsHtml(stage, query){
+function buildScoreFixtureOptionsHtml(stage, query, statusModeOverride){
   const list = (stage?.fixtures || []).filter(f => f && f.p1 && f.p2);
+  const statusMode = statusModeOverride || document.getElementById('scoreFixtureStatusFilter')?.value || 'pending';
   const q = String(query || '').trim().toLowerCase().replace(/\bv\b/gi,'vs').replace(/\s+/g,' ').trim();
   const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
   const filtered = list.filter(f => {
@@ -4854,9 +5479,21 @@ function buildScoreFixtureOptionsHtml(stage, query){
     const sc = (f.r1!=null && f.r2!=null) ? ` (${f.r1}/${f.w1??0} vs ${f.r2}/${f.w2??0})` : (f.isNR ? ' (NR)' : '');
     return `<option value="${f.id}">✅ M${f.id}${grp} • ${esc(f.p1)} vs ${esc(f.p2)}${sc}</option>`;
   };
-  let html = `<option value="">-- Choose Fixture (${pending.length} Pending · ${done.length} Done) --</option>`;
-  if(pending.length) html += `<optgroup label="⏳ Pending Matches (${pending.length})">` + pending.map(fmt).join('') + `</optgroup>`;
-  if(done.length) html += `<optgroup label="✅ Completed Matches (${done.length})">` + done.map(fmt).join('') + `</optgroup>`;
+  let html = '';
+  if(statusMode === 'pending'){
+    html = `<option value="">-- Choose Pending Fixture (${pending.length} left) --</option>`;
+    if(pending.length) html += `<optgroup label="⏳ PENDING MATCHES (${pending.length})">` + pending.map(fmt).join('') + `</optgroup>`;
+    else html += `<option value="" disabled>All matches in this stage are completed!</option>`;
+  } else if(statusMode === 'completed'){
+    html = `<option value="">-- Choose Completed Fixture (${done.length} done) --</option>`;
+    if(done.length) html += `<optgroup label="✅ COMPLETED MATCHES (${done.length})">` + done.map(fmt).join('') + `</optgroup>`;
+    else html += `<option value="" disabled>No completed matches yet</option>`;
+  } else {
+    html = `<option value="">-- Choose Fixture (${pending.length} Pending · ${done.length} Done) --</option>`;
+    if(pending.length) html += `<optgroup label="⏳ PENDING MATCHES (${pending.length})">` + pending.map(fmt).join('') + `</optgroup>`;
+    if(pending.length && done.length) html += `<option value="" disabled>────────────────────────────</option>`;
+    if(done.length) html += `<optgroup label="✅ COMPLETED MATCHES (${done.length})">` + done.map(fmt).join('') + `</optgroup>`;
+  }
   return html;
 }
 
@@ -5944,8 +6581,9 @@ function qv3AnalysePlayer(fixtures, players, targetName, winPts, tiePts, bonusPt
    ======================================================================== */
 /* F3_LEAF_NRR_FIX_01: leaf rem=0 for complete enum; CF+QI baseline; carry-forward numeric seed; AUDIT_ADV_QUAL_GUARD: manual advance does not overwrite source qualifyCount;  closed F2 ||2 + cfg save; isolation/stage/champion/12-11 source audit; resolvePtsConfig (zero points safe); Lab runs qiV2+qv3 */
 const QI_V2 = {
-  MAX_ENUM_FIXTURES: 5,   // full tree if remaining fixtures <= this
-  MAX_OUTCOMES: 20000,    // safety cap
+  MAX_ENUM_FIXTURES: 6,   // exact tree if remaining fixtures <= 6
+  MAX_OUTCOMES: 25000,    // safety cap
+  MC_TRIALS: 3000,        // seeded realistic Monte Carlo trials when > 6 fixtures remain
   enabled: true
 };
 
@@ -5954,18 +6592,20 @@ function qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts){
   const B = Math.max(0, Number(bonusPts)||0);
   const T = Math.max(0, Number(tiePts)||0);
   const N = Math.max(0, Number(nrPts)||0);
-  const outs = [
-    { tag:'w1', pts1:W, pts2:0, w1:1, w2:0 },
-    { tag:'w2', pts1:0, pts2:W, w1:0, w2:1 }
+  // Realistic cricket weights for % probabilities (while unweighted feasibility guarantees Q/E strictly)
+  const outs = B > 0 ? [
+    { tag:'w1',  pts1:W,   pts2:0,   w1:1, w2:0, weight:0.37 },
+    { tag:'w2',  pts1:0,   pts2:W,   w1:0, w2:1, weight:0.37 },
+    { tag:'w1b', pts1:W+B, pts2:0,   w1:1, w2:0, weight:0.10 },
+    { tag:'w2b', pts1:0,   pts2:W+B, w1:0, w2:1, weight:0.10 },
+    { tag:'tie', pts1:T,   pts2:T,   w1:0, w2:0, weight:0.03 },
+    { tag:'nr',  pts1:N,   pts2:N,   w1:0, w2:0, weight:0.03 }
+  ] : [
+    { tag:'w1',  pts1:W, pts2:0, w1:1, w2:0, weight:0.47 },
+    { tag:'w2',  pts1:0, pts2:W, w1:0, w2:1, weight:0.47 },
+    { tag:'tie', pts1:T, pts2:T, w1:0, w2:0, weight:0.03 },
+    { tag:'nr',  pts1:N, pts2:N, w1:0, w2:0, weight:0.03 }
   ];
-  if(B>0){
-    outs.push({ tag:'w1b', pts1:W+B, pts2:0, w1:1, w2:0 });
-    outs.push({ tag:'w2b', pts1:0, pts2:W+B, w1:0, w2:1 });
-  }
-  if(T>0 || T===0){ // always allow tie class if tiePts defined (0 still a class)
-    outs.push({ tag:'tie', pts1:T, pts2:T, w1:0, w2:0 });
-  }
-  outs.push({ tag:'nr', pts1:N, pts2:N, w1:0, w2:0 });
   return outs;
 }
 
@@ -6117,6 +6757,7 @@ function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nr
   players.forEach(p=>{
     stats[p] = {
       qualifyCount:0, total:0,
+      wQual:0, wTotal:0,
       bestPos: players.length, worstPos: 1,
       maxPts: Number(baseMap[p]?.pts)||0,
       minPts: Number(baseMap[p]?.pts)||0,
@@ -6126,28 +6767,28 @@ function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nr
 
   if(n===0){
     const baseRem = {};
-    players.forEach(n=>{ baseRem[n]=0; });
+    players.forEach(nm=>{ baseRem[nm]=0; });
     players.forEach(p=>{
       const range = qiV2PositionRange(p, players, baseMap, baseMap, baseRem);
       const s = stats[p];
-      s.total = 1;
+      s.total = 1; s.wTotal = 1;
       s.bestPos = range.bestPos;
       s.worstPos = range.worstPos;
       s.maxPts = s.minPts = Number(baseMap[p]?.pts)||0;
       s.sumPos = range.bestPos;
-      if(range.mustAbove < qualifyK) s.qualifyCount = 1;
+      if(range.mustAbove < qualifyK){ s.qualifyCount = 1; s.wQual = 1; }
     });
     return { stats, remaining, enumerated:true, totalOutcomes:1, baseMap };
   }
 
-  if(n > QI_V2.MAX_ENUM_FIXTURES){
+  if(n > QI_V2.MAX_ENUM_FIXTURES || Math.pow(classes.length, n) > QI_V2.MAX_OUTCOMES){
     return { stats:null, remaining, enumerated:false, totalOutcomes:0, baseMap };
   }
 
   let total = 0;
   const assignment = new Array(n);
 
-  function rec(idx){
+  function rec(idx, pathWeight){
     if(total >= QI_V2.MAX_OUTCOMES) return;
     if(idx===n){
       total++;
@@ -6158,23 +6799,29 @@ function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nr
         const pts = Number(finalMap[p]?.pts)||0;
         const s = stats[p];
         s.total++;
+        s.wTotal += pathWeight;
         const range = qiV2PositionRange(p, players, finalMap, baseMap, leafRem);
         if(range.bestPos < s.bestPos) s.bestPos = range.bestPos;
         if(range.worstPos > s.worstPos) s.worstPos = range.worstPos;
-        s.sumPos += range.bestPos; // optimistic average component
+        s.sumPos += range.bestPos;
         if(pts > s.maxPts) s.maxPts = pts;
         if(pts < s.minPts) s.minPts = pts;
-        if(range.mustAbove < qualifyK) s.qualifyCount++;
+        if(range.mustAbove < qualifyK){
+          s.qualifyCount++;
+          // If boundary tie is open, credit 0.5 probability weight (NRR coin-flip), else full weight
+          const credit = (range.worstPos <= qualifyK) ? 1.0 : 0.5;
+          s.wQual += pathWeight * credit;
+        }
       });
       return;
     }
     for(const o of classes){
       assignment[idx] = o;
-      rec(idx+1);
+      rec(idx+1, pathWeight * (o.weight || 0.25));
       if(total >= QI_V2.MAX_OUTCOMES) return;
     }
   }
-  rec(0);
+  rec(0, 1.0);
 
   players.forEach(p=>{
     const s = stats[p];
@@ -6189,7 +6836,7 @@ function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nr
   return { stats, remaining, enumerated:true, totalOutcomes:total, baseMap };
 }
 
-/** Points-only bounds when full enum is too large */
+/** Deterministic seeded Monte Carlo + Exact Points Bounds when >6 fixtures remain */
 function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, baselineMap){
   const { map: baseMap } = qiV2BaseRows(fixtures, players, winPts, tiePts, bonusPts, nrPts, baselineMap);
   const remaining = qiV2RemainingFixtures(fixtures, players);
@@ -6204,40 +6851,118 @@ function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts,
   players.forEach(p=>{
     const cur = Number(baseMap[p]?.pts)||0;
     maxPts[p] = cur + (remCount[p]||0)*winV;
-    minPts[p] = cur; // conservative: could get 0 more
+    minPts[p] = cur;
   });
 
+  // Deterministic PRNG seeded from pool state so percentages are stable across re-renders
+  let seed = 2166136261;
+  players.forEach(p=>{
+    const b = baseMap[p]||{};
+    const s = p + ':' + (b.pts||0) + ':' + Math.round((b.nrr||0)*1000) + ':' + (remCount[p]||0);
+    for(let i=0;i<s.length;i++){ seed ^= s.charCodeAt(i); seed = Math.imul(seed, 16777619); }
+  });
+  seed ^= remaining.length * 2654435761;
+  const rand = () => {
+    seed = (seed + 0x6D2B79F5) >>> 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+
+  const classes = qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts);
+  const cdf = [];
+  let acc = 0;
+  classes.forEach(o=>{ acc += (o.weight || 0.25); cdf.push(acc); });
+
+  const TRIALS = QI_V2.MC_TRIALS || 3000;
+  const N = players.length;
+  const pIndex = Object.fromEntries(players.map((p,i)=>[p,i]));
+  const basePtsArr = players.map(p=>Number(baseMap[p]?.pts)||0);
+  const baseNrrArr = players.map(p=>Number(baseMap[p]?.nrr)||0);
+  const remArr = players.map(p=>remCount[p]||0);
+  const edges = remaining.map(f=>[pIndex[String(f.p1)], pIndex[String(f.p2)]]).filter(e=>e[0]!==undefined && e[1]!==undefined);
+
+  const mcQual = new Float64Array(N);
+  const mcSumPos = new Float64Array(N);
+  const mcBest = new Int32Array(N).fill(N);
+  const mcWorst = new Int32Array(N).fill(1);
+  const ptsBuf = new Float64Array(N);
+  const nrrBuf = new Float64Array(N);
+  const ord = Array.from({length:N}, (_,i)=>i);
+
+  for(let tr=0; tr<TRIALS; tr++){
+    for(let i=0;i<N;i++){ ptsBuf[i]=basePtsArr[i]; nrrBuf[i]=baseNrrArr[i]; }
+    for(let e=0; e<edges.length; e++){
+      const u = edges[e][0], v = edges[e][1];
+      const r = rand() * acc;
+      let o = classes[classes.length-1];
+      for(let c=0;c<cdf.length;c++){ if(r <= cdf[c]){ o = classes[c]; break; } }
+      ptsBuf[u] += o.pts1; ptsBuf[v] += o.pts2;
+      // Realistic NRR swing per match so tiebreaks reflect match margins naturally
+      const swing = (0.15 + rand() * 0.55);
+      if(o.w1){ nrrBuf[u] += swing; nrrBuf[v] -= swing; }
+      else if(o.w2){ nrrBuf[v] += swing; nrrBuf[u] -= swing; }
+    }
+    ord.sort((a,b)=> (ptsBuf[b]-ptsBuf[a]) || (nrrBuf[b]-nrrBuf[a]) || (a-b));
+    for(let pos=0; pos<N; pos++){
+      const idx = ord[pos];
+      const rank = pos + 1;
+      mcSumPos[idx] += rank;
+      if(rank < mcBest[idx]) mcBest[idx] = rank;
+      if(rank > mcWorst[idx]) mcWorst[idx] = rank;
+      if(rank <= qualifyK) mcQual[idx] += 1;
+    }
+  }
+
+  const liveRows = players.map(n=>({ name:n, pts:Number(baseMap[n]?.pts)||0, nrr:Number(baseMap[n]?.nrr)||0 })).sort((a,b)=>b.pts-a.pts||b.nrr-a.nrr);
+  const cutPts = liveRows.length >= qualifyK ? liveRows[qualifyK-1].pts : 0;
+
   const results = {};
-  players.forEach(target=>{
+  players.forEach((target, idx)=>{
     const aboveMax = players.filter(p=>p!==target && (Number(baseMap[p]?.pts)||0) > maxPts[target]).length;
     const foreverBelow = players.filter(p=>p!==target && maxPts[p] < minPts[target]).length;
-    const N = players.length;
     const lockedAhead = qiV2PermanentlyAheadCount(target, players, baseMap, remCount, maxPts, minPts);
     const eliminated = aboveMax >= qualifyK || lockedAhead >= qualifyK;
     const clinched = !eliminated && foreverBelow >= (N - qualifyK);
 
     const bestPos = Math.min(N, Math.max(aboveMax, lockedAhead) + 1);
-    const canReach = players.filter(p=>{
-      if(p===target) return false;
-      return maxPts[p] >= minPts[target];
-    }).length;
+    const canReach = players.filter(p=>p!==target && maxPts[p] >= minPts[target]).length;
     const worstPos = Math.min(N, Math.max(canReach + 1, lockedAhead + 1));
 
     let status, pct;
     if(eliminated){ status='E'; pct=0; }
     else if(clinched){ status='Q'; pct=100; }
-    else { status='In Contention'; pct=null; }
+    else {
+      status='In Contention';
+      const rawPct = Math.round((mcQual[idx] / TRIALS) * 1000) / 10;
+      pct = Math.max(0.1, Math.min(99.9, rawPct));
+    }
+
+    const curPts = Number(baseMap[target]?.pts)||0;
+    const myRem = remCount[target]||0;
+    let magicWin = null;
+    if(status !== 'Q' && status !== 'E' && myRem > 0){
+      magicWin = curPts < cutPts ? Math.min(myRem, Math.ceil((cutPts - curPts) / Math.max(1, winV || 1))) : 0;
+    }
+    let elimNumber = null;
+    if(status !== 'E' && myRem > 0 && winV > 0){
+      for(let losses=0; losses<=myRem; losses++){
+        if(curPts + (myRem - losses) * winV < cutPts){ elimNumber = losses; break; }
+      }
+    }
 
     results[target] = {
-      status, pct,
+      status, pct, prob: pct,
       bestPos, worstPos,
+      avgPos: Math.round((mcSumPos[idx] / TRIALS) * 10) / 10,
       maxPts: maxPts[target], minPts: minPts[target],
-      rem: remCount[target]||0,
+      rem: myRem,
       possible: !eliminated,
       guaranteed: clinched,
-      outlook: eliminated?'Mathematically eliminated':clinched?'Guaranteed qualification':'Still possible',
+      outlook: eliminated?'Mathematically eliminated':clinched?'Guaranteed qualification':('~'+pct+'% chance (Monte Carlo)'),
       nrrDependent:false,
-      engine:'qiV2-bounds'
+      cutPts, magicWin, elimNumber, lockedAhead,
+      engine:'qiV2-montecarlo'
     };
   });
   return results;
@@ -6335,7 +7060,9 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
   players.forEach(p=>{
     const s = stats[p];
     const total = Math.max(1, s.total||1);
-    let pct = Math.round((s.qualifyCount / total) * 1000) / 10;
+    const wTot = s.wTotal > 0 ? s.wTotal : total;
+    const wQ = s.wTotal > 0 ? s.wQual : s.qualifyCount;
+    let pct = Math.round((wQ / wTot) * 1000) / 10;
     let status, guaranteed, possible;
     if(s.qualifyCount === 0){
       status = 'E'; guaranteed = false; possible = false;
@@ -6433,9 +7160,11 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
       pct = 0;
     }
     const avgPos = Math.round((s.sumPos / total) * 10) / 10;
+    const finalPct = (status==='In Contention') ? Math.max(0.1, Math.min(99.9, pct)) : (status==='Q' ? 100 : 0);
     out[p] = {
       status,
-      pct: (status==='In Contention') ? pct : (status==='Q' ? 100 : 0),
+      pct: finalPct,
+      prob: finalPct,
       bestPos: s.bestPos,
       worstPos: s.worstPos,
       avgPos,
@@ -6635,52 +7364,130 @@ function qiV2NrrMarginHints(fixtures, players, target, winPts, tiePts, bonusPts,
  * Binary-searches M. Caps R to realistic 5-over scoring.
  * Returns plain numbers for clear UI copy.
  */
-function qiV2MarginVsLocked(me, rival, quota){
+function qiV2SampleScoresForOvers(Q){
+  if(Q <= 6)  return [35, 45, 55, 65, 75, 85];
+  if(Q <= 12) return [70, 90, 110, 130, 150];
+  if(Q <= 16) return [100, 120, 140, 160, 180];
+  if(Q <= 25) return [130, 150, 170, 190, 210];
+  return [220, 250, 280, 310, 340];
+}
+function qiV2CalcNrr(rf, ofBalls, ra, obBalls){
+  return (ofBalls > 0 ? (rf / ofBalls) * 6 : 0) - (obBalls > 0 ? (ra / obBalls) * 6 : 0);
+}
+function qiV2SolveSingleScore(me, rival, quota, scoreInput, mode, isDirectH2H){
+  const Q = Math.max(1, Number(quota)||5);
+  const B = Math.round(Q * 6);
+  const S = Math.max(1, Math.round(Number(scoreInput)||Math.round(Q*10)));
+  const rf=Number(me?.rf)||0, of=Number(me?.of)||0, ra=Number(me?.ra)||0, ob=Number(me?.ob)||0;
+  const rrf=Number(rival?.rf)||0, rof=Number(rival?.of)||0, rra=Number(rival?.ra)||0, rob=Number(rival?.ob)||0;
+  const rvBaseNrr = Number(rival?.nrr)||0;
+
+  // Helper: check if `me` beats `rival` on NRR after this match
+  const beatsRivalDefend = (myRuns, oppRuns, oppBalls) => {
+    const myNew = qiV2CalcNrr(rf + myRuns, of + B, ra + oppRuns, ob + oppBalls);
+    const rvNew = isDirectH2H ? qiV2CalcNrr(rrf + oppRuns, rof + oppBalls, rra + myRuns, rob + B) : rvBaseNrr;
+    return myNew > rvNew;
+  };
+  const beatsRivalChase = (oppRuns, myRuns, myBalls) => {
+    const myNew = qiV2CalcNrr(rf + myRuns, of + myBalls, ra + oppRuns, ob + B);
+    const rvNew = isDirectH2H ? qiV2CalcNrr(rrf + oppRuns, rof + B, rra + myRuns, rob + myBalls) : rvBaseNrr;
+    return myNew > rvNew;
+  };
+
+  if(mode === 'shield'){
+    // SHIELD / DAMAGE-CONTROL MODE (You lose the match, but want NRR to stay ahead of rival!)
+    // 1) If you bat 1st & score S, opponent chases S+1: what is the MINIMUM balls they must take?
+    let minOppBalls = null;
+    for(let balls = 1; balls <= B; balls++){
+      if(beatsRivalDefend(S, S + 1, balls)){ minOppBalls = balls; break; }
+    }
+    // 2) If opponent bats 1st & scores S, you bat 2nd (full Q overs or all out = B balls) & lose: what MINIMUM runs must you score?
+    let minRunsScore = null;
+    for(let runs = 0; runs < S; runs++){
+      if(beatsRivalChase(S, runs, B)){ minRunsScore = runs; break; }
+    }
+    return {
+      mode:'shield', score:S, oversQuota:Q, isDirectH2H:!!isDirectH2H,
+      bat1MinBalls: minOppBalls,
+      bat1MinOvers: minOppBalls != null ? (Math.floor(minOppBalls/6)+'.'+(minOppBalls%6)) : null,
+      bat2MinRuns: minRunsScore,
+      bat2MaxLossMargin: minRunsScore != null ? (S - minRunsScore) : null
+    };
+  }
+
+  // HUNTER MODE (You win & overtake rival on NRR)
+  // 1) If you bat 1st & score S: minimum winning margin M (restrict opp to <= S-M in full B balls / All Out)
+  let minMargin = null;
+  let lo = 1, hi = S;
+  while(lo <= hi){
+    const mid = (lo + hi) >> 1;
+    if(beatsRivalDefend(S, S - mid, B)){ minMargin = mid; hi = mid - 1; }
+    else lo = mid + 1;
+  }
+  // 2) If opponent bats 1st & scores S: chase S+1 in AT MOST maxBalls
+  let maxChaseBalls = null;
+  for(let balls = B; balls >= 1; balls--){
+    if(beatsRivalChase(S, S + 1, balls)){ maxChaseBalls = balls; break; }
+  }
+  return {
+    mode:'hunter', score:S, oversQuota:Q, isDirectH2H:!!isDirectH2H,
+    defendMargin: minMargin,
+    defendMaxConcede: minMargin != null ? (S - minMargin) : null,
+    chaseTarget: S + 1,
+    chaseMaxBalls: maxChaseBalls,
+    chaseMaxOvers: maxChaseBalls != null ? (Math.floor(maxChaseBalls/6)+'.'+(maxChaseBalls%6)) : null
+  };
+}
+
+function qiV2MarginVsLocked(me, rival, quota, isDirectH2H){
   if(!me || !rival) return null;
   const myNrr = Number(me.nrr)||0;
   const rvNrr = Number(rival.nrr)||0;
   const Q = Math.max(1, Number(quota)||5);
-  const B = Math.round(Q * 6); // balls in a full innings — of/ob are balls
-  if(myNrr > rvNrr){
-    return { defendRuns:0, chaseBalls:null, chaseOvers:null, gap:rvNrr-myNrr, rivalNrr:rvNrr, myNrr,
-      projectedR:null, alreadyAhead:true, method:'nrr-ahead', oversQuota:Q, defendTable:[], chaseTable:[] };
-  }
+  const B = Math.round(Q * 6);
   const rf=Number(me.rf), of=Number(me.of), ra=Number(me.ra), ob=Number(me.ob);
   const hasBowl = [rf,of,ra,ob].every(Number.isFinite) && of>0.05 && ob>0.05;
-  const maxInn=Math.max(30,Math.round(Q*20)), minInn=Math.max(8,Math.round(Q*5));
-  function nrrOf(rf2,of2,ra2,ob2){ return (of2>0?(rf2/of2)*6:0) - (ob2>0?(ra2/ob2)*6:0); }
-  function nrrDefend(R,C){ return nrrOf(rf+R, of+B, ra+C, ob+B); }
-  function nrrChase(T,balls){ return nrrOf(rf+(T+1), of+balls, ra+T, ob+B); }
-  const scores=[];
-  [8,10,12,14,16,18].map(m=>Math.round(Q*m)).forEach(s=>{ if(s>=minInn&&s<=maxInn) scores.push(s); });
-  if(hasBowl&&of>0){ const fr=Math.round((rf/of)*B); if(fr>=minInn&&fr<=maxInn) scores.push(fr); }
-  const uniq=[...new Set(scores)].sort((a,b)=>a-b);
-  const defendTable=[]; let bestM=null,bestR=null;
-  if(hasBowl){
-    for(const R of uniq){
-      let ok=null,lo=0,hi=R;
-      while(lo<=hi){ const mid=(lo+hi)>>1; if(nrrDefend(R,R-mid)>rvNrr){ ok=mid; hi=mid-1; } else lo=mid+1; }
-      if(ok!=null){ defendTable.push({yourScore:R,margin:ok,maxConcede:R-ok}); if(bestM==null||ok<bestM){bestM=ok;bestR=R;} }
+  const uniq = qiV2SampleScoresForOvers(Q);
+
+  // Build Shield (damage-control loss) table whenever player is currently ahead on NRR
+  const shieldTable = [];
+  if(hasBowl && myNrr >= rvNrr){
+    for(const S of uniq){
+      const sh = qiV2SolveSingleScore(me, rival, Q, S, 'shield', isDirectH2H);
+      shieldTable.push(sh);
     }
+    return { defendRuns:0, chaseBalls:null, chaseOvers:null, gap:rvNrr-myNrr, rivalNrr:rvNrr, myNrr,
+      projectedR:null, alreadyAhead:true, method:'nrr-ahead', oversQuota:Q, isDirectH2H:!!isDirectH2H,
+      defendTable:[], chaseTable:[], shieldTable };
   }
-  const chaseTable=[];
+
+  const defendTable=[]; const chaseTable=[];
+  let bestM=null, bestR=null;
   if(hasBowl){
-    for(const T of uniq){
-      let maxBalls=null;
-      for(let balls=B; balls>=6; balls--){ if(nrrChase(T,balls)>rvNrr){ maxBalls=balls; break; } }
-      if(maxBalls!=null) chaseTable.push({ oppScore:T, chaseTarget:T+1, maxBalls, maxOvers:(Math.floor(maxBalls/6)+'.'+(maxBalls%6)) });
+    for(const S of uniq){
+      const res = qiV2SolveSingleScore(me, rival, Q, S, 'hunter', isDirectH2H);
+      if(res.defendMargin != null){
+        defendTable.push({ yourScore:S, margin:res.defendMargin, maxConcede:res.defendMaxConcede });
+        if(bestM==null || res.defendMargin<bestM){ bestM=res.defendMargin; bestR=S; }
+      }
+      if(res.chaseMaxBalls != null){
+        chaseTable.push({ oppScore:S, chaseTarget:S+1, maxBalls:res.chaseMaxBalls, maxOvers:res.chaseMaxOvers });
+      }
     }
   }
   if(!hasBowl || (!defendTable.length && !chaseTable.length)){
-    const O=hasBowl?Math.max(of,ob):B*4;
-    let rough=Math.ceil(Math.abs(rvNrr-myNrr)*(O+B)/6); rough=Math.max(1,Math.min(maxInn,rough));
+    const O = hasBowl ? Math.max(of, ob) : B * 4;
+    const div = isDirectH2H ? 12 : 6;
+    let rough = Math.ceil(Math.abs(rvNrr - myNrr) * (O + B) / div);
+    rough = Math.max(1, Math.min(Math.round(Q * 20), rough));
     return { defendRuns:rough, chaseBalls:null, chaseOvers:null, gap:rvNrr-myNrr, rivalNrr:rvNrr, myNrr,
-      projectedR:Math.round(Q*10), alreadyAhead:false, method:'estimate', oversQuota:Q, defendTable:[], chaseTable:[], note:'estimate' };
+      projectedR:uniq[2]||Math.round(Q*10), alreadyAhead:false, method:'estimate', oversQuota:Q, isDirectH2H:!!isDirectH2H,
+      defendTable:[], chaseTable:[], shieldTable:[], note:'estimate' };
   }
-  const top=chaseTable[0]||null;
+  const top = chaseTable[0] || null;
   return { defendRuns:bestM!=null?bestM:0, chaseBalls:top?top.maxBalls:null, chaseOvers:top?top.maxOvers:null,
-    gap:rvNrr-myNrr, rivalNrr:rvNrr, myNrr, projectedR:bestR, alreadyAhead:false, method:'rf-of', oversQuota:Q,
-    defendTable:defendTable.slice(0,8), chaseTable:chaseTable.slice(0,8) };
+    gap:rvNrr-myNrr, rivalNrr:rvNrr, myNrr, projectedR:bestR, alreadyAhead:false, method:'rf-of', oversQuota:Q, isDirectH2H:!!isDirectH2H,
+    defendTable:defendTable.slice(0,6), chaseTable:chaseTable.slice(0,6), shieldTable:[] };
 }
 
 function qiV2FormatMarginGuide(rivalName, mg, mode, matchOpponent){
@@ -6693,6 +7500,13 @@ function qiV2FormatMarginGuide(rivalName, mg, mode, matchOpponent){
   return bits.join(' — ');
 }
 
+function qiV2ToggleGuideTab(el, showDef){
+  const g = el && el.closest ? el.closest('.nrr-guide') : null;
+  if(!g) return;
+  const d = g.querySelector('.nrr-def'), c = g.querySelector('.nrr-chase');
+  if(d) d.style.display = showDef ? 'block' : 'none';
+  if(c) c.style.display = showDef ? 'none' : 'block';
+}
 function qiV2MarginGuideHtml(rivalName, mg, mode, matchOpponent){
   if(!mg) return '';
   const rn=(Number(mg.rivalNrr)>=0?'+':'')+(Number(mg.rivalNrr)||0).toFixed(3);
@@ -6701,7 +7515,18 @@ function qiV2MarginGuideHtml(rivalName, mg, mode, matchOpponent){
   const vs=matchOpponent?String(matchOpponent):'your opponent';
   const uid='nrrg_'+Math.random().toString(36).slice(2,9);
   if(mg.alreadyAhead){
-    return '<div class="nrr-guide">Your NRR ('+mn+') is already above '+esc(rivalName)+' ('+rn+'). Equal points → you rank higher.</div>';
+    const sTable = Array.isArray(mg.shieldTable) ? mg.shieldTable : [];
+    const shBat2 = sTable.filter(r=>r.bat2MinRuns!=null).map(r=>
+      '<div class="nrr-line">If <b>'+esc(vs)+'</b> scores <b>'+r.score+'</b>: scoring <b>'+r.bat2MinRuns+'+</b> in '+Q+'.0 ov (lose by &le;'+r.bat2MaxLossMargin+' runs) keeps NRR ahead.</div>'
+    ).join('');
+    const shBat1 = sTable.filter(r=>r.bat1MinBalls!=null).map(r=>
+      '<div class="nrr-line">If you score <b>'+r.score+'</b>: drag their chase to at least <b>'+r.bat1MinOvers+' ov ('+r.bat1MinBalls+' balls)</b> to protect NRR.</div>'
+    ).join('');
+    return '<div class="nrr-guide" id="'+uid+'"><div class="nrr-head">🛡️ <b>NRR Shield vs '+esc(rivalName)+'</b> (Your NRR '+mn+' &gt; '+rn+(mg.isDirectH2H?' • Direct H2H':'')+'). Even in a loss, avoid a heavy defeat:</div>'
+      +(shBat2||shBat1 ? `<div class="nrr-tabs"><label class="nrr-tab"><input type="radio" name="${uid}" checked onchange="qiV2ToggleGuideTab(this,true)"> Bat 2nd (Min Runs)</label><label class="nrr-tab"><input type="radio" name="${uid}" onchange="qiV2ToggleGuideTab(this,false)"> Bat 1st (Min Balls)</label></div>`
+      +'<div class="nrr-def"><div class="nrr-sec">SAFE LOSS SCORE ('+Q+' OVERS)</div>'+(shBat2||'<div class="muted nrr-line">Safe across standard scores.</div>')+'</div>'
+      +'<div class="nrr-chase" style="display:none"><div class="nrr-sec">DRAG OPPONENT CHASE TO</div>'+(shBat1||'<div class="muted nrr-line">Safe across standard chases.</div>')+'</div>' : '')
+      +'</div>';
   }
   const dTable=Array.isArray(mg.defendTable)?mg.defendTable:[];
   const cTable=Array.isArray(mg.chaseTable)?mg.chaseTable:[];
@@ -6784,10 +7609,16 @@ function qiV2BuildScenarios(fixtures, players, target, qualifyK, winPts, tiePts,
     const ifLose = qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, loseTag);
     const w = ifWin[target]||{}, l = ifLose[target]||{};
     const winPtsAfter = myPts + winV;
-    const lockedOnLine = threats.filter(th=>th.locked && th.kind==='can-meet' && Number(th.rPts)===winPtsAfter);
+    let nrrTargets = threats.filter(th=>th.locked && th.kind==='can-meet' && Number(th.rPts)===winPtsAfter);
+    // Also include close unlocked cut-line rival (e.g., Rival A in A/B/C scenario) as live guide
+    if(!nrrTargets.length){
+      const liveCutRivals = threats.filter(th=>th.kind==='can-meet' && (Number(th.rPts)===winPtsAfter || Number(th.rPts)===myPts)).slice(0,2);
+      nrrTargets = liveCutRivals;
+    }
     let marginLine = '';
-    lockedOnLine.forEach(th=>{
-      const mg = qiV2MarginVsLocked(me, baseMap[th.name], quota);
+    nrrTargets.forEach(th=>{
+      const isDirect = String(th.name) === String(opp);
+      const mg = qiV2MarginVsLocked(me, baseMap[th.name], quota, isDirect);
       const rn = (Number(baseMap[th.name]?.nrr)>=0?'+':'')+(Number(baseMap[th.name]?.nrr)||0).toFixed(3);
       const mn = (Number(me.nrr)>=0?'+':'')+(Number(me.nrr)||0).toFixed(3);
       if(mg && mg.alreadyAhead){
@@ -7039,7 +7870,7 @@ function renderQiPlayerDetail(){
     </div>`;
 }
 
-function computeStandingsWithPermutations(fixtures, playerList, winPts, tiePts, bonusPts, qualifyK, nrPts){
+function computeStandingsWithPermutations(fixtures, playerList, winPts, tiePts, bonusPts, qualifyK, nrPts, baselineOverride){
   const __tid=(typeof selectedTournamentId!=="undefined"&&selectedTournamentId)?selectedTournamentId:(typeof db!=="undefined"?db.activeId:null);
   const __t=(typeof db!=="undefined"&&db.tournaments)?db.tournaments[__tid]:null;
   const __fp=tournamentFingerprint(__t);
@@ -7054,7 +7885,12 @@ function computeStandingsWithPermutations(fixtures, playerList, winPts, tiePts, 
   if(qualificationCache.has(__cacheKey)) return qualificationCache.get(__cacheKey);
 
   const players=playerList||[];
-  const rows=computeStandingsForList(fixtures,players,winPts,tiePts,bonusPts,nrPts);
+  let __baseline = baselineOverride || null;
+  if(!__baseline && __t && typeof getCarryBaselineMap==='function'){
+    const __match=(__t.stages||[]).find(s=>s && s.fixtures===fixtures);
+    if(__match) __baseline=getCarryBaselineMap(__t, __match, players);
+  }
+  const rows=computeStandingsForList(fixtures,players,winPts,tiePts,bonusPts,nrPts,__baseline);
   const kRaw=Number(qualifyK);
   const k=Number.isFinite(kRaw) ? Math.max(0,Math.min(kRaw,players.length||0)) : Math.min(1,players.length||1);
   if(k<=0){
@@ -7081,11 +7917,6 @@ function computeStandingsWithPermutations(fixtures, playerList, winPts, tiePts, 
   }
 
   if(typeof QI_V2!=='undefined' && QI_V2.enabled && typeof qiV2AnalyseAll==='function'){
-    let __baseline=null;
-    if(__t && typeof getCarryBaselineMap==='function'){
-      const __match=(__t.stages||[]).find(s=>s && s.fixtures===fixtures);
-      if(__match) __baseline=getCarryBaselineMap(__t, __match, players);
-    }
     const v2 = qiV2AnalyseAll(fixtures, players, k, resolvePtsConfig(winPts,3), resolvePtsConfig(tiePts,1), bonusPts, resolvePtsConfig(nrPts,1), null, __baseline);
     rows.forEach(row=>{
       const a = v2[row.name] || {};
@@ -7514,22 +8345,8 @@ function renderStandingsTables(t, stage){
     const baseline = (fixtures === (stage.fixtures || []) || fixtures === stage.fixtures)
       ? getCarryBaselineMap(t, stage, players) : null;
     const rows = Number(k)>0
-      ? computeStandingsWithPermutations(fixtures || [], players || [], resolvePtsConfig(t.winPts,3), resolvePtsConfig(t.tiePts,1), effectiveBonusPts(t), k, resolvePtsConfig(t.nrPts,1))
+      ? computeStandingsWithPermutations(fixtures || [], players || [], resolvePtsConfig(t.winPts,3), resolvePtsConfig(t.tiePts,1), effectiveBonusPts(t), k, resolvePtsConfig(t.nrPts,1), baseline)
       : computeStandingsForList(fixtures || [], players || [], resolvePtsConfig(t.winPts,3), resolvePtsConfig(t.tiePts,1), effectiveBonusPts(t), resolvePtsConfig(t.nrPts,1), baseline);
-    if(Number(k)>0 && baseline){
-      rows.forEach(r => {
-        const b = baseline[r.name];
-        if(!b) return;
-        r.pts = (Number(r.pts)||0) + (Number(b.pts)||0);
-        r.bp = (Number(r.bp)||0) + (Number(b.bp)||0);
-        r.rf = (Number(r.rf)||0) + (Number(b.rf)||0);
-        r.of = (Number(r.of)||0) + (Number(b.of)||0);
-        r.ra = (Number(r.ra)||0) + (Number(b.ra)||0);
-        r.ob = (Number(r.ob)||0) + (Number(b.ob)||0);
-        r.nrr = (r.of ? (r.rf / r.of) * 6 : 0) - (r.ob ? (r.ra / r.ob) * 6 : 0);
-      });
-      rows.sort((a,b) => b.pts - a.pts || b.nrr - a.nrr || b.w - a.w || a.name.localeCompare(b.name));
-    }
     return sortRows(rows);
   };
 
@@ -7637,20 +8454,20 @@ function renderStandingsTables(t, stage){
   const showCombinedTable = !showCards;
 
   container.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0 6px;flex-wrap:wrap;gap:8px">
-      <span class="muted" style="font-size:12px">${isGrouped?'Each group is its own table · QI is per group only.':'Tap column headers to sort:'}</span>
-      <div class="standings-export-actions">
-        <button class="btn btn-sm btn-primary" type="button" onclick="shareOrDownloadStandingsTable()">📤 Share Table + Link</button>
-        <button class="btn btn-sm btn-secondary" type="button" onclick="downloadStandingsImageOnly()">⬇️ Download PNG</button>
-        <button class="btn btn-sm btn-secondary" type="button" onclick="copyTournamentShareLink()">🔗 Copy Link</button>
+    <div class="standings-toolbar-compact" style="display:flex;justify-content:space-between;align-items:center;margin:6px 0 6px;flex-wrap:wrap;gap:5px">
+      <span class="muted" style="font-size:10.5px;font-weight:600">${isGrouped?'Each group is its own table · QI is per group only.':'Tap headers to sort:'}</span>
+      <div class="standings-export-actions" style="gap:4px;align-items:center">
+        <button class="btn btn-sm btn-primary" type="button" onclick="shareOrDownloadStandingsTable()">📤 Share</button>
+        <button class="btn btn-sm btn-secondary" type="button" onclick="downloadStandingsImageOnly()">⬇️ PNG</button>
+        <button class="btn btn-sm btn-secondary" type="button" onclick="copyTournamentShareLink()">🔗 Link</button>
         ${(isAdmin || developerMode) ? '<button class="btn btn-sm btn-secondary" type="button" onclick="downloadStandingsCSV()">📊 CSV</button>' : ''}
-        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:11px;font-weight:700;color:var(--muted)">SORT:</span>
-        <select onchange="toggleStandingsSort(this.value)" style="width:auto;padding:4px 8px;font-size:12px;font-weight:700">
-          <option value="default" ${standingsSort.key==='default'?'selected':''}>Points & NRR (Ranked)</option>
-          <option value="name" ${standingsSort.key==='name'?'selected':''}>Alphabetical (A - Z)</option>
-          <option value="p" ${standingsSort.key==='p'?'selected':''}>Matches Played</option>
-          <option value="w" ${standingsSort.key==='w'?'selected':''}>Wins</option>
-          <option value="nrr" ${standingsSort.key==='nrr'?'selected':''}>Net Run Rate (NRR)</option>
+        <div class="sort-pill-wrap" style="display:inline-flex;align-items:center;gap:4px"><span style="font-size:10px;font-weight:800;color:var(--muted)">SORT:</span>
+        <select class="sort-active-select" onchange="toggleStandingsSort(this.value)" style="width:auto;padding:3px 7px;font-size:10.5px;font-weight:800">
+          <option value="default" ${standingsSort.key==='default'?'selected':''}>Points & NRR</option>
+          <option value="name" ${standingsSort.key==='name'?'selected':''}>Name (A–Z)</option>
+          <option value="p" ${standingsSort.key==='p'?'selected':''}>Matches (P)</option>
+          <option value="w" ${standingsSort.key==='w'?'selected':''}>Wins (W)</option>
+          <option value="nrr" ${standingsSort.key==='nrr'?'selected':''}>NRR</option>
         </select>
         </div>
       </div>
@@ -7950,7 +8767,7 @@ async function shareOrDownloadStandingsTable(){
 }
 
 function isSuperOverPending(f){
-  return !!(f && f.completed && Number.isFinite(Number(f.r1)) && Number.isFinite(Number(f.r2)) && Number(f.r1)===Number(f.r2) && !f.winner);
+  return !!(f && f.completed && Number.isFinite(Number(f.r1)) && Number.isFinite(Number(f.r2)) && Number(f.r1)===Number(f.r2) && !f.winner && f.result === 'Tied • Super Over pending');
 }
 
 function loadFixtureForSuperOver(id, stageNum){
@@ -8191,8 +9008,17 @@ function getMatchResultSummary(m, maxBalls, maxWkts){
     if(m.teamResultTie || !m.winner) return `🤝 Team fixture tied <b>${esc(String(m.result||(a+'-'+b)))}</b> (leg wins)`;
     return `🏆 <b style="color:var(--accent)">${esc(m.winner)}</b> won the team fixture <b>${esc(String(m.result||''))}</b> (leg wins)`;
   }
+  const isMainTied = Number.isFinite(Number(m.r1)) && Number.isFinite(Number(m.r2)) && Number(m.r1) === Number(m.r2);
+  if(isMainTied && m.winner && (m.result === 'Super Over' || (Array.isArray(m.superOvers) && m.superOvers.length))){
+    return `⚡ <b style="color:var(--accent)">${esc(m.winner)}</b> won via <b>Super Over</b>`;
+  }
+  if(isMainTied && !m.winner){
+    if(m.result === 'Tied • Super Over pending') return '⚡ <b style="color:var(--purple)">Match Tied</b> • Super Over Pending';
+    return '🤝 <b style="color:var(--gold)">Match Tied</b> (Points Shared)';
+  }
   if(m.winner === m.p1) return `🏆 <b style="color:var(--accent)">${esc(m.p1)}</b> won by <b>${m.r1 - m.r2} runs</b>`;
   if(m.winner === m.p2) return `🏆 <b style="color:var(--accent)">${esc(m.p2)}</b> won by <b>${Math.max(1, maxWkts - (m.w2||0))} wkts</b>`;
+  if(Number(m.r1) === Number(m.r2)) return '🤝 <b style="color:var(--gold)">Match Tied</b> (Points Shared)';
   return m.r1 > m.r2 ? `${esc(m.p1)} won` : `${esc(m.p2)} won`;
 }
 
@@ -8702,29 +9528,45 @@ function renderAwardsAndLeaderboards(t){
   }).join('');
 }
 
-function maybeShowSuperOverForTie(){
+function maybeShowSuperOverForTie(forceCheck){
   const t=getActiveTournament();
   if(!t || t.matchFormat==='test_cricket') return;
   const a=document.getElementById('scR1')?.value, b=document.getElementById('scR2')?.value;
-  const box=document.getElementById('superOverBox'), toggle=document.getElementById('superOverToggle'), hint=document.getElementById('superOverActionHint');
+  const box=document.getElementById('superOverBox'), toggle=document.getElementById('superOverToggle');
   const tied=a!=='' && b!=='' && Number(a)===Number(b);
   if(tied){
     if(box) box.classList.remove('hidden');
-    if(toggle) toggle.checked=true;
-    if(hint){ hint.style.display='block'; hint.innerHTML='<b>⚡ Main match is tied.</b> Super Over controls are ready now. Enter the decider scores below and save.'; }
+    if(typeof forceCheck === 'boolean' && toggle) toggle.checked = forceCheck;
     toggleSuperOverInputs();
-  } else if(box && !(toggle?.checked && isSuperOverPending(findFixtureByIdAnyStage(t,parseInt(document.getElementById('scoreFixtureSelect')?.value,10))))){
-    box.classList.add('hidden');
+  } else {
+    if(toggle) toggle.checked = false;
+    if(box) box.classList.add('hidden');
+    const wrap=document.getElementById('so1Wrap'); if(wrap) wrap.classList.add('hidden');
+    const extra=document.getElementById('soExtraWrap'); if(extra) extra.innerHTML='';
   }
 }
 
 function toggleSuperOverInputs(){
-  const toggle=document.getElementById('superOverToggle'), wrap=document.getElementById('so1Wrap'), box=document.getElementById('superOverBox');
-  if(box) box.classList.toggle('hidden', !toggle?.checked);
-  if(wrap) wrap.classList.toggle('hidden', !toggle?.checked);
-  const hint=document.getElementById('superOverActionHint'); if(hint && toggle?.checked) hint.style.display='block'; else if(hint) hint.style.display='none';
-  if(toggle?.checked) checkDoubleSuperOver();
-  try{ renderTeamFormStrip(t); }catch(e){}
+  const toggle=document.getElementById('superOverToggle'), wrap=document.getElementById('so1Wrap'), extra=document.getElementById('soExtraWrap'), box=document.getElementById('superOverBox');
+  const a=document.getElementById('scR1')?.value, b=document.getElementById('scR2')?.value;
+  const tied=a!=='' && b!=='' && Number(a)===Number(b);
+  const checked=!!toggle?.checked;
+  if(box) box.classList.toggle('hidden', !(tied || checked));
+  if(wrap) wrap.classList.toggle('hidden', !checked);
+  if(extra) extra.style.display = checked ? '' : 'none';
+  const hint=document.getElementById('superOverActionHint');
+  if(hint){
+    if(checked){
+      hint.style.display='block';
+      hint.innerHTML='<b>⚡ Super Over enabled.</b> Enter both Super Over scores below and save to decide the winner.';
+    } else if(tied){
+      hint.style.display='block';
+      hint.innerHTML='<b>🤝 Scores are tied!</b> Leave <b>Play Super Over?</b> unticked to save this match as an official <b>Tie</b>, or tick it to enter Super Over runs.';
+    } else {
+      hint.style.display='none';
+    }
+  }
+  if(checked) checkDoubleSuperOver();
 }
 function readSuperOverScoreInput(el){
   if(!el) return null;
@@ -8844,7 +9686,15 @@ function loadFixtureForScore(id, stageNum, opts){
     t.currentStage = Number(st.stageNum);
   }
 
+  const statusFiltEl = document.getElementById('scoreFixtureStatusFilter');
   const fixSel = document.getElementById('scoreFixtureSelect');
+  if(statusFiltEl && found.completed && statusFiltEl.value === 'pending'){
+    statusFiltEl.value = 'both';
+    if(fixSel && st) fixSel.innerHTML = buildScoreFixtureOptionsHtml(st, document.getElementById('scoreFixtureFilter')?.value || '', 'both');
+  } else if(statusFiltEl && !found.completed && statusFiltEl.value === 'completed'){
+    statusFiltEl.value = 'both';
+    if(fixSel && st) fixSel.innerHTML = buildScoreFixtureOptionsHtml(st, document.getElementById('scoreFixtureFilter')?.value || '', 'both');
+  }
   if(fixSel) fixSel.value = found.id;
   const sc1 = document.getElementById('scP1'), sc2 = document.getElementById('scP2');
   if(sc1) sc1.value = found.p1;
@@ -8865,12 +9715,18 @@ function loadFixtureForScore(id, stageNum, opts){
   renderSuperOverHistory(found);
   const soBox=document.getElementById('superOverBox');
   const soToggle=document.getElementById('superOverToggle');
-  if(isSuperOverPending(found)){
+  const hasSavedSO = Array.isArray(found.superOvers) && found.superOvers.length > 0;
+  const isTiedLoaded = found.completed && t.matchFormat!=='test_cricket' && Number.isFinite(Number(found.r1)) && Number.isFinite(Number(found.r2)) && Number(found.r1)===Number(found.r2);
+  if(hasSavedSO || isSuperOverPending(found)){
     if(soBox) soBox.classList.remove('hidden');
     if(soToggle) soToggle.checked=true;
-    const soHint=document.getElementById('superOverActionHint'); if(soHint){soHint.style.display='block';soHint.innerHTML='<b>⚡ Super Over required.</b> Enter the decider score below and save. The tied main-match score is already loaded.';}
     toggleSuperOverInputs();
-  } else if(soBox && !(Array.isArray(found.superOvers)&&found.superOvers.length)){
+  } else if(isTiedLoaded){
+    if(soBox) soBox.classList.remove('hidden');
+    if(soToggle) soToggle.checked=false;
+    toggleSuperOverInputs();
+  } else if(soBox){
+    if(soToggle) soToggle.checked=false;
     soBox.classList.add('hidden');
   }
 
@@ -8983,6 +9839,7 @@ function parseSmartScore(num){
     checkAutoAllOut(num);
     const allOutChecked = document.getElementById('scA' + num)?.checked;
     if(badge){ badge.textContent = `✓ ${runs}/${wkts}${allOutChecked ? ' (All Out)' : ''}`; badge.className = 'pill pill-done'; }
+    maybeShowSuperOverForTie();
   }
 }
 
@@ -9272,8 +10129,8 @@ function submitMatchScore(){
     const useSO=!!document.getElementById('superOverToggle')?.checked;
     const supers=getSuperOverDomValues();
     if(useSO && !supers.length){ alert('Enter both Super Over scores before saving.'); return; }
-    if(!useSO || !supers.length){
-      target.superOvers=[]; delete target.superOver1; delete target.superOver2; target.winner=null; target.result='Tied • Super Over pending'; target.completed=true;
+    if(!useSO){
+      target.superOvers=[]; delete target.superOver1; delete target.superOver2; target.winner=null; target.result='Match Tied'; target.completed=true;
     }else{
       const firstTie=supers.findIndex(x=>x[0]!==x[1]);
       if(firstTie<0){
@@ -10142,19 +10999,52 @@ function getSlotPlayers(){
 }
 function renderPlayerSlots(players){
   const editor=document.getElementById('playerSlotEditor'); if(!editor)return;
-  const t=getActiveTournament(); const current=Array.isArray(players)?players:[];
+  const t=setupMode==='new' ? null : getActiveTournament();
+  const current=Array.isArray(players)?players:[];
   const completedNames=new Set();
   if(t) (t.stages||[]).forEach(st=>(st.fixtures||[]).forEach(f=>{if(f?.completed){if(f.p1)completedNames.add(String(f.p1));if(f.p2)completedNames.add(String(f.p2));}}));
-  editor.innerHTML=current.map((name,i)=>{
+  const links = (t && t.playerLinks) ? t.playerLinks : {};
+  const dirEntries = Object.values(db.userDirectory || {});
+  const datalistHtml = `<datalist id="apexUserDirList">${dirEntries.map(u=>`<option value="${esc(u.userId)}">${esc(u.displayName||u.userId)}</option>`).join('')}</datalist>`;
+  const pendingClaims = (t && Array.isArray(t.pendingClaims) && t.pendingClaims.length) ? `
+    <div style="grid-column:1/-1;margin-bottom:8px;padding:10px;border-radius:12px;border:1.5px solid rgba(56,189,248,0.45);background:rgba(56,189,248,0.08)">
+      <div style="font-size:12px;font-weight:900;color:var(--accent);margin-bottom:6px">🙋 Pending Player Stat Claims (${t.pendingClaims.length})</div>
+      ${t.pendingClaims.map((c, idx)=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 0;border-top:1px solid rgba(148,163,184,0.18);font-size:11.5px">
+          <span><b>${esc(c.displayName)}</b> (<code>@${esc(c.userId)}</code>) claims slot <b>${esc(c.slotName)}</b></span>
+          <div style="display:flex;gap:5px">
+            <button type="button" class="btn btn-success btn-sm" onclick="approvePlayerClaim(${idx})">✅ Approve</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="rejectPlayerClaim(${idx})">✕ Reject</button>
+          </div>
+        </div>`).join('')}
+    </div>` : '';
+  editor.innerHTML = datalistHtml + pendingClaims + current.map((name,i)=>{
     const locked=completedNames.has(String(name));
+    const linkedUid = links[name] || '';
     return `<div class="player-slot ${locked?'player-slot-locked':''}">
       <div class="player-slot-num">${i+1}</div>
-      <input data-player-slot="${i}" value="${esc(name)}" maxlength="28" placeholder="Participant ${i+1} (max 12 chars/word)" ${locked?'title="This participant has completed results. Rename is allowed; removal is protected."':''} oninput="enforcePlayerSlotNameRule(this);syncPlayerSlotNames()">
+      <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+        <input data-player-slot="${i}" value="${esc(name)}" maxlength="28" placeholder="Participant ${i+1} (max 12 chars/word)" ${locked?'title="This participant has completed results. Rename is allowed; removal is protected."':''} oninput="enforcePlayerSlotNameRule(this);syncPlayerSlotNames()">
+        <input data-player-userid="${i}" list="apexUserDirList" value="${esc(linkedUid)}" maxlength="12" placeholder="Link @UserID (optional, for Career Stats)" oninput="this.value=normalizeUserId(this.value)" style="font-size:11px;padding:6px 8px">
+      </div>
       <button type="button" class="btn btn-secondary btn-sm player-slot-remove" onclick="removePlayerSlot(${i})" ${locked?'disabled':''}>✕ Remove</button>
-      ${locked?'<div class="player-slot-status">🔒 Has completed results. Rename only, or use future Withdraw Player workflow.</div>':''}
+      ${locked?'<div class="player-slot-status">🔒 Has completed results. Rename or link @UserID allowed; removal protected.</div>':''}
     </div>`;
   }).join('');
   syncPlayerSlotNames();
+}
+function getSlotPlayerLinks(){
+  const editor=document.getElementById('playerSlotEditor');
+  const map={};
+  if(!editor) return map;
+  editor.querySelectorAll('.player-slot').forEach(row=>{
+    const nameEl=row.querySelector('input[data-player-slot]');
+    const uidEl=row.querySelector('input[data-player-userid]');
+    const nm=String(nameEl?.value||'').trim();
+    const uid=normalizeUserId(uidEl?.value||'');
+    if(nm && uid) map[nm]=uid;
+  });
+  return map;
 }
 function enforcePlayerSlotNameRule(inp){
   if(!inp) return;
@@ -10284,6 +11174,12 @@ function updateActiveTournamentDetails(){
   }
 
   const applyName=name=>Object.prototype.hasOwnProperty.call(renameMap,name)?renameMap[name]:name;
+  const newPlayerLinks = getSlotPlayerLinks();
+  if(Object.keys(newPlayerLinks).length || t.playerLinks){
+    t.playerLinks = { ...(t.playerLinks||{}), ...newPlayerLinks };
+    // Remove links for names that were explicitly cleared in the editor
+    newPlayers.forEach(nm=>{ if(!newPlayerLinks[nm] && t.playerLinks[nm]) delete t.playerLinks[nm]; });
+  }
   if(Object.keys(renameMap).length){
     (t.stages||[]).forEach(stage=>{if(Array.isArray(stage.participants))stage.participants=stage.participants.map(applyName);if(Array.isArray(stage.fixtures))stage.fixtures.forEach(f=>{if(f){f.p1=applyName(f.p1);f.p2=applyName(f.p2);if(f.winner)f.winner=applyName(f.winner);}});if(stage.groups)Object.keys(stage.groups).forEach(k=>{if(Array.isArray(stage.groups[k]))stage.groups[k]=stage.groups[k].map(applyName);});});
     if(t.groups)Object.keys(t.groups).forEach(k=>{if(Array.isArray(t.groups[k]))t.groups[k]=t.groups[k].map(applyName);});
@@ -11282,7 +12178,26 @@ setTimeout(()=>{
     switchNav('view_standings','nav_standings',{forceTop:true});
   }
 },120);
-setInterval(()=>{ if(!isAdmin) fetchCloudData(); }, 5000);
+setInterval(()=>{
+  if(cloudSyncBusy) return;
+  const activeTag = document.activeElement?.tagName;
+  if(isAdmin && (uiState.viewId==='view_score' || uiState.viewId==='view_setup') && /^(INPUT|TEXTAREA|SELECT)$/i.test(activeTag||'')) return;
+  if(isAdmin && (getDirtyTournamentIds().length || getDeletedDirtyIds().length)){
+    if(!window.__cloudAuthWarned) queueCloudPush();
+    return;
+  }
+  fetchCloudData();
+}, 5000);
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState === 'visible'){
+    if(isAdmin && (getDirtyTournamentIds().length || getDeletedDirtyIds().length)) queueCloudPush();
+    else fetchCloudData();
+  }
+});
+window.addEventListener('online', ()=>{
+  if(isAdmin && (getDirtyTournamentIds().length || getDeletedDirtyIds().length)) queueCloudPush();
+  fetchCloudData();
+});
 </script>
  
 
@@ -11416,6 +12331,14 @@ setInterval(()=>{ if(!isAdmin) fetchCloudData(); }, 5000);
     const localAcc = Object.values(db.accounts).find(a => String(a.contact || '').toLowerCase() === contact);
 
     if (localAcc && localAcc.passHash === hsHashPass(pass)) {
+      if (fbConfigLooksReady() && contact.includes('@') && location.protocol !== 'content:' && location.protocol !== 'file:') {
+        try {
+          if (!__fbReady) initFirebaseAuth();
+          if (__fbAuth && !__fbAuth.currentUser) {
+            await fbLoginEmail(contact, pass).catch(()=>{});
+          }
+        } catch (e) {}
+      }
       hsSaveSession(localAcc.id);
       showToast('Welcome back, ' + (localAcc.name || contact.split('@')[0]) + '!', 'success');
       hsNav('menu');
@@ -11480,12 +12403,15 @@ setInterval(()=>{ if(!isAdmin) fetchCloudData(); }, 5000);
   async function unifiedRegisterHome() {
     ensureRecoveryStores();
     const name = (document.getElementById('hsRegName')?.value || '').trim();
-    const userId = (document.getElementById('hsRegUserId')?.value || '').replace(/\s+/g,'').slice(0, 12);
+    const userId = normalizeUserId(document.getElementById('hsRegUserId')?.value || '');
     const contact = (document.getElementById('hsRegContact')?.value || '').trim().toLowerCase();
     const pass = (document.getElementById('hsRegPass')?.value || '');
     if (!contact || !pass) { showToast('Enter email and password.', 'error'); return; }
     if (pass.length < 6) { showToast('Password must be at least 6 characters.', 'error'); return; }
-    await createOrRegisterAccount(name || contact.split('@')[0], contact, pass, userId);
+    if (!userId || userId.length < 3) { showToast('Choose a unique User ID (3–12 chars).', 'error'); return; }
+    const avail = await checkUserIdAvailable(userId, null);
+    if (!avail.ok) { showToast('❌ ' + avail.reason, 'error'); return; }
+    await createOrRegisterAccount(name || contact.split('@')[0], contact, pass, avail.clean);
   }
 
   async function createOrRegisterAccount(dispName, contact, pass, shortUserId) {
@@ -11529,13 +12455,15 @@ setInterval(()=>{ if(!isAdmin) fetchCloudData(); }, 5000);
     db.accounts[id] = {
       id,
       contact,
-      name: dispName || contact.split('@')[0] || 'Organiser',
-      userId: (shortUserId || (dispName || contact.split('@')[0] || 'Player').replace(/\s+/g,'')).slice(0, 12),
+      name: dispName || contact.split('@')[0] || 'Player',
+      userId: normalizeUserId(shortUserId || (dispName || contact.split('@')[0] || 'Player')),
+      userIdLocked: !!shortUserId,
       passHash: hsHashPass(pass),
       uid: uid || null,
       createdAt: (existing && existing.createdAt) || Date.now()
     };
     hsSaveSession(id);
+    if(db.accounts[id].userId){ syncUserDirectoryEntry(db.accounts[id]).catch(()=>{}); }
     try { window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db)); } catch(e) {}
     showToast('Account ready! Welcome, ' + db.accounts[id].name + '!', 'success');
     hsNav('menu');
@@ -11801,7 +12729,7 @@ function createTestTournamentFromDev() {
       ` : `
         <div class="apex-auth-grid">
           <input id="hsRegName" placeholder="Full Name">
-          <input id="hsRegUserId" maxlength="12" placeholder="Tournament ID / Short Name (max 12 chars)" oninput="this.value=this.value.replace(/\s+/g,'').slice(0,12)">
+          <input id="hsRegUserId" maxlength="12" placeholder="User ID (3–12 chars, unique & permanent)" oninput="this.value=normalizeUserId(this.value)">
           <input id="hsRegContact" type="email" placeholder="Email address" autocomplete="username">
           <div style="position:relative;width:100%;">
             <input id="hsRegPass" type="password" placeholder="Password (min 6 chars)" autocomplete="new-password" onkeydown="if(event.key==='Enter')unifiedRegisterHome().then(()=>{ if(hsGetSession()) closeAuthPopup(); })" style="width:100%;padding-right:42px;">
@@ -11814,17 +12742,28 @@ function createTestTournamentFromDev() {
         <span>G</span> Continue with Google
       </button>`;
   }
-  function saveProfileEdits(){
+  async function saveProfileEdits(){
     const acc = hsGetSession(); if(!acc) return;
     const fn = (document.getElementById('profFullName')?.value || '').trim();
-    const uid = (document.getElementById('profUserId')?.value || '').replace(/\s+/g,'').slice(0, 12);
-    if(fn) acc.name = fn;
-    if(uid) acc.userId = uid;
+    if(!acc.userIdLocked){
+      const uid = normalizeUserId(document.getElementById('profUserId')?.value || '');
+      if(uid){
+        const avail = await checkUserIdAvailable(uid, acc.id);
+        if(!avail.ok){ showToast('❌ ' + avail.reason, 'error'); return; }
+        acc.userId = avail.clean;
+        acc.userIdLocked = true;
+      }
+    }
+    if(fn){
+      acc.name = fn;
+      if(acc.userId) propagateDisplayNameToLinkedTournaments(acc.userId, fn);
+    }
     try{
       window.__safeStorage.setItem(APEX_AUTH_PROFILE_KEY, JSON.stringify(acc));
       window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db));
+      if(acc.userId) await syncUserDirectoryEntry(acc);
     }catch(e){}
-    showToast('✅ Profile updated!', 'success');
+    showToast('✅ Profile saved!', 'success');
     closeProfilePopup();
     if(document.body.classList.contains('home-hub')) renderHomeHub();
   }
@@ -11834,20 +12773,32 @@ function createTestTournamentFromDev() {
     const box = document.getElementById('profilePopupBody');
     if(!box) return;
     const initials = String(acc.name || 'U').split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();
-    const shortId = acc.userId || String(acc.name || 'Player').replace(/\s+/g,'').slice(0,12);
+    const curId = normalizeUserId(acc.userId || '');
+    const career = computeUserCareerRecord(acc);
+    const idFieldHtml = acc.userIdLocked && curId
+      ? `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:10px;border:1.5px solid rgba(56,189,248,0.45);background:rgba(56,189,248,0.08);margin-bottom:4px">
+           <span style="font-weight:900;font-size:14px;color:var(--accent)">@${esc(curId)}</span>
+           <span class="pill pill-done" style="font-size:9px">🔒 Permanent Unique ID</span>
+         </div>`
+      : `<input id="profUserId" maxlength="12" value="${esc(curId)}" oninput="this.value=normalizeUserId(this.value)" placeholder="e.g. Hareesh75 (3–12 chars)" style="padding:8px 10px;font-size:13px">
+         <div class="muted" style="font-size:10px;margin-top:3px">⚠️ Once saved, your unique @UserID is permanent so your career stats never disconnect.</div>`;
     box.innerHTML = `
-      <div class="hs-profile-av" style="width:60px;height:60px;font-size:22px;margin:0 auto 10px">${esc(initials)}</div>
-      <div style="font-size:18px;font-weight:900">${esc(acc.name || 'Player')}</div>
-      <div class="muted" style="font-size:12px;margin:2px 0 12px">${esc(acc.contact || '')}</div>
+      <div class="hs-profile-av" style="width:56px;height:56px;font-size:20px;margin:0 auto 8px">${esc(initials)}</div>
+      <div style="font-size:17px;font-weight:900">${esc(acc.name || 'Player')}</div>
+      <div class="muted" style="font-size:11.5px;margin:2px 0 10px">${esc(acc.contact || '')}</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px;text-align:center">
+        <div style="padding:7px 4px;border-radius:10px;border:1px solid var(--card-border);background:rgba(56,189,248,0.06)"><div class="muted" style="font-size:9px;font-weight:800">MATCHES</div><b style="font-size:14px">${career.matches}</b></div>
+        <div style="padding:7px 4px;border-radius:10px;border:1px solid var(--card-border);background:rgba(56,189,248,0.06)"><div class="muted" style="font-size:9px;font-weight:800">RUNS</div><b style="font-size:14px">${career.runs}</b></div>
+        <div style="padding:7px 4px;border-radius:10px;border:1px solid var(--card-border);background:rgba(56,189,248,0.06)"><div class="muted" style="font-size:9px;font-weight:800">WKTS</div><b style="font-size:14px">${career.wickets}</b></div>
+      </div>
       <div style="text-align:left;margin-bottom:10px">
-        <label style="font-size:10px;font-weight:800;margin-bottom:3px">Full Name</label>
-        <input id="profFullName" value="${esc(acc.name||'')}" placeholder="Your Full Name" style="margin-bottom:8px;padding:8px 10px;font-size:13px">
-        <label style="font-size:10px;font-weight:800;margin-bottom:3px">Tournament ID / Short Name (max 12 chars)</label>
-        <input id="profUserId" maxlength="12" value="${esc(shortId)}" oninput="this.value=this.value.replace(/\s+/g,'').slice(0,12)" placeholder="e.g. Hareesh75" style="padding:8px 10px;font-size:13px">
-        <div class="muted" style="font-size:10px;margin-top:4px">Used for clean points tables &amp; future tournament stat syncing.</div>
+        <label style="font-size:10px;font-weight:800;margin-bottom:3px">Display Name (Changeable)</label>
+        <input id="profFullName" value="${esc(acc.name||'')}" placeholder="Your Display Name" style="margin-bottom:8px;padding:8px 10px;font-size:13px">
+        <label style="font-size:10px;font-weight:800;margin-bottom:3px">Unique User ID (Universal Key)</label>
+        ${idFieldHtml}
       </div>
       <div style="display:flex;gap:8px;margin-top:12px">
-        <button type="button" class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveProfileEdits()">💾 Save Profile</button>
+        <button type="button" class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveProfileEdits()">💾 Save</button>
         <button type="button" class="btn btn-danger" style="flex:1;justify-content:center" onclick="closeProfilePopup();logoutAccountHome()">Sign Out</button>
       </div>`;
     document.getElementById('profilePopupModal')?.classList.add('show');
@@ -12001,32 +12952,42 @@ function createTestTournamentFromDev() {
         </div>`;
 
       if (acc) {
+        const myOwnedTours = Object.entries(db.tournaments || {}).filter(([id, tt]) => {
+          if (!developerMode && isTestTournament(tt)) return false;
+          if (getTournamentHomeBucket(tt) === 'archive') return false;
+          return isUserTournamentOwnerOrCoOwner(tt, acc);
+        });
+        const myCareer = computeUserCareerRecord(acc);
+        const uidTag = acc.userId ? '@' + acc.userId : 'Set @UserID in Profile';
         body += `
-          <div class="hs-section-label">Organiser Hub</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin:16px 4px 8px">
+            <div class="hs-section-label" style="margin:0">My Space · ${esc(uidTag)}</div>
+            <button type="button" class="btn btn-primary btn-sm" style="padding:3px 9px;font-size:10.5px;border-radius:999px" onclick="openCreateTournamentFromHome()">＋ New</button>
+          </div>
           <div class="hs-menu">
-            <button type="button" class="hs-item" onclick="openCreateTournamentFromHome()">
-              <div class="hs-ico plus">＋</div>
+            <div class="hs-item" onclick="hsNav('my_tournaments')" role="button" tabindex="0">
+              <div class="hs-ico mine">🏆</div>
               <div class="hs-item-body">
-                <div class="hs-item-title">Create Tournament</div>
-                <div class="hs-item-sub">Launch a new cup or league</div>
+                <div class="hs-item-title">My Tournaments</div>
+                <div class="hs-item-sub">${myOwnedTours.length ? myOwnedTours.length + ' tournament(s) managed by you' : '0 created yet · Tap ＋ New to host'}</div>
               </div>
               <div class="hs-chev">›</div>
-            </button>
-
-            <button type="button" class="hs-item" onclick="openManageTournamentFromHome()">
-              <div class="hs-ico mine">⚙️</div>
-              <div class="hs-item-body">
-                <div class="hs-item-title">Manage Tournament</div>
-                <div class="hs-item-sub">${developerMode ? 'Developer unlocked (No PIN needed)' : 'Unlock with tournament PIN'}</div>
-              </div>
-              <div class="hs-chev">›</div>
-            </button>
+            </div>
 
             <button type="button" class="hs-item" onclick="hsNav('community')">
               <div class="hs-ico comm">🏠</div>
               <div class="hs-item-body">
                 <div class="hs-item-title">My Communities</div>
-                <div class="hs-item-sub">${myComms.length ? myComms.length + ' managed by you' : 'Create or manage groups'}</div>
+                <div class="hs-item-sub">${myComms.length ? myComms.length + ' community group(s)' : '0 communities yet'}</div>
+              </div>
+              <div class="hs-chev">›</div>
+            </button>
+
+            <button type="button" class="hs-item" onclick="hsNav('career')">
+              <div class="hs-ico done">🏏</div>
+              <div class="hs-item-body">
+                <div class="hs-item-title">Career Record</div>
+                <div class="hs-item-sub">${myCareer.tournamentsPlayed ? `${myCareer.tournamentsPlayed} cup(s) · ${myCareer.matches} M · ${myCareer.runs} runs · ${myCareer.wickets} wkts` : '0 linked tournaments yet'}</div>
               </div>
               <div class="hs-chev">›</div>
             </button>
@@ -12041,7 +13002,49 @@ function createTestTournamentFromDev() {
         ? `<button type="button" class="hs-corner hs-corner-r" onclick="hsNav('devtools')">👨‍💻 Dev Tools</button>`
         : `<button type="button" class="hs-corner hs-corner-r" onclick="enableDeveloperMode()">👨‍💻 Dev</button>`;
     }
-        else if (panel === 'live') {
+    else if (panel === 'my_tournaments') {
+      const myOwned = acc ? Object.entries(db.tournaments || {}).filter(([id, tt]) => {
+        if (!developerMode && isTestTournament(tt)) return false;
+        if (getTournamentHomeBucket(tt) === 'archive') return false;
+        return isUserTournamentOwnerOrCoOwner(tt, acc);
+      }) : [];
+      body += `<button type="button" class="hs-back" onclick="hsNav('menu')">‹ Back to Home</button>
+               <div class="hs-hero-v9"><h1>🏆 My Tournaments</h1><p>Tournaments created or co-managed by your account</p></div>
+               <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+                 <button type="button" class="btn btn-primary btn-sm" onclick="openCreateTournamentFromHome()">＋ Create New Tournament</button>
+                 <button type="button" class="btn btn-secondary btn-sm" onclick="openManageTournamentFromHome()">🔑 Unlock Any by PIN</button>
+               </div>
+               ${myOwned.length ? listHtml(myOwned, 'live') : '<div class="hs-empty">You have 0 tournaments yet. Tap <b>＋ Create New Tournament</b> to launch one, or <b>Unlock Any by PIN</b> to manage an existing tournament.</div>'}`;
+    }
+    else if (panel === 'career') {
+      const cr = computeUserCareerRecord(acc);
+      const sr = cr.balls ? ((cr.runs / cr.balls) * 100).toFixed(1) : '0.0';
+      const econ = cr.ballsBowled ? ((cr.runsConceded / cr.ballsBowled) * 6).toFixed(2) : '0.00';
+      body += `<button type="button" class="hs-back" onclick="hsNav('menu')">‹ Back to Home</button>
+               <div class="hs-hero-v9">
+                 <div class="hs-kicker">${acc?.userId ? '@' + esc(acc.userId) : 'PLAYER PROFILE'}</div>
+                 <h1>🏏 Career Record</h1>
+                 <p>${esc(acc?.name || 'Player')} • Official Linked Tournament Stats</p>
+               </div>
+               <div class="statgrid" style="margin-bottom:14px">
+                 <div class="stat"><span>Cups</span><b>${cr.tournamentsPlayed}</b></div>
+                 <div class="stat"><span>Titles</span><b>${cr.titles}</b></div>
+                 <div class="stat"><span>Matches</span><b>${cr.matches}</b></div>
+                 <div class="stat"><span>Runs</span><b>${cr.runs}</b></div>
+                 <div class="stat"><span>Wickets</span><b>${cr.wickets}</b></div>
+                 <div class="stat"><span>Sixes</span><b>${cr.sixes}</b></div>
+                 <div class="stat"><span>Strike Rate</span><b>${sr}</b></div>
+                 <div class="stat"><span>Economy</span><b>${econ}</b></div>
+                 <div class="stat"><span>MVP Pts</span><b>${cr.mvp}</b></div>
+               </div>
+               <div class="hs-section-label">Linked Tournaments (${cr.history.length})</div>
+               ${cr.history.length ? '<div class="hs-list">' + cr.history.map(h => `
+                 <div class="hs-card" onclick="openTournamentFromHome('${esc(h.id)}')" style="cursor:pointer">
+                   <div class="hs-card-title">${esc(h.name)} ${h.champion ? '<span class="hs-badge">🏆 CHAMPION</span>' : ''}</div>
+                   <div class="hs-card-meta">Slot: ${esc(h.slot)} · ${h.matches} M · ${h.runs} runs · ${h.wickets} wkts · ${h.mvp} MVP pts</div>
+                 </div>`).join('') : '<div class="hs-empty">No linked tournaments yet. Ask your tournament organiser to link your <b>@' + esc(acc?.userId || 'UserID') + '</b> in Setup, or tap <b>Claim Stats</b> inside any tournament&apos;s Qualification view.</div>'}`;
+    }
+    else if (panel === 'live') {
       body += `<button type="button" class="hs-back" onclick="hsNav('menu')">‹ Back to Home</button>
                <div class="hs-hero-v9"><h1>🔴 Live Tournaments</h1><p>Tap any tournament to view live standings & scores</p></div>
                ${listHtml(L, 'live')}`;
