@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,viewport-fit=cover">
   
-<title>APEX Cricket Hub v49 V12 • Pro Cricket Tournament Hub</title>
+<title>APEX Cricket Hub v49 V14 • Pro Cricket Tournament Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
 :root{
@@ -2408,13 +2408,10 @@ body.theme-light .standings-toolbar-compact .sort-active-select option {
     transform: translateY(-2px) scale(1.01);
   }
 }
-@keyframes apexCardPopIn {
-  0% { opacity: 0; transform: translateY(10px) scale(0.97); }
-  70% { opacity: 1; transform: translateY(-2px) scale(1.008); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
+/* Smooth, zero-lag GPU transitions on Snapdragon & desktop */
 body.home-hub .hs-item, body.home-hub .hs-card {
-  animation: apexCardPopIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation: none !important;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease !important;
 }
 
 /* === 7. DECORATED THICKER INPUT BORDERS IN SETUP & RECORD SCORE === */
@@ -2495,6 +2492,241 @@ body.theme-light .qi-ai-tip {
 body.theme-light .qi-calc-res-box {
   background: rgba(255, 255, 255, 0.78) !important;
   border-color: rgba(37, 99, 235, 0.25) !important;
+}
+</style>
+
+
+<style id="apex-v14-liquid-glass-dock">
+/* === V14 LIQUID GLASS TOKENS === */
+:root {
+  --lg-dock-bg: rgba(15, 23, 42, 0.68);
+  --lg-dock-border: rgba(148, 163, 184, 0.28);
+  --lg-dock-outer: rgba(56, 189, 248, 0.28);
+  --lg-dock-shadow: 0 18px 42px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(56, 189, 248, 0.18), inset 0 1.5px 1px rgba(255, 255, 255, 0.22);
+  --lg-lens-bg: linear-gradient(145deg, rgba(56, 189, 248, 0.94) 0%, rgba(2, 132, 199, 0.96) 55%, rgba(29, 78, 216, 0.98) 100%);
+  --lg-lens-shadow: 0 8px 22px rgba(56, 189, 248, 0.44), inset 0 1.5px 2px rgba(255, 255, 255, 0.55), inset 0 -1px 2px rgba(0, 0, 0, 0.28);
+}
+body.theme-light {
+  --lg-dock-bg: rgba(255, 255, 255, 0.72);
+  --lg-dock-border: rgba(255, 255, 255, 0.90);
+  --lg-dock-outer: rgba(37, 99, 235, 0.24);
+  --lg-dock-shadow: 0 14px 36px rgba(15, 23, 42, 0.16), 0 2px 8px rgba(37, 99, 235, 0.12), inset 0 1.5px 1px rgba(255, 255, 255, 0.95);
+  --lg-lens-bg: linear-gradient(145deg, rgba(56, 189, 248, 0.94) 0%, rgba(37, 99, 235, 0.96) 55%, rgba(29, 78, 216, 0.98) 100%);
+  --lg-lens-shadow: 0 8px 20px rgba(37, 99, 235, 0.42), inset 0 1.5px 2px rgba(255, 255, 255, 0.65), inset 0 -1px 2px rgba(0, 0, 0, 0.18);
+}
+
+/* === MOBILE (< 900px): HIDE TOP NAV BAR, SHOW FLOATING LIQUID GLASS DOCK + ADMIN CAPSULE === */
+@media(max-width: 899px) {
+  body.in-app .nav-container { display: none !important; }
+  body.in-app { padding-bottom: calc(146px + env(safe-area-inset-bottom)) !important; }
+  body.in-app #apexLiquidDockShell { display: block !important; }
+  body.in-app.is-admin-unlocked #apexAdminCapsuleShell { display: block !important; }
+}
+
+/* === DESKTOP (>= 900px): CLEAN TOP BAR WITH DYNAMIC SLIDING GLIDER PILL === */
+@media(min-width: 900px) {
+  #apexLiquidDockShell, #apexAdminCapsuleShell { display: none !important; }
+  .nav-container {
+    position: sticky !important; top: 0; z-index: 99;
+    padding: 8px 12px !important;
+  }
+  #mainNav {
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 5px 8px !important;
+    max-width: fit-content !important;
+    margin: 0 auto !important;
+    border-radius: 16px !important;
+    border: 1.5px solid var(--lg-dock-border) !important;
+    background: var(--lg-dock-bg) !important;
+    box-shadow: var(--lg-dock-shadow) !important;
+  }
+  #mainNav .desktop-nav-glider {
+    position: absolute;
+    top: 5px; bottom: 5px; left: 0;
+    border-radius: 11px;
+    background: var(--lg-lens-bg);
+    box-shadow: var(--lg-lens-shadow);
+    transition: transform 0.24s cubic-bezier(0.34, 1.32, 0.64, 1), width 0.22s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  #mainNav button {
+    position: relative !important; z-index: 2 !important;
+    flex: 0 0 auto !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 8px 14px !important;
+    border-radius: 11px !important;
+    font-size: 12.5px !important;
+    font-weight: 800 !important;
+    transform: none !important;
+    transition: color 0.16s ease !important;
+  }
+  #mainNav button.active {
+    background: transparent !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+}
+
+/* === FLOATING LIQUID GLASS BOTTOM DOCK (HyperOS 4 / OriginOS 7 Style) === */
+#apexLiquidDockShell {
+  display: none;
+  position: fixed;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(94vw, 440px);
+  z-index: 950;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+.apex-glass-dock {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  padding: 6px;
+  border-radius: 26px;
+  background: var(--lg-dock-bg);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1.5px solid var(--lg-dock-border);
+  outline: 1px solid var(--lg-dock-outer);
+  box-shadow: var(--lg-dock-shadow);
+  overflow: visible;
+}
+.apex-glass-dock::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 25px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.05) 42%, transparent 100%);
+  pointer-events: none; z-index: 1;
+}
+body:not(.theme-light) .apex-glass-dock::before {
+  background: linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.02) 45%, transparent 100%);
+}
+.apex-glass-lens {
+  position: absolute;
+  top: 5px; bottom: 5px; left: 6px;
+  border-radius: 20px;
+  background: var(--lg-lens-bg);
+  box-shadow: var(--lg-lens-shadow);
+  z-index: 2; pointer-events: none;
+  will-change: transform, width;
+  transition: transform 0.26s cubic-bezier(0.34, 1.42, 0.64, 1), width 0.22s ease, opacity 0.16s ease;
+}
+.apex-glass-dock.scrubbing .apex-glass-lens {
+  transition: transform 0.06s linear;
+  box-shadow: 0 12px 28px rgba(2, 132, 199, 0.56), inset 0 2px 3px rgba(255, 255, 255, 0.78);
+}
+.apex-dock-btn {
+  position: relative; z-index: 3;
+  border: 0; background: transparent; color: var(--muted);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; padding: 7px 2px; border-radius: 20px; cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.15s ease;
+}
+.apex-dock-btn .ico {
+  font-size: 18px; line-height: 1;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.apex-dock-btn .lbl {
+  font-size: 9.5px; font-weight: 800; letter-spacing: -0.01em;
+}
+.apex-dock-btn.active, .apex-dock-btn.hovering {
+  color: #ffffff !important;
+  transform: translateY(-3px) scale(1.06);
+}
+.apex-dock-btn.hovering .ico { transform: translateY(-2px) scale(1.15); }
+.apex-dock-btn.active .ico { transform: translateY(-1px) scale(1.08); }
+
+.apex-scrub-toast {
+  position: absolute;
+  top: -40px; left: 50%;
+  transform: translateX(-50%) scale(0.88);
+  opacity: 0; pointer-events: none;
+  padding: 5px 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 900; color: #ffffff;
+  background: var(--lg-lens-bg); box-shadow: var(--lg-lens-shadow);
+  white-space: nowrap;
+  transition: opacity 0.14s ease, transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#apexLiquidDockShell.scrubbing .apex-scrub-toast,
+#apexAdminCapsuleShell.scrubbing .apex-scrub-toast {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* === FLOATING LIQUID GLASS ADMIN CAPSULE (WITH SLIDING LENS!) === */
+#apexAdminCapsuleShell {
+  display: none;
+  position: fixed;
+  bottom: calc(84px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 945;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+.apex-admin-capsule {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-width: 242px;
+  padding: 5px;
+  border-radius: 999px;
+  background: var(--lg-dock-bg);
+  backdrop-filter: blur(22px) saturate(185%);
+  -webkit-backdrop-filter: blur(22px) saturate(185%);
+  border: 1.5px solid var(--lg-dock-border);
+  outline: 1px solid var(--lg-dock-outer);
+  box-shadow: var(--lg-dock-shadow);
+}
+.apex-admin-lens {
+  position: absolute;
+  top: 4px; bottom: 4px; left: 5px;
+  border-radius: 999px;
+  background: var(--lg-lens-bg);
+  box-shadow: var(--lg-lens-shadow);
+  z-index: 1; pointer-events: none;
+  transition: transform 0.24s cubic-bezier(0.34, 1.42, 0.64, 1), width 0.2s ease, opacity 0.15s ease;
+}
+.apex-admin-capsule.scrubbing .apex-admin-lens {
+  transition: transform 0.06s linear;
+}
+.apex-admin-btn {
+  position: relative; z-index: 2;
+  border: 0; background: transparent; color: var(--text);
+  padding: 7px 14px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 800; cursor: pointer;
+  white-space: nowrap; text-align: center;
+  transition: color 0.15s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.apex-admin-btn.active, .apex-admin-btn.hovering {
+  color: #ffffff !important;
+  transform: scale(1.04);
+}
+
+/* === CRISP FAST 170ms SECTION TRANSITION (NO HEAVY PAGE-TURN LAG) === */
+@keyframes apexFastFadeUp {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.view-panel:not(.hidden) {
+  animation: apexFastFadeUp 0.17s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+}
+details.qi-pro-others[open] > div {
+  animation: apexFastFadeUp 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 </style>
 
@@ -2584,16 +2816,16 @@ body.theme-light .qi-calc-res-box {
     <button id="nav_results" onclick="switchNav('view_results', 'nav_results')">📋 Scorecards</button>
     <button id="nav_awards" onclick="switchNav('view_awards', 'nav_awards')">🎖️ MVP &amp; Leaderboards</button>
     <button id="nav_query" onclick="switchNav('view_query', 'nav_query')">🔎 Qualification</button>
-    <button id="nav_score" class="admin-only-nav hidden" onclick="switchNav('view_score', 'nav_score')">➕ Record Score</button>
-    <button id="nav_setup" class="admin-only-nav hidden" onclick="switchNav('view_setup', 'nav_setup')">⚙️ Setup &amp; Config</button>
+    <button id="nav_score" class="admin-only-nav hidden" onclick="switchNav('view_score', 'nav_score')">➕ Match Entry</button>
+    <button id="nav_setup" class="admin-only-nav hidden" onclick="switchNav('view_setup', 'nav_setup')">⚙️ Manage</button>
    </nav>
   </div>
   
 <div id="createTourBar">
   <div class="ctb-row">
     <div>
-      <div class="ctb-title">Create new tournament</div>
-      <div class="ctb-sub">Dedicated setup · not managing an existing event</div>
+      <div class="ctb-title">🏏 Tourney Setup</div>
+      <div class="ctb-sub">Create a new tournament · dedicated setup mode</div>
     </div>
     <button type="button" class="btn btn-secondary btn-sm" onclick="cancelCreateTournamentToHome()">Cancel</button>
   </div>
@@ -2871,7 +3103,7 @@ Group B: Player C, Player D"></textarea></div>
 
    <div class="card">
     <div class="card-header">
-     <div class="card-title">➕ Match Score Entry &amp; Validation</div>
+     <div class="card-title">➕ Match Entry</div>
     </div>
     <div id="scoreLockMsg" class="hidden" class="admin-lock-msg">
      🔒 Score recording is restricted to tournament organizers.
@@ -3042,7 +3274,7 @@ Group B: Player C, Player D"></textarea></div>
   <section id="view_setup" class="view-panel hidden">
    <div class="card">
     <div class="card-header">
-     <div class="card-title">⚙️ Tournament Configuration &amp; Engine Setup</div>
+     <div class="card-title">⚙️ Manage Tournament</div>
     </div>
     <div id="setupLockMsg" class="hidden" class="admin-lock-msg">
      🔒 Tournament configuration is restricted to admins.
@@ -3395,6 +3627,7 @@ document.addEventListener('touchend', e => {
 }, {passive: true});
 
 function handleHorizontalTabSwipe(xDiff, yDiff, targetEl){
+  return; // Replaced by V14 Liquid Glass Bottom Dock finger-slide scrubbing
   if(window.innerWidth >= 900) return; // Desktop mode: disable swipe tab switching
   if(!document.body.classList.contains('in-app') || setupMode === 'new') return;
   if(uiState && uiState.viewId === 'view_score') return; // Never swipe away while recording scores
@@ -3523,7 +3756,9 @@ function initFirebaseAuth(){
           id: id,
           contact: user.email || user.phoneNumber || user.uid,
           name: prev.name || user.displayName || (user.email ? user.email.split('@')[0] : 'Organiser'),
-          userId: prev.userId || (user.displayName || (user.email ? user.email.split('@')[0] : 'Player')).replace(/\s+/g,'').slice(0,12),
+          userId: prev.userIdLocked ? prev.userId : (prev.userId || ''),
+          userIdLocked: !!prev.userIdLocked,
+          emailVerified: !!user.emailVerified,
           uid: user.uid,
           provider: (user.providerData && user.providerData[0] && user.providerData[0].providerId) || 'firebase',
           createdAt: prev.createdAt || Date.now()
@@ -3561,8 +3796,25 @@ async function fbRegisterEmail(email, password, displayName){
   if(!__fbReady || !__fbAuth) throw new Error('Firebase Auth not configured. Paste FIREBASE_CONFIG.');
   const cred = await __fbAuth.createUserWithEmailAndPassword(email, password);
   if(displayName) await cred.user.updateProfile({ displayName: displayName });
+  try{ await cred.user.sendEmailVerification(); }catch(e){ console.warn('sendEmailVerification:', e); }
   await fbUpsertProfile(cred.user);
   return cred.user;
+}
+async function resendEmailVerificationLink(){
+  try{
+    const u = __fbUser || (__fbAuth && __fbAuth.currentUser);
+    if(!u){ showToast('Sign in with your email first.', 'error'); return; }
+    await u.reload();
+    if(u.emailVerified){
+      const acc = hsGetSession();
+      if(acc){ acc.emailVerified = true; hsSaveSession(acc.id); }
+      showToast('✅ Your email is already verified!', 'success');
+      if(document.body.classList.contains('home-hub')) renderHomeHub();
+      return;
+    }
+    await u.sendEmailVerification();
+    showToast('📧 Verification link sent to ' + (u.email||'your inbox') + '! Check Spam if not seen.', 'success');
+  }catch(e){ showToast('Could not send verification email: ' + (e.message||e), 'error'); }
 }
 async function fbLoginEmail(email, password){
   if(!__fbReady || !__fbAuth) throw new Error('Firebase Auth not configured.');
@@ -3738,9 +3990,10 @@ function applyTournamentLinkFromUrl(){
     if(id && db?.tournaments?.[id]){
       selectedTournamentId=id;
       db.activeId=id;
-      isAdmin=false;
-      accessLevel='public';
-      window.__safeStorage.removeItem('icc_is_admin_session');
+      if(window.__safeStorage.getItem('icc_is_admin_session') !== 'true'){
+        isAdmin=false;
+        accessLevel='public';
+      }
     }
   }catch(e){}
 }
@@ -4190,7 +4443,7 @@ function computeUserCareerRecord(acc){
 async function requestClaimTournamentSlot(tournamentId, playerSlotName){
   const acc = hsGetSession();
   if(!acc){ showToast('Please Sign In first to claim your stats.', 'error'); return; }
-  if(!acc.userId){ showToast('Set your unique @UserID in Profile first.', 'error'); openProfilePopup(); return; }
+  if(!acc.userId || !acc.userIdLocked){ showToast('🔒 Claim & save your unique @UserID in Profile first before linking tournaments.', 'error'); openProfilePopup(); return; }
   const t = db?.tournaments?.[tournamentId];
   if(!t) return;
   t.playerLinks = t.playerLinks || {};
@@ -4357,7 +4610,14 @@ function preserveUrlTournament(data){
       const wasPending = !!window.__pendingUrlTournamentId || document.body.classList.contains('home-hub');
       window.__pendingUrlTournamentId = '';
       selectedTournamentId=urlTournament; data.activeId=urlTournament;
-      if(!developerMode){ isAdmin=false; accessLevel='public'; }
+      // Preserve active unlocked Admin session for this tournament! Never lock out on cloud sync.
+      const keepAdmin = !!isAdmin || window.__safeStorage.getItem('icc_is_admin_session') === 'true';
+      if(keepAdmin){
+        isAdmin = true;
+        if(!accessLevel || accessLevel==='public') accessLevel = 'organizer';
+      } else if(!developerMode){
+        isAdmin=false; accessLevel='public';
+      }
       document.body.classList.remove('home-hub','setup-new-mode','create-tournament-mode');
       document.body.classList.add('in-app');
       const hr=document.getElementById('homeHubRoot'); if(hr){ hr.style.display='none'; hr.innerHTML=''; }
@@ -4736,7 +4996,7 @@ function enterCreateTournamentMode(){
   const title=document.querySelector('#view_setup .card-title');
   if(title){
     if(!title.dataset.origTitle) title.dataset.origTitle=title.innerHTML;
-    title.innerHTML='Create new tournament';
+    title.innerHTML='🏏 Tourney Setup';
   }
   const manageHead=[...document.querySelectorAll('#view_setup .card-title, #view_setup h3, #view_setup .section-title')];
   const nav=document.querySelector('.nav-container'); if(nav) nav.style.display='none';
@@ -5006,7 +5266,7 @@ function renderQualificationQuery(){
   const linkedUid = t.playerLinks && t.playerLinks[x.name];
   const claimHtml = linkedUid
     ? `<span class="pill pill-done" style="font-size:9.5px;margin-left:auto">@${esc(linkedUid)}</span>`
-    : (curAcc && curAcc.userId ? `<button type="button" class="btn btn-secondary btn-sm" style="margin-left:auto;font-size:9.5px;padding:3px 7px" onclick="requestClaimTournamentSlot('${esc(t.id)}', ${JSON.stringify(String(x.name))})">🙋 Claim @${esc(curAcc.userId)}</button>` : '');
+    : (curAcc && curAcc.userId && curAcc.userIdLocked ? `<button type="button" class="btn btn-secondary btn-sm" style="margin-left:auto;font-size:9.5px;padding:3px 7px" onclick="requestClaimTournamentSlot('${esc(t.id)}', ${JSON.stringify(String(x.name))})">🙋 Claim @${esc(curAcc.userId)}</button>` : '');
 
   qAnswer.innerHTML = `
     <div class="qi-pro-card qi-pro-compact">
@@ -5199,6 +5459,141 @@ function resetTournamentBoundUI(){
   syncWicketInputLimits();
 }
 
+
+/* === V14 LIQUID GLASS DOCK + ADMIN CAPSULE SCRUBBING + DESKTOP SLIDING PILL === */
+(function initApexLiquidNav(){
+  function getDockItems(){ return Array.from(document.querySelectorAll('#apexGlassDock .apex-dock-btn')); }
+  function getAdminItems(){ return Array.from(document.querySelectorAll('#apexAdminCapsule .apex-admin-btn')); }
+
+  window.syncDesktopNavGlider = function(){
+    const nav = document.getElementById('mainNav');
+    if(!nav || window.innerWidth < 900) return;
+    let glider = nav.querySelector('.desktop-nav-glider');
+    if(!glider){
+      glider = document.createElement('div');
+      glider.className = 'desktop-nav-glider';
+      nav.insertBefore(glider, nav.firstChild);
+    }
+    const activeBtn = nav.querySelector('button.active:not(.hidden)');
+    if(!activeBtn){ glider.style.opacity = '0'; return; }
+    glider.style.opacity = '1';
+    glider.style.width = activeBtn.offsetWidth + 'px';
+    glider.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
+  };
+
+  window.syncLiquidGlassDock = function(activeViewId){
+    const dock = document.getElementById('apexGlassDock');
+    const lens = document.getElementById('apexGlassLens');
+    const items = getDockItems();
+    if(dock && lens && items.length){
+      const idx = items.findIndex(b => b.getAttribute('data-view') === activeViewId);
+      items.forEach((b, i) => { b.classList.remove('hovering'); b.classList.toggle('active', i === idx); });
+      if(idx >= 0){
+        lens.style.opacity = '1';
+        lens.style.width = items[idx].offsetWidth + 'px';
+        lens.style.transform = `translateX(${items[idx].offsetLeft - 6}px)`;
+      } else {
+        lens.style.opacity = '0';
+      }
+    }
+    const cap = document.getElementById('apexAdminCapsule');
+    const aLens = document.getElementById('apexAdminLens');
+    const aItems = getAdminItems();
+    if(cap && aLens && aItems.length){
+      const aIdx = aItems.findIndex(b => b.getAttribute('data-view') === activeViewId);
+      aItems.forEach((b, i) => { b.classList.remove('hovering'); b.classList.toggle('active', i === aIdx); });
+      if(aIdx >= 0){
+        aLens.style.opacity = '1';
+        aLens.style.width = aItems[aIdx].offsetWidth + 'px';
+        aLens.style.transform = `translateX(${aItems[aIdx].offsetLeft - 5}px)`;
+      } else {
+        aLens.style.opacity = '0';
+      }
+    }
+    window.syncDesktopNavGlider();
+  };
+
+  function bindScrubBar(shellId, barId, lensId, toastId, btnSelector, padOffset){
+    const shell = document.getElementById(shellId);
+    const bar = document.getElementById(barId);
+    const lens = document.getElementById(lensId);
+    const toast = document.getElementById(toastId);
+    if(!shell || !bar || !lens || bar.__scrubBound) return;
+    bar.__scrubBound = true;
+    let scrubbing = false, curIdx = -1;
+
+    function idxFromX(clientX){
+      const btns = Array.from(bar.querySelectorAll(btnSelector));
+      const rect = bar.getBoundingClientRect();
+      const rel = Math.max(0, Math.min(rect.width - 1, clientX - rect.left));
+      return Math.min(btns.length - 1, Math.floor((rel / rect.width) * btns.length));
+    }
+    function hoverIdx(idx){
+      if(idx === curIdx && scrubbing) return;
+      const btns = Array.from(bar.querySelectorAll(btnSelector));
+      if(idx < 0 || idx >= btns.length) return;
+      curIdx = idx;
+      btns.forEach((b, i) => { b.classList.toggle('hovering', i === idx); b.classList.remove('active'); });
+      lens.style.opacity = '1';
+      lens.style.width = btns[idx].offsetWidth + 'px';
+      lens.style.transform = `translateX(${btns[idx].offsetLeft - padOffset}px)`;
+      if(toast) toast.textContent = btns[idx].textContent.trim();
+      try{ if(navigator.vibrate) navigator.vibrate(12); }catch(e){}
+    }
+    function endScrub(){
+      if(!scrubbing) return;
+      scrubbing = false;
+      shell.classList.remove('scrubbing');
+      bar.classList.remove('scrubbing');
+      const btns = Array.from(bar.querySelectorAll(btnSelector));
+      const chosen = btns[curIdx];
+      if(chosen){
+        const vId = chosen.getAttribute('data-view');
+        const nId = chosen.getAttribute('data-nav');
+        if(vId) switchNav(vId, nId);
+      }
+    }
+    bar.addEventListener('pointerdown', e => {
+      try{ bar.setPointerCapture(e.pointerId); }catch(_){}
+      scrubbing = true; curIdx = -1;
+      shell.classList.add('scrubbing');
+      bar.classList.add('scrubbing');
+      hoverIdx(idxFromX(e.clientX));
+    });
+    bar.addEventListener('pointermove', e => {
+      if(scrubbing) hoverIdx(idxFromX(e.clientX));
+    });
+    bar.addEventListener('pointerup', endScrub);
+    bar.addEventListener('pointercancel', endScrub);
+  }
+
+  function initAll(){
+    bindScrubBar('apexLiquidDockShell', 'apexGlassDock', 'apexGlassLens', 'apexDockScrubToast', '.apex-dock-btn', 6);
+    bindScrubBar('apexAdminCapsuleShell', 'apexAdminCapsule', 'apexAdminLens', 'apexAdminScrubToast', '.apex-admin-btn', 5);
+    window.addEventListener('resize', () => {
+      if(uiState && uiState.viewId) window.syncLiquidGlassDock(uiState.viewId);
+    });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
+  else initAll();
+})();
+
+function renderActiveViewOnly(viewId){
+  const t = getActiveTournament();
+  if(!t) return;
+  const activeStage = (t.stages || []).find(s => s.stageNum === t.currentStage) || (t.stages && t.stages[0]) || { stageNum:1, name:'Stage 1', fixtures:[] };
+  try{
+    if(viewId === 'view_standings') renderStandingsTables(t, activeStage);
+    else if(viewId === 'view_champion') renderTournamentCompletion(t);
+    else if(viewId === 'view_fixtures') renderFixtures();
+    else if(viewId === 'view_results') renderResults();
+    else if(viewId === 'view_awards') renderAwardsAndLeaderboards(t);
+    else if(viewId === 'view_query') populateQualificationQuery(t);
+    else if(viewId === 'view_setup'){ populateSetupForm(t); renderLogoManager(); }
+    else if(viewId === 'view_score'){ updateBonusUI(t); }
+  }catch(e){ console.error('renderActiveViewOnly error:', e); }
+}
+
 function switchNav(viewId, btnId, options={}){
   if(!options.skipRemember && uiState.viewId && uiState.viewId!==viewId) rememberScroll();
   if(viewId!=='view_score'){
@@ -5216,7 +5611,7 @@ function switchNav(viewId, btnId, options={}){
           loadFixtureForScore(Number(fid), null, {skipNav:true});
         }
       }catch(e){}
-    }, 30);
+    }, 20);
   }
   document.querySelectorAll('.view-panel, section.view-panel').forEach(el=>{
     el.classList.add('hidden');
@@ -5243,23 +5638,11 @@ function switchNav(viewId, btnId, options={}){
       history.replaceState({ apex:'tab', id:selectedTournamentId, tab:viewId }, '', u.toString());
     }
   }catch(e){}
-  renderAll();
-  try{
-    const _curT = getActiveTournament();
-    if(_curT && viewId === 'view_awards') renderAwardsAndLeaderboards(_curT);
-    if(_curT && viewId === 'view_fixtures') renderFixtures();
-    if(_curT && viewId === 'view_results') renderResults();
-    if(_curT && viewId === 'view_query') renderQualificationQuery();
-  }catch(e){}
-  if(target){
-    target.style.opacity = '';
-    target.classList.remove('slide-from-left','slide-from-right','page-turn-next','page-turn-prev');
-    void target.offsetWidth;
-    if(window.innerWidth < 900){
-      if(window.__lastSwipeDir === 'left') target.classList.add('page-turn-next');
-      else if(window.__lastSwipeDir === 'right') target.classList.add('page-turn-prev');
-    }
-    window.__lastSwipeDir = null;
+
+  // ⚡ INSTANT TAB SWITCHING: render ONLY the newly active tab (never rebuild all 7 hidden views!)
+  renderActiveViewOnly(viewId);
+  if(typeof window.syncLiquidGlassDock === 'function'){
+    requestAnimationFrame(()=>window.syncLiquidGlassDock(viewId));
   }
 }
 
@@ -5841,7 +6224,7 @@ function renderAll(){
     }
     document.body.classList.toggle('is-admin-unlocked', !!isAdmin);
     const activeTournamentHeader = document.getElementById('activeTournamentHeader');
-    if(activeTournamentHeader) activeTournamentHeader.textContent = setupMode==='new' ? 'New Tournament Setup' : (t.name || 'Tournament');
+    if(activeTournamentHeader) activeTournamentHeader.textContent = setupMode==='new' ? 'Tourney Setup' : (t.name || 'Tournament');
     const tagEl = document.getElementById('activeTournamentTagline');
     if(tagEl){
       const tl = (setupMode==='new') ? '' : String(t.tagline || '').trim();
@@ -5852,12 +6235,12 @@ function renderAll(){
     const setupTitle=document.getElementById('setupPanelTitle'), setupSub=document.getElementById('setupPanelSub');
     const saveBtn=document.getElementById('saveExistingTournamentBtn'), launchBtn=document.getElementById('launchNewTournamentBtn');
     if(setupMode==='new'){
-      if(setupTitle) setupTitle.textContent='🆕 Create New Tournament';
+      if(setupTitle) setupTitle.textContent='🏏 Tourney Setup';
       if(setupSub) setupSub.innerHTML='Everything below starts fresh. Enter the tournament details, participants and <b>mandatory tournament PIN</b>, then launch it.';
       if(saveBtn) saveBtn.classList.add('hidden');
       if(launchBtn){ launchBtn.classList.remove('hidden'); launchBtn.textContent='🚀 Launch New Tournament'; launchBtn.onclick=launchNewTournament; }
     }else{
-      if(setupTitle) setupTitle.textContent='⚙️ Manage Existing Tournament';
+      if(setupTitle) setupTitle.textContent='⚙️ Manage Tournament';
       if(setupSub) setupSub.innerHTML='Edit the selected tournament. Changes apply only to this tournament.';
       if(saveBtn) saveBtn.classList.remove('hidden');
       if(launchBtn){ launchBtn.classList.add('hidden'); launchBtn.onclick=null; }
@@ -5932,16 +6315,18 @@ function renderAll(){
       }
       resultsPlayerFilter.innerHTML = `<option value="">All Players</option>` + opts.map(p=>`<option value="${esc(p)}" ${p===oldResultsPlayer?'selected':''}>${esc(p)}</option>`).join('');
     }
-    populateSetupForm(t);
     updateBonusUI(t);
-    renderLogoManager();
-    populateQualificationQuery(t);
-
-    renderStandingsTables(t, activeStage);
-    renderFixtures();
-    renderResults();
-    renderAwardsAndLeaderboards(t);
+    const curV = (uiState && uiState.viewId) || 'view_standings';
+    if(curV === 'view_setup' || setupMode === 'new'){ populateSetupForm(t); renderLogoManager(); }
+    if(curV === 'view_query') populateQualificationQuery(t);
+    if(curV === 'view_standings') renderStandingsTables(t, activeStage);
+    if(curV === 'view_fixtures') renderFixtures();
+    if(curV === 'view_results') renderResults();
+    if(curV === 'view_awards') renderAwardsAndLeaderboards(t);
     renderTournamentCompletion(t);
+    if(typeof window.syncLiquidGlassDock === 'function'){
+      requestAnimationFrame(()=>window.syncLiquidGlassDock(curV));
+    }
   } catch(e){ console.error('RenderAll error:', e); }
 }
 
@@ -12406,12 +12791,18 @@ window.addEventListener('online', ()=>{
     const userId = normalizeUserId(document.getElementById('hsRegUserId')?.value || '');
     const contact = (document.getElementById('hsRegContact')?.value || '').trim().toLowerCase();
     const pass = (document.getElementById('hsRegPass')?.value || '');
+    const pass2 = (document.getElementById('hsRegPassConfirm')?.value || '');
     if (!contact || !pass) { showToast('Enter email and password.', 'error'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) { showToast('Enter a valid email address.', 'error'); return; }
     if (pass.length < 6) { showToast('Password must be at least 6 characters.', 'error'); return; }
-    if (!userId || userId.length < 3) { showToast('Choose a unique User ID (3–12 chars).', 'error'); return; }
-    const avail = await checkUserIdAvailable(userId, null);
-    if (!avail.ok) { showToast('❌ ' + avail.reason, 'error'); return; }
-    await createOrRegisterAccount(name || contact.split('@')[0], contact, pass, avail.clean);
+    if (pass !== pass2) { showToast('❌ Passwords do not match. Please confirm your password.', 'error'); return; }
+    let cleanUid = '';
+    if (userId) {
+      const avail = await checkUserIdAvailable(userId, null);
+      if (!avail.ok) { showToast('❌ ' + avail.reason, 'error'); return; }
+      cleanUid = avail.clean;
+    }
+    await createOrRegisterAccount(name || contact.split('@')[0], contact, pass, cleanUid);
   }
 
   async function createOrRegisterAccount(dispName, contact, pass, shortUserId) {
@@ -12456,14 +12847,18 @@ window.addEventListener('online', ()=>{
       id,
       contact,
       name: dispName || contact.split('@')[0] || 'Player',
-      userId: normalizeUserId(shortUserId || (dispName || contact.split('@')[0] || 'Player')),
+      userId: shortUserId ? normalizeUserId(shortUserId) : '',
       userIdLocked: !!shortUserId,
+      emailVerified: false,
       passHash: hsHashPass(pass),
       uid: uid || null,
       createdAt: (existing && existing.createdAt) || Date.now()
     };
     hsSaveSession(id);
-    if(db.accounts[id].userId){ syncUserDirectoryEntry(db.accounts[id]).catch(()=>{}); }
+    if(db.accounts[id].userId && db.accounts[id].userIdLocked){ syncUserDirectoryEntry(db.accounts[id]).catch(()=>{}); }
+    if(uid){
+      setTimeout(()=>{ showToast('📧 Verification email sent to ' + contact + '. Please verify your inbox!', 'success'); }, 450);
+    }
     try { window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db)); } catch(e) {}
     showToast('Account ready! Welcome, ' + db.accounts[id].name + '!', 'success');
     hsNav('menu');
@@ -12729,13 +13124,17 @@ function createTestTournamentFromDev() {
       ` : `
         <div class="apex-auth-grid">
           <input id="hsRegName" placeholder="Full Name">
-          <input id="hsRegUserId" maxlength="12" placeholder="User ID (3–12 chars, unique & permanent)" oninput="this.value=normalizeUserId(this.value)">
+          <input id="hsRegUserId" maxlength="12" placeholder="Unique User ID (Optional · set now or later)" oninput="this.value=normalizeUserId(this.value)">
           <input id="hsRegContact" type="email" placeholder="Email address" autocomplete="username">
           <div style="position:relative;width:100%;">
-            <input id="hsRegPass" type="password" placeholder="Password (min 6 chars)" autocomplete="new-password" onkeydown="if(event.key==='Enter')unifiedRegisterHome().then(()=>{ if(hsGetSession()) closeAuthPopup(); })" style="width:100%;padding-right:42px;">
+            <input id="hsRegPass" type="password" placeholder="Password (min 6 chars)" autocomplete="new-password" style="width:100%;padding-right:42px;">
             <button type="button" aria-label="Show or hide password" onclick="const p=document.getElementById('hsRegPass'); p.type=p.type==='password'?'text':'password'; this.textContent=p.type==='password'?'👁️':'🙈';" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;">👁️</button>
           </div>
-          <button type="button" class="apex-auth-btn" onclick="unifiedRegisterHome().then(()=>{ if(hsGetSession()) closeAuthPopup(); })">Sign Up</button>
+          <div style="position:relative;width:100%;">
+            <input id="hsRegPassConfirm" type="password" placeholder="Confirm Password" autocomplete="new-password" onkeydown="if(event.key==='Enter')unifiedRegisterHome().then(()=>{ if(hsGetSession()) closeAuthPopup(); })" style="width:100%;padding-right:42px;">
+            <button type="button" aria-label="Show or hide confirm password" onclick="const p=document.getElementById('hsRegPassConfirm'); p.type=p.type==='password'?'text':'password'; this.textContent=p.type==='password'?'👁️':'🙈';" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;">👁️</button>
+          </div>
+          <button type="button" class="apex-auth-btn" onclick="unifiedRegisterHome().then(()=>{ if(hsGetSession()) closeAuthPopup(); })">Create Account &amp; Verify Email</button>
         </div>
       `}
       <button type="button" class="apex-google-btn" onclick="unifiedGoogleSignIn().then(()=>{ if(hsGetSession()) closeAuthPopup(); })">
@@ -12785,7 +13184,10 @@ function createTestTournamentFromDev() {
     box.innerHTML = `
       <div class="hs-profile-av" style="width:56px;height:56px;font-size:20px;margin:0 auto 8px">${esc(initials)}</div>
       <div style="font-size:17px;font-weight:900">${esc(acc.name || 'Player')}</div>
-      <div class="muted" style="font-size:11.5px;margin:2px 0 10px">${esc(acc.contact || '')}</div>
+      <div class="muted" style="font-size:11.5px;margin:2px 0 6px">${esc(acc.contact || '')}</div>
+      ${(__fbUser && __fbUser.emailVerified) || acc.emailVerified
+        ? '<div style="margin-bottom:10px"><span class="pill pill-done" style="font-size:10px">✅ Verified Email</span></div>'
+        : '<div style="margin-bottom:10px;display:flex;justify-content:center;gap:6px;align-items:center"><span class="pill pill-pending" style="font-size:10px">⚠️ Email Unverified</span><button type="button" class="btn btn-secondary btn-sm" style="font-size:10px;padding:2px 8px" onclick="resendEmailVerificationLink()">Verify / Check</button></div>'}
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px;text-align:center">
         <div style="padding:7px 4px;border-radius:10px;border:1px solid var(--card-border);background:rgba(56,189,248,0.06)"><div class="muted" style="font-size:9px;font-weight:800">MATCHES</div><b style="font-size:14px">${career.matches}</b></div>
         <div style="padding:7px 4px;border-radius:10px;border:1px solid var(--card-border);background:rgba(56,189,248,0.06)"><div class="muted" style="font-size:9px;font-weight:800">RUNS</div><b style="font-size:14px">${career.runs}</b></div>
@@ -13173,5 +13575,28 @@ function createTestTournamentFromDev() {
   };
 
   setTimeout(() => { if (document.body.classList.contains('home-hub')) renderHomeHub(); }, 50);</script>
+
+  <!-- V14 Floating Liquid Glass Admin Capsule (Mobile) -->
+  <div id="apexAdminCapsuleShell">
+    <div class="apex-scrub-toast" id="apexAdminScrubToast">Match Entry</div>
+    <div class="apex-admin-capsule" id="apexAdminCapsule">
+      <div class="apex-admin-lens" id="apexAdminLens"></div>
+      <button type="button" class="apex-admin-btn" data-idx="0" data-view="view_score" data-nav="nav_score">➕ Match Entry</button>
+      <button type="button" class="apex-admin-btn" data-idx="1" data-view="view_setup" data-nav="nav_setup">⚙️ Manage</button>
+    </div>
+  </div>
+  <!-- V14 Floating Liquid Glass Bottom Dock (Mobile) -->
+  <div id="apexLiquidDockShell">
+    <div class="apex-scrub-toast" id="apexDockScrubToast">Table</div>
+    <div class="apex-glass-dock" id="apexGlassDock">
+      <div class="apex-glass-lens" id="apexGlassLens"></div>
+      <button type="button" class="apex-dock-btn active" data-idx="0" data-view="view_standings" data-nav="nav_standings"><span class="ico">🏆</span><span class="lbl">Table</span></button>
+      <button type="button" class="apex-dock-btn" data-idx="1" data-view="view_fixtures" data-nav="nav_fixtures"><span class="ico">📅</span><span class="lbl">Fixtures</span></button>
+      <button type="button" class="apex-dock-btn" data-idx="2" data-view="view_results" data-nav="nav_results"><span class="ico">📋</span><span class="lbl">Scores</span></button>
+      <button type="button" class="apex-dock-btn" data-idx="3" data-view="view_awards" data-nav="nav_awards"><span class="ico">🎖️</span><span class="lbl">MVP</span></button>
+      <button type="button" class="apex-dock-btn" data-idx="4" data-view="view_query" data-nav="nav_query"><span class="ico">🔎</span><span class="lbl">QI</span></button>
+    </div>
+  </div>
+
 </body>
 </html>
