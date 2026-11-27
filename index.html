@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,viewport-fit=cover">
   
-<title>APEX Cricket Hub v49 V16 • Pro Cricket Tournament Hub</title>
+<title>APEX Cricket Hub v49 V17 • Pro Cricket Tournament Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
 :root{
@@ -3305,7 +3305,7 @@ Group B: Player C, Player D"></textarea></div>
     <div id="scoreLockMsg" class="hidden" class="admin-lock-msg">
      🔒 Score recording is restricted to tournament organizers.
      <br>
-     Unlock Admin mode using PIN (Default: <b>7788</b>) at the top right.
+     Unlock Organizer mode using your tournament's private PIN (or Organizer account).
     </div>
     <div id="scoreFormWrap" class="hidden">
      <div class="form-group">
@@ -3381,8 +3381,9 @@ Group B: Player C, Player D"></textarea></div>
        </div>
        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:6px">
         <label style="display:inline-flex;align-items:center;gap:6px;text-transform:none;margin:0;font-size:12px;cursor:pointer"> <input type="checkbox" id="scA1" style="width:auto"> <b>All Out</b> (Full overs for NRR) </label>
-        <div style="display:inline-flex;align-items:center;gap:4px">
-         <span class="muted" style="font-size:11px">6s (Opt):</span> <input type="number" id="sc6s1" placeholder="0" min="0" style="width:55px;padding:4px 6px;text-align:center;font-size:12px">
+        <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">
+         <span class="muted" style="font-size:11px">4s:</span> <input type="number" id="sc4s1" placeholder="0" min="0" style="width:48px;padding:4px 5px;text-align:center;font-size:12px">
+         <span class="muted" style="font-size:11px">6s:</span> <input type="number" id="sc6s1" placeholder="0" min="0" style="width:48px;padding:4px 5px;text-align:center;font-size:12px">
         </div>
        </div>
       </div>
@@ -3407,8 +3408,9 @@ Group B: Player C, Player D"></textarea></div>
        </div>
        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:6px">
         <label style="display:inline-flex;align-items:center;gap:6px;text-transform:none;margin:0;font-size:12px;cursor:pointer"> <input type="checkbox" id="scA2" style="width:auto"> <b>All Out</b> (Full overs for NRR) </label>
-        <div style="display:inline-flex;align-items:center;gap:4px">
-         <span class="muted" style="font-size:11px">6s (Opt):</span> <input type="number" id="sc6s2" placeholder="0" min="0" style="width:55px;padding:4px 6px;text-align:center;font-size:12px">
+        <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">
+         <span class="muted" style="font-size:11px">4s:</span> <input type="number" id="sc4s2" placeholder="0" min="0" style="width:48px;padding:4px 5px;text-align:center;font-size:12px">
+         <span class="muted" style="font-size:11px">6s:</span> <input type="number" id="sc6s2" placeholder="0" min="0" style="width:48px;padding:4px 5px;text-align:center;font-size:12px">
         </div>
        </div>
       </div>
@@ -3584,6 +3586,13 @@ Group B: Player C, Player D"></textarea></div>
        </div>
        <div class="form-group">
         <label>Tournament Tagline (Optional)</label><input id="cfgTagline" placeholder="e.g. Official Season 67 • Real Cricket">
+       </div>
+       <div class="form-group">
+        <label>Play Mode</label>
+        <select id="cfgPlayEnvironment">
+         <option value="mobile" selected>📱 Mobile Game (Real Cricket)</option>
+         <option value="real_life">🏏 Real-Life Cricket</option>
+        </select>
        </div>
        <div class="form-group">
         <label>Cricket Match Format</label>
@@ -3964,8 +3973,15 @@ function initFirebaseAuth(){
         window.__cloudAuthWarned = false;
         try{ await fbUpsertProfile(user); }catch(e){ console.warn(e); }
         try{
+          if(isDeveloperAccount()){
+            developerMode = true;
+            try{ window.__safeSession.setItem('apex_developer_mode', '1'); }catch(_){}
+          }
           if(isAdmin && (getDirtyTournamentIds().length || getDeletedDirtyIds().length)){
             setTimeout(()=>{ queueCloudPush(); }, 150);
+          } else {
+            // Pull fresh cloud data immediately once Firebase Auth resolves on startup!
+            setTimeout(()=>{ try{ fetchCloudData(true); }catch(_){} }, 80);
           }
         }catch(e){}
       }else{
@@ -4138,9 +4154,19 @@ function recoveryListHtml(){
 let lastCloudDataStr = '';
 let isAdmin = false;
 const MASTER_PIN = null; // public build: no global master override for normal users
-const DEVELOPER_PIN = 'APEX-DEV-2026';
+const DEVELOPER_EMAILS = ['peetalahareesh2014@gmail.com'];
 let developerMode = false;
-try{ developerMode = window.__safeSession.getItem('apex_developer_mode') === '1'; }catch(e){}
+function isDeveloperAccount(accOverride){
+  try{
+    const fbEmail = String((__fbUser || (__fbAuth && __fbAuth.currentUser))?.email || '').trim().toLowerCase();
+    if(fbEmail && DEVELOPER_EMAILS.includes(fbEmail)) return true;
+    const acc = accOverride || (typeof hsGetSession === 'function' ? hsGetSession() : null);
+    const accEmail = String(acc?.contact || '').trim().toLowerCase();
+    if(accEmail && DEVELOPER_EMAILS.includes(accEmail)) return true;
+  }catch(e){}
+  return false;
+}
+try{ developerMode = window.__safeSession.getItem('apex_developer_mode') === '1' && isDeveloperAccount(); }catch(e){}
 
 let accessLevel = 'public';
 let selectedTournamentId = null; // Public viewer selection; intentionally not persisted.
@@ -4456,7 +4482,7 @@ function init(){
   }
   initHiddenAdminGesture();
   try{ seedHunterPremierLeagueIfMissing(); }catch(e){}
-  fetchCloudData();
+  fetchCloudData(true);
   setTimeout(function(){
     try{
       seedHunterPremierLeagueIfMissing();
@@ -4588,48 +4614,64 @@ function propagateDisplayNameToLinkedTournaments(userId, newDisplayName){
     });
   });
 }
-function computeUserCareerRecord(acc){
-  const empty = { tournamentsPlayed:0, matches:0, runs:0, balls:0, wickets:0, runsConceded:0, ballsBowled:0, sixes:0, mvp:0, bestBat:null, bestBowl:null, titles:0, history:[] };
+function computeUserCareerRecord(acc, envFilter){
+  const empty = { tournamentsPlayed:0, matches:0, runs:0, balls:0, wickets:0, runsConceded:0, ballsBowled:0, fours:0, sixes:0, mvp:0, bestBat:null, bestBowl:null, titles:0, history:[] };
   if(!acc) return empty;
   const uidKey = canonicalUserIdKey(acc.userId);
   if(!uidKey) return empty;
   const res = { ...empty, history:[] };
   Object.values(db.tournaments || {}).forEach(t => {
     if(!t || (!developerMode && isTestTournament(t))) return;
+    const tEnv = String(t.playEnvironment || 'mobile');
+    if(envFilter && envFilter !== 'all' && tEnv !== envFilter) return;
     const links = t.playerLinks || {};
     const matchedSlots = Object.entries(links).filter(([, linked]) => canonicalUserIdKey(linked) === uidKey).map(([slot]) => slot);
     if(!matchedSlots.length) return;
-    let tMatches=0, tRuns=0, tWkts=0, tSixes=0, tMvp=0;
+    let tMatches=0, tRuns=0, tWkts=0, tFours=0, tSixes=0, tMvp=0;
     const slotSet = new Set(matchedSlots.map(s=>s.toLowerCase()));
-    (t.stages || []).forEach(st => (st.fixtures || []).filter(f => f && f.completed && !f.isNR && !f.isForfeit).forEach(f => {
-      const checkSide = (name, r, w, o, s6, oppW, oppR, oppO) => {
+    const pTeamMap = {};
+    if(Array.isArray(t.teams)) t.teams.forEach(tm=>(tm.players||[]).forEach(p=>{ pTeamMap[String(p).toLowerCase()] = tm.name; }));
+    (t.stages || []).forEach(st => (st.fixtures || []).forEach(f => {
+      if(!f) return;
+      const addLine = (name, r, bb, wTaken, rConc, bBowl, s4, s6, won, isNRFlag) => {
         if(!name || !slotSet.has(String(name).toLowerCase())) return;
-        const rr = Number(r)||0, ww = Number(w)||0, bb = Number(o)||0, sx = Number(s6)||0;
-        const wTaken = Number(oppW)||0, rConc = Number(oppR)||0, bBowl = Number(oppO)||0;
-        tMatches++; tRuns += rr; tWkts += wTaken; tSixes += sx;
-        const mvpAdd = rr + (wTaken * 20) + (sx * 2);
+        const rr=Number(r)||0, bl=Number(bb)||0, wt=Number(wTaken)||0, rc=Number(rConc)||0, bbl=Number(bBowl)||0, f4=Number(s4)||0, sx=Number(s6)||0;
+        if(isNRFlag && !hasRecordedCricketActivity(rr,bl,wt,rc,bbl,f4,sx)) return;
+        tMatches++; tRuns += rr; tWkts += wt; tFours += f4; tSixes += sx;
+        const mvpAdd = computeTournamentMvpPoints(rr, wt, sx, !!won && !isNRFlag);
         tMvp += mvpAdd;
-        res.balls += bb; res.runsConceded += rConc; res.ballsBowled += bBowl;
-        if(!res.bestBat || rr > res.bestBat.runs) res.bestBat = { runs:rr, wkts:ww, tourney:t.name };
-        if(wTaken > 0 && (!res.bestBowl || wTaken > res.bestBowl.wkts || (wTaken===res.bestBowl.wkts && rConc < res.bestBowl.runs))){
-          res.bestBowl = { wkts:wTaken, runs:rConc, tourney:t.name };
+        res.balls += bl; res.runsConceded += rc; res.ballsBowled += bbl;
+        if(rr > 0 && (!res.bestBat || rr > res.bestBat.runs)) res.bestBat = { runs:rr, tourney:t.name };
+        if(wt > 0 && (!res.bestBowl || wt > res.bestBowl.wkts || (wt===res.bestBowl.wkts && rc < res.bestBowl.runs))){
+          res.bestBowl = { wkts:wt, runs:rc, tourney:t.name };
         }
       };
       if(Array.isArray(f.legs) && f.legs.length){
-        f.legs.filter(l=>l&&l.completed&&!l.isNR&&!l.isForfeit).forEach(l=>{
-          checkSide(l.p1, l.r1, l.w1, l.o1, l.s6_1, l.w2, l.r2, l.o2);
-          checkSide(l.p2, l.r2, l.w2, l.o2, l.s6_2, l.w1, l.r1, l.o1);
+        f.legs.filter(l=>l&&l.completed&&!l.isForfeit).forEach(l=>{
+          // Team Legs convention: l.w1 = wickets taken by l.p1, l.w2 = wickets taken by l.p2
+          addLine(l.p1, l.r1, l.o1, l.w1, l.r2, l.o2, l.s4_1, l.s6_1, l.winner===l.p1, !!l.isNR);
+          addLine(l.p2, l.r2, l.o2, l.w2, l.r1, l.o1, l.s4_2, l.s6_2, l.winner===l.p2, !!l.isNR);
         });
-      } else {
-        checkSide(f.p1, f.r1, f.w1, f.o1, f.s6_1, f.w2, f.r2, f.o2);
-        checkSide(f.p2, f.r2, f.w2, f.o2, f.s6_2, f.w1, f.r1, f.o1);
+      } else if(f.completed && !f.isForfeit && Array.isArray(f.playerCard) && f.playerCard.length){
+        f.playerCard.forEach(pc=>{
+          const nm = pc.name || pc.playerName;
+          const pTeam = pc.teamName || pTeamMap[String(nm||'').toLowerCase()] || '';
+          const won = !f.isNR && !f.teamResultTie && !!f.winner && String(pTeam)===String(f.winner);
+          addLine(nm, pc.runs, pc.balls||pc.ballsFaced, pc.wickets, pc.runsConceded, pc.ballsBowled, pc.fours||pc.s4, pc.sixes||pc.s6, won, !!f.isNR);
+        });
+      } else if(f.completed && !f.isForfeit){
+        // 1v1 convention: f.w2 = wickets taken by f.p1, f.w1 = wickets taken by f.p2
+        addLine(f.p1, f.r1, f.o1, f.w2, f.r2, f.o2, f.s4_1, f.s6_1, f.winner===f.p1, !!f.isNR);
+        addLine(f.p2, f.r2, f.o2, f.w1, f.r1, f.o1, f.s4_2, f.s6_2, f.winner===f.p2, !!f.isNR);
       }
     }));
     res.tournamentsPlayed++;
-    res.matches += tMatches; res.runs += tRuns; res.wickets += tWkts; res.sixes += tSixes; res.mvp += tMvp;
+    res.matches += tMatches; res.runs += tRuns; res.wickets += tWkts; res.fours += tFours; res.sixes += tSixes; res.mvp += tMvp;
     const comp = typeof getTournamentCompletion === 'function' ? getTournamentCompletion(t) : { complete:false };
-    if(comp.complete && comp.champion && slotSet.has(String(comp.champion).toLowerCase())) res.titles++;
-    res.history.push({ id:t.id, name:t.name, slot:matchedSlots[0], matches:tMatches, runs:tRuns, wickets:tWkts, mvp:tMvp, champion: !!(comp.complete && comp.champion && slotSet.has(String(comp.champion).toLowerCase())) });
+    const champName = comp.complete && comp.champion ? String(comp.champion).toLowerCase() : '';
+    const isChamp = !!champName && (slotSet.has(champName) || matchedSlots.some(sl => String(pTeamMap[sl.toLowerCase()]||'').toLowerCase() === champName));
+    if(isChamp) res.titles++;
+    res.history.push({ id:t.id, name:t.name, playEnvironment:tEnv, slot:matchedSlots[0], matches:tMatches, runs:tRuns, wickets:tWkts, mvp:tMvp, champion:isChamp });
   });
   return res;
 }
@@ -4744,10 +4786,9 @@ function hsPromptTournamentPin(t, actionLabel){
   const msg = (actionLabel||'Manage') + ' "' + name + '"\n\nEnter this tournament\'s admin PIN:';
   const pin = prompt(msg);
   if(pin==null) return false;
-  if(String(pin).trim() === DEVELOPER_PIN){
+  if(isDeveloperAccount()){
     developerMode = true;
     try{ window.__safeSession.setItem('apex_developer_mode','1'); }catch(e){}
-    showToast('Developer unlock accepted','success');
     return true;
   }
   const pins = Array.isArray(t.adminPins) ? t.adminPins.map(String) : (t.adminPin ? [String(t.adminPin)] : []);
@@ -4945,11 +4986,14 @@ function mergeTournamentForPush(localT, cloudT, fixtureKeysMap, hasConfigEdit){
   return merged;
 }
 
-async function fetchCloudData(){
+async function fetchCloudData(forceFresh){
   if(cloudSyncBusy) return; // Never race an active cloud push!
   try {
     const localBeforeFetch=db;
-    const res=await fetch(await getAuthedFirebaseUrl(),{cache:'no-store'});
+    let url = await getAuthedFirebaseUrl();
+    url += (url.includes('?') ? '&' : '?') + '_ts=' + Date.now();
+    if(forceFresh) lastCloudDataStr = '';
+    const res=await fetch(url,{cache:'no-store'});
     if(!res.ok) throw new Error('Cloud read failed: '+res.status);
     const data=await res.json();
     data.deletedTournaments=data.deletedTournaments||{}; data.deletedTombstones=data.deletedTombstones||{};
@@ -5403,7 +5447,7 @@ function renderQualificationQuery(){
   const poolFixtures = (pool?.fixtures) || (stage.fixtures||[]).filter(f=>poolPlayers.includes(String(f.p1))&&poolPlayers.includes(String(f.p2)));
   const allowCross = !!(pool && pool.allowCrossGroup);
   const baselineMap = (typeof getCarryBaselineMap === 'function') ? getCarryBaselineMap(t, stage, poolPlayers) : null;
-  const oversQuota = Math.max(1, Number(t.overs)||Number(stage.overs)||5);
+  const oversQuota = getEffectiveMatchOversQuota(t, stage);
   const qiOpts = { oversQuota, allowCrossGroup: allowCross };
   const rows=computeStandingsWithPermutations(
     poolFixtures, poolPlayers,
@@ -5433,8 +5477,9 @@ function renderQualificationQuery(){
   const basePct = (b.pct!=null) ? Number(b.pct) : (b.status==='Q'?100:b.status==='E'?0:50);
   const pct = (b.pct!=null) ? b.pct : (b.status==='Q'?100:b.status==='E'?0:null);
   const statusWord = b.status==='Q' ? 'QUALIFIED (Q)' : b.status==='E' ? 'ELIMINATED (E)' : 'IN CONTENTION';
+  const estTag = (b.status==='In Contention' && b.nrrSampled) ? ' Est.' : '';
   const statusBig = (pct!=null && b.status!=='Q' && b.status!=='E')
-    ? ((pct===0 && !isQiIncludeTieNR()) ? ('0% (Tie/NR only) · '+statusWord) : (pct+'% · '+statusWord))
+    ? ((pct===0 && !isQiIncludeTieNR()) ? ('0% (Tie/NR only) · '+statusWord) : (pct+'%'+estTag+' · '+statusWord))
     : ((b.status==='Q'||b.status==='E') ? (statusWord+(pct!=null?' · '+pct+'%':'')) : statusWord);
   const statusCls = b.status==='Q' ? 'qi-pro-q' : b.status==='E' ? 'qi-pro-e' : 'qi-pro-c';
   const nrrStr = (Number(b.nrr)>=0?'+':'') + (Number(b.nrr)||0).toFixed(3);
@@ -6752,12 +6797,26 @@ function generateStageFixtures(t, stageNum){
   }
   stage.fixtures=newFixtures;
 }
-function ovToBalls(s){
+function ovToBalls(s, maxOversOpt){
   s = String(s||'').trim(); if(!s) return null;
+  if(!/^\d+(\.\d)?$/.test(s)) return null;
   const p = s.split('.');
   const o = parseInt(p[0], 10), b = p.length > 1 ? parseInt(p[1], 10) : 0;
-  if(isNaN(o) || isNaN(b) || b < 0 || b > 5) return null;
-  return o * 6 + b;
+  if(isNaN(o) || isNaN(b) || o < 0 || b < 0 || b > 5) return null;
+  const total = o * 6 + b;
+  if(Number.isFinite(Number(maxOversOpt)) && Number(maxOversOpt) > 0 && total > Number(maxOversOpt) * 6) return null;
+  return total;
+}
+function getEffectiveMatchOversQuota(t, stage){
+  if(t && typeof isTeamTournament==='function' && isTeamTournament(t)){
+    const fmt = String(t.teamSettings?.teamFormat || t.teamSettings?.inningsMode || 'legs');
+    if(fmt === 'legs'){
+      const nLegs = Math.max(1, Number(t.teamSettings?.playersPerTeam) || 3);
+      const legOv = Math.max(1, Number(t.teamSettings?.legMatchOvers || t.overs) || 5);
+      return nLegs * legOv;
+    }
+  }
+  return Math.max(1, Number(stage?.overs) || Number(t?.overs) || 5);
 }
 
 function ballsToOv(b){
@@ -6814,22 +6873,26 @@ function computeStandingsForList(fixtures, playerList, winPts, tiePts, bonusPts,
 
   (fixtures || []).filter(f=>f && f.completed).forEach(m => {
     const A = s[m.p1], B = s[m.p2];
-    if(!A || !B) return;
-    A.p++; B.p++;
-    if(m.isNR){ A.nr++; B.nr++; A.pts += effectiveNrPts; B.pts += effectiveNrPts; return; }
-    if(m.isForfeit){
-      if(m.winner === m.p1){ A.w++; A.pts += resolvePtsConfig(winPts, 3); B.l++; }
-      else if(m.winner === m.p2){ B.w++; B.pts += resolvePtsConfig(winPts, 3); A.l++; }
+    if(!A && !B) return; // Supports both intra-group (A & B) and cross-group/hybrid (A or B) pools!
+    if(A) A.p++;
+    if(B) B.p++;
+    if(m.isNR){
+      if(A){ A.nr++; A.pts += effectiveNrPts; }
+      if(B){ B.nr++; B.pts += effectiveNrPts; }
       return;
     }
-    A.rf += (m.r1 || 0); B.rf += (m.r2 || 0);
-    A.ra += (m.r2 || 0); B.ra += (m.r1 || 0);
-    A.of += (m.o1 || 0); B.of += (m.o2 || 0);
-    A.ob += (m.o2 || 0); B.ob += (m.o1 || 0);
+    if(m.isForfeit){
+      if(m.winner === m.p1){ if(A){ A.w++; A.pts += resolvePtsConfig(winPts, 3); } if(B) B.l++; }
+      else if(m.winner === m.p2){ if(B){ B.w++; B.pts += resolvePtsConfig(winPts, 3); } if(A) A.l++; }
+      return;
+    }
+    if(A){ A.rf += (m.r1 || 0); A.ra += (m.r2 || 0); A.of += (m.o1 || 0); A.ob += (m.o2 || 0); }
+    if(B){ B.rf += (m.r2 || 0); B.ra += (m.r1 || 0); B.of += (m.o2 || 0); B.ob += (m.o1 || 0); }
 
     let winner = m.winner;
     if(m.teamResultTie){
-      A.t++; B.t++; A.pts += resolvePtsConfig(tiePts, 1); B.pts += resolvePtsConfig(tiePts, 1);
+      if(A){ A.t++; A.pts += resolvePtsConfig(tiePts, 1); }
+      if(B){ B.t++; B.pts += resolvePtsConfig(tiePts, 1); }
       return;
     }
     if(!winner){
@@ -6838,13 +6901,14 @@ function computeStandingsForList(fixtures, playerList, winPts, tiePts, bonusPts,
     }
 
     if(winner === m.p1){
-      A.w++; A.pts += resolvePtsConfig(winPts, 3); B.l++;
-      if(m.bonusPoint && Number(bonusPts)>0){ A.bp++; A.pts += Number(bonusPts); }
+      if(A){ A.w++; A.pts += resolvePtsConfig(winPts, 3); if(m.bonusPoint && Number(bonusPts)>0){ A.bp++; A.pts += Number(bonusPts); } }
+      if(B) B.l++;
     } else if(winner === m.p2){
-      B.w++; B.pts += resolvePtsConfig(winPts, 3); A.l++;
-      if(m.bonusPoint && Number(bonusPts)>0){ B.bp++; B.pts += Number(bonusPts); }
+      if(B){ B.w++; B.pts += resolvePtsConfig(winPts, 3); if(m.bonusPoint && Number(bonusPts)>0){ B.bp++; B.pts += Number(bonusPts); } }
+      if(A) A.l++;
     } else {
-      A.t++; B.t++; A.pts += resolvePtsConfig(tiePts, 1); B.pts += resolvePtsConfig(tiePts, 1);
+      if(A){ A.t++; A.pts += resolvePtsConfig(tiePts, 1); }
+      if(B){ B.t++; B.pts += resolvePtsConfig(tiePts, 1); }
     }
   });
 
@@ -6855,13 +6919,17 @@ function computeStandingsForList(fixtures, playerList, winPts, tiePts, bonusPts,
 }
 
 /** Carry-forward baseline from source stage. Pure; never mutates stored totals. */
-function getCarryBaselineMap(t, stage, playerList){
+function getCarryBaselineMap(t, stage, playerList, visited){
   if(!t || !stage) return null;
   const cf = stage.carryForward || {};
   if(!cf.points && !cf.nrr && !cf.bonus) return null;
   if(stage.sourceStage == null || stage.sourceStage === '') return null;
+  const vis = visited instanceof Set ? visited : new Set();
+  const curKey = Number(stage.stageNum);
+  if(vis.has(curKey)) return null;
+  vis.add(curKey);
   const src = (t.stages || []).find(s => Number(s.stageNum) === Number(stage.sourceStage));
-  if(!src) return null;
+  if(!src || vis.has(Number(src.stageNum))) return null;
   const players = (playerList && playerList.length) ? playerList : (stage.participants || []);
   const srcPlayers = (src.participants && src.participants.length)
     ? src.participants.slice()
@@ -6872,8 +6940,17 @@ function getCarryBaselineMap(t, stage, playerList){
   const NR = resolvePtsConfig(t.nrPts, 1);
   const Bfull = effectiveBonusPts(t);
   const fx = src.fixtures || [];
-  const withB = computeStandingsForList(fx, srcPlayers, W, Ti, Bfull, NR);
-  const noB = computeStandingsForList(fx, srcPlayers, W, Ti, 0, NR);
+  const srcBaseFull = getCarryBaselineMap(t, src, srcPlayers, new Set(vis));
+  let srcBaseNoBonus = null;
+  if(srcBaseFull){
+    srcBaseNoBonus = {};
+    Object.keys(srcBaseFull).forEach(k => {
+      const r = srcBaseFull[k];
+      srcBaseNoBonus[k] = { ...r, pts: Math.max(0, (Number(r.pts)||0) - (Number(r.bp)||0)*Bfull), bp: 0 };
+    });
+  }
+  const withB = computeStandingsForList(fx, srcPlayers, W, Ti, Bfull, NR, srcBaseFull);
+  const noB = computeStandingsForList(fx, srcPlayers, W, Ti, 0, NR, srcBaseNoBonus);
   const withMap = {}, noMap = {};
   withB.forEach(r => { withMap[r.name] = r; });
   noB.forEach(r => { noMap[r.name] = r; });
@@ -7622,7 +7699,8 @@ function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nr
       maxPts: Number(baseMap[p]?.pts)||0,
       minPts: Number(baseMap[p]?.pts)||0,
       sumPos: 0,
-      strictQualCount: 0
+      strictQualCount: 0,
+      hadOpenCutTie: false
     };
   });
 
@@ -7746,11 +7824,10 @@ function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nr
           s.strictQualCount++;
           s.wQual += pathWeight;
         } else if(rg.bestPos <= qualifyK){
-          // Score-aware NRR check: if sub-trials show player qualifies (or pathWeight===0 feasibility branch)
+          s.hadOpenCutTie = true;
           const frac = subQualFrac ? subQualFrac[i] : 0;
-          if(pathWeight === 0 || frac > 0 || baseRem[p] > 0){
-            s.qualifyCount++;
-          }
+          // Any leaf where bestPos <= k is mathematically reachable via legal NRR!
+          s.qualifyCount++;
           s.wQual += pathWeight * frac;
         }
       }
@@ -7896,17 +7973,39 @@ function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts,
   const cutPts = liveRows.length >= qualifyK ? liveRows[qualifyK-1].pts : 0;
 
   const results = {};
+  // Compute exact deterministic post-forced min/max points (NEVER read mcMaxPts/mcMinPts for Q/E!)
+  const detMax = { ...maxPts }, detMin = { ...minPts }, detRem = { ...remCount };
+  if(forcedIdx >= 0 && forcedSpec && remaining[forcedIdx]){
+    const ff = remaining[forcedIdx];
+    const fp1 = String(ff.p1), fp2 = String(ff.p2);
+    const fClasses = qiV2FilterClassesForForced(qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts, true), forcedSpec.tag);
+    if(fClasses.length){
+      const p1MinAdd = Math.min(...fClasses.map(c=>c.pts1||0)), p1MaxAdd = Math.max(...fClasses.map(c=>c.pts1||0));
+      const p2MinAdd = Math.min(...fClasses.map(c=>c.pts2||0)), p2MaxAdd = Math.max(...fClasses.map(c=>c.pts2||0));
+      if(detRem[fp1] !== undefined){
+        detRem[fp1] = Math.max(0, detRem[fp1] - 1);
+        detMin[fp1] = (Number(baseMap[fp1]?.pts)||0) + p1MinAdd;
+        detMax[fp1] = (Number(baseMap[fp1]?.pts)||0) + p1MaxAdd + detRem[fp1] * winV;
+      }
+      if(detRem[fp2] !== undefined){
+        detRem[fp2] = Math.max(0, detRem[fp2] - 1);
+        detMin[fp2] = (Number(baseMap[fp2]?.pts)||0) + p2MinAdd;
+        detMax[fp2] = (Number(baseMap[fp2]?.pts)||0) + p2MaxAdd + detRem[fp2] * winV;
+      }
+    }
+  }
+
   players.forEach((target, idx)=>{
-    const effMax = forcedIdx >= 0 ? Math.max(Number(baseMap[target]?.pts)||0, mcMaxPts[idx]) : maxPts[target];
-    const effMin = forcedIdx >= 0 ? Math.min(effMax, mcMinPts[idx]) : minPts[target];
-    const aboveMax = players.filter(p=>p!==target && (Number(baseMap[p]?.pts)||0) > effMax).length;
-    const foreverBelow = players.filter(p=>p!==target && maxPts[p] < effMin).length;
-    const lockedAhead = qiV2PermanentlyAheadCount(target, players, baseMap, remCount, maxPts, minPts);
+    const effMax = detMax[target];
+    const effMin = detMin[target];
+    const aboveMax = players.filter(p=>p!==target && detMin[p] > effMax).length;
+    const foreverBelow = players.filter(p=>p!==target && detMax[p] < effMin).length;
+    const lockedAhead = qiV2PermanentlyAheadCount(target, players, baseMap, detRem, detMax, detMin);
     const eliminated = aboveMax >= qualifyK || lockedAhead >= qualifyK;
     const clinched = !eliminated && foreverBelow >= (N - qualifyK);
 
     const bestPos = Math.min(N, Math.max(aboveMax, lockedAhead) + 1);
-    const canReach = players.filter(p=>p!==target && maxPts[p] >= effMin).length;
+    const canReach = players.filter(p=>p!==target && detMax[p] >= effMin).length;
     const worstPos = Math.min(N, Math.max(canReach + 1, lockedAhead + 1));
 
     let status, pct;
@@ -7939,8 +8038,10 @@ function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts,
       rem: myRem,
       possible: !eliminated,
       guaranteed: clinched,
-      outlook: eliminated?'Mathematically eliminated':clinched?'Guaranteed qualification':(pct===0 && !includeTieNR ? 'Tie/NR only (0% W/L)' : ('~'+pct+'% chance (Score-Aware Sim)')),
-      nrrDependent:false,
+      outlook: eliminated?'Mathematically eliminated':clinched?'Guaranteed qualification':(pct===0 && !includeTieNR ? 'Tie/NR only (0% W/L)' : ('~'+pct+'% (Est. · >5 matches left)')),
+      nrrDependent:true,
+      isExactProof: eliminated || clinched,
+      nrrSampled: !(eliminated || clinched),
       cutPts, magicWin, elimNumber, lockedAhead,
       engine:'qiV2-score-mc'
     };
@@ -8029,9 +8130,10 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
     let pct = s.wTotal > 0 ? (Math.round((s.wQual / wTot) * 1000) / 10) : 0;
     let status, guaranteed, possible;
 
+    // Strict mathematical proof rules: NEVER promote sampled NRR sub-trials into Q or E!
     if(s.bestPos > k || s.qualifyCount === 0){
       status = 'E'; guaranteed = false; possible = false; pct = 0;
-    } else if(s.worstPos <= k || (s.wTotal > 0 && pct >= 99.95 && s.qualifyCount === total)){
+    } else if(s.worstPos <= k){
       status = 'Q'; guaranteed = true; possible = true; pct = 100;
     } else {
       status = 'In Contention'; guaranteed = false; possible = true;
@@ -8042,16 +8144,6 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
       status = 'E'; guaranteed = false; possible = false; pct = 0;
       if(s.bestPos < lockedAhead + 1) s.bestPos = Math.min(N, lockedAhead + 1);
       s.worstPos = Math.max(s.worstPos, lockedAhead + 1);
-    }
-
-    // If a forced outcome left 0% realistic chance across all score sub-trials (e.g. Suhas after Suryakant beats Riju),
-    // treat that conditional scenario as Eliminated (0%) cleanly!
-    const isForcedMode = !!(opts && opts.forcedMatch);
-    if(isForcedMode && status === 'In Contention' && pct === 0 && s.wQual === 0){
-      status = 'E'; guaranteed = false; possible = false;
-    }
-    if(isForcedMode && status === 'In Contention' && pct >= 99.95 && s.wTotal > 0 && Math.abs(s.wQual - s.wTotal) < 1e-6){
-      status = 'Q'; guaranteed = true; possible = true; pct = 100;
     }
 
     const rivalsNeverCatch = players.filter(r => r !== p && (maxPtsAll[r]||0) < s.minPts).length;
@@ -8073,11 +8165,12 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
 
     const avgPos = Math.round((s.sumPos / total) * 10) / 10;
     const finalPct = (status === 'Q') ? 100 : (status === 'E') ? 0 : (includeTieNR ? Math.max(0.1, Math.min(99.9, pct)) : Math.max(0, Math.min(99.9, pct)));
+    const isExactProof = (status === 'Q' || status === 'E' || !s.hadOpenCutTie);
     const outlookTxt = status === 'Q'
       ? 'Guaranteed qualification'
       : status === 'E'
         ? (s.bestPos > k ? ('Eliminated — best possible finish is #'+s.bestPos+' (top '+k+' qualify)') : 'Mathematically eliminated')
-        : (finalPct === 0 && !includeTieNR ? 'Tie/NR only (0% W/L)' : ('~'+finalPct+'% chance'));
+        : (finalPct === 0 && !includeTieNR ? 'Tie/NR only (0% W/L)' : ('~'+finalPct+'%' + (s.hadOpenCutTie ? ' (NRR Est.)' : ' chance')));
 
     out[p] = {
       status,
@@ -8092,8 +8185,10 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
       possible,
       guaranteed: status === 'Q',
       outlook: outlookTxt,
-      nrrDependent: false,
-      engine: 'qiV2-exact-scoreaware',
+      nrrDependent: !!s.hadOpenCutTie,
+      isExactProof,
+      nrrSampled: !!s.hadOpenCutTie,
+      engine: s.hadOpenCutTie ? 'qiV2-exact-nrr-est' : 'qiV2-exact',
       qualifyScenarios: s.qualifyCount,
       totalScenarios: total,
       cutPts,
@@ -8580,8 +8675,8 @@ function qiV2BuildScenarios(fixtures, players, target, qualifyK, winPts, tiePts,
   }).slice(0, 6);
 
   others.forEach(f=>{
-    const aWin = qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w1');
-    const bWin = qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w2');
+    const aWin = qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w1', f.id, baselineMap, qiOpts);
+    const bWin = qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w2', f.id, baselineMap, qiOpts);
     const aw = aWin[target]||{}, bw = bWin[target]||{};
     const baseSt = base.status, basePct = base.pct;
     const aChanged = aw.status!==baseSt || aw.pct!==basePct || aw.bestPos!==base.bestPos;
@@ -8706,7 +8801,7 @@ function renderQiPlayerDetail(){
   let pack;
   try{
     const __detBase = (typeof getCarryBaselineMap === 'function') ? getCarryBaselineMap(t, stage, players) : null;
-    pack = qiV2BuildScenarios(fixtures, players, name, k, winPts, tiePts, bonusPts, nrPts, Number(t.overs)||5, __detBase, !!(pool && pool.allowCrossGroup));
+    pack = qiV2BuildScenarios(fixtures, players, name, k, winPts, tiePts, bonusPts, nrPts, getEffectiveMatchOversQuota(t, stage), __detBase, !!(pool && pool.allowCrossGroup));
   }catch(e){
     host.innerHTML = '<div class="muted">Could not build scenarios: '+esc(String(e.message||e))+'</div>';
     return;
@@ -8818,7 +8913,7 @@ function computeStandingsWithPermutations(fixtures, playerList, winPts, tiePts, 
 
   if(typeof QI_V2!=='undefined' && QI_V2.enabled && typeof qiV2AnalyseAll==='function'){
     const __isCross = (__t && (String(__t.format||'')==='two_groups_cross' || String(__t.format||'')==='two_groups_hybrid'));
-    const v2 = qiV2AnalyseAll(fixtures, players, k, resolvePtsConfig(winPts,3), resolvePtsConfig(tiePts,1), bonusPts, resolvePtsConfig(nrPts,1), null, __baseline, { oversQuota: Number(__t?.overs)||5, allowCrossGroup: __isCross });
+    const v2 = qiV2AnalyseAll(fixtures, players, k, resolvePtsConfig(winPts,3), resolvePtsConfig(tiePts,1), bonusPts, resolvePtsConfig(nrPts,1), null, __baseline, { oversQuota: getEffectiveMatchOversQuota(__t, null), allowCrossGroup: __isCross });
     rows.forEach(row=>{
       const a = v2[row.name] || {};
       Object.assign(row, a);
@@ -9192,8 +9287,7 @@ function renderBracketStage(t,stage){
 }
 
 function getLiveCapLeaders(t){
-  const stats=typeof accumulatePlayerMatchStats==='function'?accumulatePlayerMatchStats(t):{};
-  const arr=Object.values(stats);
+  const arr=typeof getFilteredPlayerStatsArray==='function'?getFilteredPlayerStatsArray(t):Object.values(accumulatePlayerMatchStats(t));
   const orange=[...arr].filter(x=>x.runs>0).sort((a,b)=>
     b.runs-a.runs ||
     ((b.balls?b.runs/b.balls:0)-(a.balls?a.runs/a.balls:0)) ||
@@ -9268,9 +9362,9 @@ function renderStandingsTables(t, stage){
 
   const allGroupRows = [];
   groups.forEach(g=>{
-    const gf = isGrouped
-      ? (stage.fixtures||[]).filter(f => g.players.includes(f.p1) && g.players.includes(f.p2))
-      : (stage.fixtures||[]);
+    const gf = Array.isArray(g.fixtures)
+      ? g.fixtures
+      : (isGrouped ? (stage.fixtures||[]).filter(f => g.players.includes(f.p1) && g.players.includes(f.p2)) : (stage.fixtures||[]));
     g.rows = buildRows(g.players, gf, g.qualify);
     g.rows.forEach((r,i)=>{ r.groupKey=g.key; r.groupLabel=g.label; r.groupPos=i+1; });
     allGroupRows.push(...g.rows);
@@ -9293,7 +9387,7 @@ function renderStandingsTables(t, stage){
 
   const qualificationRowHtml = (x) => {
     const neutral = !stageQualifyConfigured;
-    const rem = qv3Remaining(stage.fixtures||[], [x.name]).length;
+    const rem = (stage.fixtures||[]).filter(f=>f&&!f.completed&&(String(f.p1)===String(x.name)||String(f.p2)===String(x.name))).length;
     return `
     <tr>
       <td class="align-left" style="padding-left:14px"><button type="button" class="qi-name-btn player-chip" onclick='openQiPlayerDetail(${JSON.stringify(String(x.name))})' data-qi-name="${String(x.name).replace(/"/g,'&quot;')}">${getAvatarHtml(x.name,'team-avatar-sm')}<b>${esc(x.name)}</b></button></td>
@@ -9987,16 +10081,39 @@ function getTournamentCompletion(t){
   }
   return {complete:false,stage:last};
 }
+function computeTournamentMvpPoints(runs, wickets, sixes, wonMatch){
+  return (Number(runs)||0) + (Number(wickets)||0)*25 + (Number(sixes)||0)*4 + (wonMatch ? 15 : 0);
+}
+function getAwardEligibilityMinBalls(t){
+  const ov = Math.max(1, Number(t?.overs)||5);
+  return Math.max(6, Math.min(30, Math.round(ov * 2.4)));
+}
+function getFilteredPlayerStatsArray(t){
+  const stats = accumulatePlayerMatchStats(t);
+  let arr = Object.values(stats);
+  if(typeof isTeamTournament==='function' && isTeamTournament(t)){
+    const teamNames = new Set((t.teams||[]).map(tm=>String(tm.name||'').toLowerCase()));
+    (t.players||[]).forEach(p=>{
+      if(teamNames.has(String(p).toLowerCase()) || (t.teams||[]).some(tm=>tm.name===p)) teamNames.add(String(p).toLowerCase());
+    });
+    arr = arr.filter(s=>!teamNames.has(String(s.name||'').toLowerCase()));
+  }
+  return arr;
+}
 function getTournamentAwardResults(t){
-  const stats={}; (t.players||[]).forEach(p=>stats[p]={name:p,matches:0,runs:0,balls:0,s6:0,wickets:0,runsConceded:0,ballsBowled:0,mvp:0});
-  (t.stages||[]).forEach(st=>(st.fixtures||[]).filter(f=>f&&f.completed).forEach(m=>{const a=stats[m.p1],b=stats[m.p2];if(!a||!b)return;a.matches++;b.matches++;a.runs+=Number(m.r1)||0;b.runs+=Number(m.r2)||0;a.balls+=Number(m.o1)||0;b.balls+=Number(m.o2)||0;a.s6+=Number(m.s6_1)||0;b.s6+=Number(m.s6_2)||0;a.wickets+=Number(m.w2)||0;b.wickets+=Number(m.w1)||0;a.runsConceded+=Number(m.r2)||0;b.runsConceded+=Number(m.r1)||0;a.ballsBowled+=Number(m.o2)||0;b.ballsBowled+=Number(m.o1)||0;a.mvp+=(Number(m.r1)||0)+(Number(m.w2)||0)*25+(Number(m.s6_1)||0)*4+(m.winner===m.p1?15:0);b.mvp+=(Number(m.r2)||0)+(Number(m.w1)||0)*25+(Number(m.s6_2)||0)*4+(m.winner===m.p2?15:0);}));
-  const arr=Object.values(stats); const top=(key)=>[...arr].sort((a,b)=>b[key]-a[key]||a.name.localeCompare(b.name))[0]||null;
-  const econ=[...arr].filter(x=>x.ballsBowled>=12).sort((a,b)=>(a.runsConceded/a.ballsBowled)-(b.runsConceded/b.ballsBowled)||a.name.localeCompare(b.name))[0]||null;
-  const sr=[...arr].filter(x=>x.balls>=12&&x.runs>0).sort((a,b)=>(b.runs/b.balls)-(a.runs/a.balls)||b.runs-a.runs||a.name.localeCompare(b.name))[0]||null;
-  const sixCandidates=arr.filter(x=>Number(x.s6)>0); const sixes=sixCandidates.length?[...sixCandidates].sort((a,b)=>b.s6-a.s6||a.name.localeCompare(b.name))[0]:null;
-  const orangeCap=[...arr].filter(x=>x.runs>0).sort((a,b)=>b.runs-a.runs || (b.balls&&a.balls ? (b.runs/b.balls)-(a.runs/a.balls) : 0) || a.name.localeCompare(b.name))[0]||null;
-  const purpleCap=[...arr].filter(x=>x.wickets>0).sort((a,b)=>b.wickets-a.wickets || ((a.runsConceded/a.ballsBowled)-(b.runsConceded/b.ballsBowled)) || a.name.localeCompare(b.name))[0]||null;
-  return {mvp:top('mvp'),runs:top('runs'),wickets:top('wickets'),sixes,sr,econ,orangeCap,purpleCap};
+  const arr = getFilteredPlayerStatsArray(t);
+  const minB = getAwardEligibilityMinBalls(t);
+  const top = (key) => {
+    const cands = arr.filter(x => Number(x[key]) > 0);
+    return cands.length ? [...cands].sort((a,b)=>b[key]-a[key] || a.name.localeCompare(b.name))[0] : null;
+  };
+  const econ = [...arr].filter(x=>x.ballsBowled>=minB).sort((a,b)=>(a.runsConceded/a.ballsBowled)-(b.runsConceded/b.ballsBowled)||a.name.localeCompare(b.name))[0]||null;
+  const sr = [...arr].filter(x=>x.balls>=minB && x.runs>0).sort((a,b)=>(b.runs/b.balls)-(a.runs/a.balls)||b.runs-a.runs||a.name.localeCompare(b.name))[0]||null;
+  const sixCandidates = arr.filter(x=>Number(x.s6)>0);
+  const sixes = sixCandidates.length ? [...sixCandidates].sort((a,b)=>b.s6-a.s6||a.name.localeCompare(b.name))[0] : null;
+  const orangeCap = [...arr].filter(x=>x.runs>0).sort((a,b)=>b.runs-a.runs || ((b.balls?b.runs/b.balls:0)-(a.balls?a.runs/a.balls:0)) || a.name.localeCompare(b.name))[0]||null;
+  const purpleCap = [...arr].filter(x=>x.wickets>0).sort((a,b)=>b.wickets-a.wickets || ((a.ballsBowled?a.runsConceded/a.ballsBowled:Infinity)-(b.ballsBowled?b.runsConceded/b.ballsBowled:Infinity)) || a.name.localeCompare(b.name))[0]||null;
+  return {mvp:top('mvp'), runs:orangeCap||top('runs'), wickets:purpleCap||top('wickets'), sixes, sr, econ, orangeCap, purpleCap, minBalls:minB};
 }
 function renderTournamentCompletion(t){
   const box=document.getElementById('championCompletionContent'),nav=document.getElementById('nav_champion'); if(!box)return;
@@ -10053,6 +10170,9 @@ function renderTournamentCompletion(t){
 function emptyPlayerStat(name){
   return { name:name, matches:0, runs:0, balls:0, s4:0, s6:0, wickets:0, runsConceded:0, ballsBowled:0, mvp:0 };
 }
+function hasRecordedCricketActivity(r, balls, wkts, rConc, bBowl, s4, s6){
+  return (Number(r)||0)>0 || (Number(balls)||0)>0 || (Number(wkts)||0)>0 || (Number(rConc)||0)>0 || (Number(bBowl)||0)>0 || (Number(s4)||0)>0 || (Number(s6)||0)>0;
+}
 function accumulatePlayerMatchStats(t){
   const stats = {};
   const ensure = (name)=>{
@@ -10061,9 +10181,10 @@ function accumulatePlayerMatchStats(t){
     return stats[name];
   };
   const isTeam=typeof isTeamTournament==='function'&&isTeamTournament(t);
+  const playerTeamMap = {};
   if(isTeam && Array.isArray(t.teams)){
-    t.teams.forEach(tm=>(tm.players||[]).forEach(p=>ensure(p)));
-    (t.playerRecords||[]).forEach(pr=>{ if(pr&&pr.name&&pr.teamId) ensure(pr.name); });
+    t.teams.forEach(tm=>(tm.players||[]).forEach(p=>{ ensure(p); playerTeamMap[String(p).toLowerCase()] = tm.name; }));
+    (t.playerRecords||[]).forEach(pr=>{ if(pr&&pr.name&&pr.teamId){ ensure(pr.name); if(pr.teamName) playerTeamMap[String(pr.name).toLowerCase()] = pr.teamName; } });
   }else{
     (t.players||[]).forEach(p=>ensure(p));
     (t.playerRecords||[]).forEach(pr=>{ if(pr&&pr.name) ensure(pr.name); });
@@ -10073,47 +10194,62 @@ function accumulatePlayerMatchStats(t){
       if(!m) return;
       if(Array.isArray(m.legs)&&m.legs.length){
         m.legs.forEach(leg=>{
-          if(!leg||!leg.completed||leg.isNR) return;
+          if(!leg || !leg.completed || leg.isForfeit) return;
           const a=ensure(leg.p1), b=ensure(leg.p2);
           if(!a||!b) return;
+          const r1=Number(leg.r1)||0, r2=Number(leg.r2)||0, o1=Number(leg.o1)||0, o2=Number(leg.o2)||0;
+          const w1=Number(leg.w1)||0, w2=Number(leg.w2)||0, s4_1=Number(leg.s4_1)||0, s4_2=Number(leg.s4_2)||0, s6_1=Number(leg.s6_1)||0, s6_2=Number(leg.s6_2)||0;
+          // No Result: skip completely if no runs/wickets/overs were entered!
+          if(leg.isNR && !hasRecordedCricketActivity(r1,o1,w1,r2,o2,s4_1,s6_1) && !hasRecordedCricketActivity(r2,o2,w2,r1,o1,s4_2,s6_2)) return;
+          const wonA = !leg.isNR && leg.winner===leg.p1;
+          const wonB = !leg.isNR && leg.winner===leg.p2;
           a.matches++; b.matches++;
-          a.runs += Number(leg.r1)||0; a.balls += Number(leg.o1)||0;
-          b.runs += Number(leg.r2)||0; b.balls += Number(leg.o2)||0;
-          a.wickets += Number(leg.w1)||0; a.runsConceded += Number(leg.r2)||0; a.ballsBowled += Number(leg.o2)||0;
-          b.wickets += Number(leg.w2)||0; b.runsConceded += Number(leg.r1)||0; b.ballsBowled += Number(leg.o1)||0;
-          a.s6 += Number(leg.s6_1)||0; b.s6 += Number(leg.s6_2)||0;
-          a.mvp += (Number(leg.r1)||0) + (Number(leg.w1)||0)*25 + (Number(leg.s6_1)||0)*4 + (leg.winner===leg.p1?15:0);
-          b.mvp += (Number(leg.r2)||0) + (Number(leg.w2)||0)*25 + (Number(leg.s6_2)||0)*4 + (leg.winner===leg.p2?15:0);
+          a.runs += r1; a.balls += o1; a.s4 += s4_1; a.s6 += s6_1;
+          a.wickets += w1; a.runsConceded += r2; a.ballsBowled += o2;
+          a.mvp += computeTournamentMvpPoints(r1, w1, s6_1, wonA);
+          b.runs += r2; b.balls += o2; b.s4 += s4_2; b.s6 += s6_2;
+          b.wickets += w2; b.runsConceded += r1; b.ballsBowled += o1;
+          b.mvp += computeTournamentMvpPoints(r2, w2, s6_2, wonB);
         });
         return;
       }
+      // Strict completion & walkover gate BEFORE playerCard or 1v1 accumulation!
+      if(!m.completed || m.isForfeit) return;
       if(Array.isArray(m.playerCard)&&m.playerCard.length){
+        const hasAnyCardActivity = m.playerCard.some(pc => hasRecordedCricketActivity(pc.runs, pc.balls||pc.ballsFaced, pc.wickets, pc.runsConceded, pc.ballsBowled, pc.fours||pc.s4, pc.sixes||pc.s6));
+        if(m.isNR && !hasAnyCardActivity) return;
         m.playerCard.forEach(pc=>{
-          const s=ensure(pc.name||pc.playerName);
+          const pname = pc.name || pc.playerName;
+          const s = ensure(pname);
           if(!s) return;
-          s.runs += Number(pc.runs)||0;
-          s.balls += Number(pc.balls)||Number(pc.ballsFaced)||0;
-          s.wickets += Number(pc.wickets)||0;
-          s.runsConceded += Number(pc.runsConceded)||0;
-          s.ballsBowled += Number(pc.ballsBowled)||0;
-          s.s6 += Number(pc.sixes)||Number(pc.s6)||0;
-          s.mvp += (Number(pc.runs)||0) + (Number(pc.wickets)||0)*25 + (Number(pc.sixes)||Number(pc.s6)||0)*4;
-          if(m.completed) s.matches += 1;
+          const rr = Number(pc.runs)||0, bb = Number(pc.balls)||Number(pc.ballsFaced)||0;
+          const wk = Number(pc.wickets)||0, rc = Number(pc.runsConceded)||0, bBowl = Number(pc.ballsBowled)||0;
+          const s4 = Number(pc.fours)||Number(pc.s4)||0, s6 = Number(pc.sixes)||Number(pc.s6)||0;
+          if(m.isNR && !hasRecordedCricketActivity(rr,bb,wk,rc,bBowl,s4,s6)) return;
+          const pTeam = pc.teamName || playerTeamMap[String(pname||'').toLowerCase()] || '';
+          const wonTeam = !m.isNR && !m.teamResultTie && !!m.winner && String(pTeam)===String(m.winner);
+          s.matches += 1;
+          s.runs += rr; s.balls += bb; s.s4 += s4; s.s6 += s6;
+          s.wickets += wk; s.runsConceded += rc; s.ballsBowled += bBowl;
+          s.mvp += computeTournamentMvpPoints(rr, wk, s6, wonTeam);
         });
         return;
       }
-      if(!m.completed) return;
       if(isTeam) return;
       const p1=ensure(m.p1), p2=ensure(m.p2);
       if(!p1||!p2) return;
+      const r1=Number(m.r1)||0, r2=Number(m.r2)||0, o1=Number(m.o1)||0, o2=Number(m.o2)||0;
+      const w1=Number(m.w1)||0, w2=Number(m.w2)||0, s4_1=Number(m.s4_1)||0, s4_2=Number(m.s4_2)||0, s6_1=Number(m.s6_1)||0, s6_2=Number(m.s6_2)||0;
+      if(m.isNR && !hasRecordedCricketActivity(r1,o1,w2,r2,o2,s4_1,s6_1) && !hasRecordedCricketActivity(r2,o2,w1,r1,o1,s4_2,s6_2)) return;
+      const won1 = !m.isNR && m.winner===m.p1;
+      const won2 = !m.isNR && m.winner===m.p2;
       p1.matches++; p2.matches++;
-      p1.runs += (m.r1||0); p1.balls += (m.o1||0);
-      p2.runs += (m.r2||0); p2.balls += (m.o2||0);
-      p1.s6 += (m.s6_1||0); p2.s6 += (m.s6_2||0);
-      p1.wickets += (m.w2||0); p1.runsConceded += (m.r2||0); p1.ballsBowled += (m.o2||0);
-      p2.wickets += (m.w1||0); p2.runsConceded += (m.r1||0); p2.ballsBowled += (m.o1||0);
-      p1.mvp += (m.r1||0) + (m.w2||0)*25 + (m.s6_1||0)*4 + (m.winner===m.p1?15:0);
-      p2.mvp += (m.r2||0) + (m.w1||0)*25 + (m.s6_2||0)*4 + (m.winner===m.p2?15:0);
+      p1.runs += r1; p1.balls += o1; p1.s4 += s4_1; p1.s6 += s6_1;
+      p1.wickets += w2; p1.runsConceded += r2; p1.ballsBowled += o2;
+      p1.mvp += computeTournamentMvpPoints(r1, w2, s6_1, won1);
+      p2.runs += r2; p2.balls += o2; p2.s4 += s4_2; p2.s6 += s6_2;
+      p2.wickets += w1; p2.runsConceded += r1; p2.ballsBowled += o1;
+      p2.mvp += computeTournamentMvpPoints(r2, w1, s6_2, won2);
     });
   });
   return stats;
@@ -10130,7 +10266,7 @@ function ensureTeamPlayerCard(t, fixture){
   (teamB?.players||[]).forEach(n=>seed.push({name:n,teamId:teamB.id,teamName:teamB.name}));
   seed.forEach(info=>{
     if(!fixture.playerCard.some(pc=>String(pc.name)===String(info.name))){
-      fixture.playerCard.push({name:info.name,teamId:info.teamId,teamName:info.teamName,runs:0,balls:0,wickets:0,runsConceded:0,ballsBowled:0,sixes:0});
+      fixture.playerCard.push({name:info.name,teamId:info.teamId,teamName:info.teamName,runs:0,balls:0,fours:0,sixes:0,wickets:0,runsConceded:0,ballsBowled:0});
     }
   });
 }
@@ -10154,11 +10290,13 @@ function renderTeamScorecardPanel(fixture){
     const ordered=roster.map(n=>(fixture.playerCard||[]).find(pc=>String(pc.name)===String(n))).filter(Boolean);
     return ordered.map(pc=>`<tr>
       <td>${esc(pc.name)}</td>
-      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="runs" value="${pc.runs||0}" style="width:64px" ${!isAdmin?'disabled':''}></td>
-      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="balls" value="${pc.balls||0}" style="width:64px" ${!isAdmin?'disabled':''}></td>
-      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="wickets" value="${pc.wickets||0}" style="width:64px" ${!isAdmin?'disabled':''}></td>
-      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="runsConceded" value="${pc.runsConceded||0}" style="width:64px" ${!isAdmin?'disabled':''}></td>
-      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="ballsBowled" value="${pc.ballsBowled||0}" style="width:64px" ${!isAdmin?'disabled':''}></td>
+      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="runs" value="${pc.runs||0}" style="width:54px" ${!isAdmin?'disabled':''}></td>
+      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="balls" value="${pc.balls||0}" style="width:54px" ${!isAdmin?'disabled':''}></td>
+      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="fours" value="${pc.fours||pc.s4||0}" style="width:46px" ${!isAdmin?'disabled':''}></td>
+      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="sixes" value="${pc.sixes||pc.s6||0}" style="width:46px" ${!isAdmin?'disabled':''}></td>
+      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="wickets" value="${pc.wickets||0}" style="width:48px" ${!isAdmin?'disabled':''}></td>
+      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="runsConceded" value="${pc.runsConceded||0}" style="width:56px" ${!isAdmin?'disabled':''}></td>
+      <td><input type="number" data-pc-name="${esc(pc.name)}" data-pc-f="ballsBowled" value="${pc.ballsBowled||0}" style="width:56px" ${!isAdmin?'disabled':''}></td>
     </tr>`).join('');
   };
   const sumRuns=(teamName)=>{
@@ -10196,14 +10334,14 @@ function renderTeamScorecardPanel(fixture){
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
       <div class="form-group"><label>${esc(fixture.p1)} team runs</label><input type="number" id="teamScR1" value="${fixture.r1!=null?fixture.r1:sumRuns(fixture.p1)}" ${!isAdmin?'disabled':''}></div>
       <div class="form-group"><label>${esc(fixture.p2)} team runs</label><input type="number" id="teamScR2" value="${fixture.r2!=null?fixture.r2:sumRuns(fixture.p2)}" ${!isAdmin?'disabled':''}></div>
-      <div class="form-group"><label>${esc(fixture.p1)} overs</label><input id="teamScO1" value="${fixture.o1!=null?ballsToOv(fixture.o1):''}" ${!isAdmin?'disabled':''}></div>
-      <div class="form-group"><label>${esc(fixture.p2)} overs</label><input id="teamScO2" value="${fixture.o2!=null?ballsToOv(fixture.o2):''}" ${!isAdmin?'disabled':''}></div>
+      <div class="form-group"><label>${esc(fixture.p1)} overs</label><input id="teamScO1" value="${fixture.o1!=null?ballsToOv(fixture.o1):''}" ${!isAdmin?'disabled':''}><label style="display:inline-flex;align-items:center;gap:5px;font-size:11px;margin-top:5px;text-transform:none;cursor:pointer"><input type="checkbox" id="teamScA1" ${fixture.a1?'checked':''} style="width:auto" ${!isAdmin?'disabled':''}> All Out (Full ${t.overs||20} ov NRR)</label></div>
+      <div class="form-group"><label>${esc(fixture.p2)} overs</label><input id="teamScO2" value="${fixture.o2!=null?ballsToOv(fixture.o2):''}" ${!isAdmin?'disabled':''}><label style="display:inline-flex;align-items:center;gap:5px;font-size:11px;margin-top:5px;text-transform:none;cursor:pointer"><input type="checkbox" id="teamScA2" ${fixture.a2?'checked':''} style="width:auto" ${!isAdmin?'disabled':''}> All Out (Full ${t.overs||20} ov NRR)</label></div>
     </div>
     <div style="overflow:auto;margin-bottom:8px"><b>${esc(fixture.p1)}</b>
-      <table style="width:100%;font-size:12px"><thead><tr><th>Player</th><th>Runs</th><th>Balls</th><th>Wkts</th><th>Runs conc.</th><th>Balls bowled</th></tr></thead><tbody>${rowsFor(fixture.p1)}</tbody></table>
+      <table style="width:100%;font-size:12px"><thead><tr><th>Player</th><th>Runs</th><th>Balls</th><th>4s</th><th>6s</th><th>Wkts</th><th>Runs conc.</th><th>Balls bowled</th></tr></thead><tbody>${rowsFor(fixture.p1)}</tbody></table>
     </div>
     <div style="overflow:auto;margin-bottom:8px"><b>${esc(fixture.p2)}</b>
-      <table style="width:100%;font-size:12px"><thead><tr><th>Player</th><th>Runs</th><th>Balls</th><th>Wkts</th><th>Runs conc.</th><th>Balls bowled</th></tr></thead><tbody>${rowsFor(fixture.p2)}</tbody></table>
+      <table style="width:100%;font-size:12px"><thead><tr><th>Player</th><th>Runs</th><th>Balls</th><th>4s</th><th>6s</th><th>Wkts</th><th>Runs conc.</th><th>Balls bowled</th></tr></thead><tbody>${rowsFor(fixture.p2)}</tbody></table>
     </div>
     ${isAdmin?`<div style="display:flex;gap:8px;flex-wrap:wrap">
       <button type="button" class="btn btn-secondary btn-sm" onclick="fillTeamTotalsFromCard(${Number(fixture.id)})">∑ Totals from players</button>
@@ -10274,15 +10412,21 @@ function saveTeamScorecardMatch(fid){
   const r1=Number(document.getElementById('teamScR1')?.value);
   const r2=Number(document.getElementById('teamScR2')?.value);
   if(!Number.isFinite(r1)||!Number.isFinite(r2)){ alert('Enter team runs.'); return; }
-  let o1=ovToBalls(document.getElementById('teamScO1')?.value);
-  let o2=ovToBalls(document.getElementById('teamScO2')?.value);
-  const maxB=(Number(t.overs)||20)*6;
-  if(o1===null) o1=maxB; if(o2===null) o2=maxB;
-  fixture.r1=r1; fixture.r2=r2; fixture.o1=o1; fixture.o2=o2;
-  fixture.completed=true; fixture.isNR=false; fixture.teamResultTie=false;
+  const maxOv = Number(t.overs)||20;
+  const maxB = maxOv * 6;
+  const a1 = !!document.getElementById('teamScA1')?.checked;
+  const a2 = !!document.getElementById('teamScA2')?.checked;
+  const rawO1 = (document.getElementById('teamScO1')?.value||'').trim();
+  const rawO2 = (document.getElementById('teamScO2')?.value||'').trim();
+  let o1 = a1 ? maxB : (rawO1 ? ovToBalls(rawO1, maxOv) : maxB);
+  let o2 = a2 ? maxB : (rawO2 ? ovToBalls(rawO2, maxOv) : maxB);
+  if(o1===null || o2===null){ alert('Invalid overs. Must be between 0.0 and ' + maxOv + '.0 (balls .0 to .5).'); return; }
+  fixture.r1=r1; fixture.r2=r2; fixture.o1=o1; fixture.o2=o2; fixture.a1=a1; fixture.a2=a2;
+  fixture.completed=true; fixture.isNR=false; fixture.isForfeit=false; fixture.teamResultTie=false;
   if(r1>r2){ fixture.winner=fixture.p1; fixture.result=String(r1)+'-'+String(r2); }
   else if(r2>r1){ fixture.winner=fixture.p2; fixture.result=String(r2)+'-'+String(r1); }
   else { fixture.winner=null; fixture.teamResultTie=true; fixture.result='Tied'; }
+  markFixtureEdited(t, fixture.stageNum ?? t.currentStage, fixture);
   saveDB();
   renderTeamScorecardPanel(fixture);
   try{ renderFixtures(); }catch(e){}
@@ -10400,23 +10544,16 @@ function renderAwardsAndLeaderboards(t){
     ['highScorePlayer','TBD'], ['bestBowlPlayer','TBD']
   ];
   awardDefaults.forEach(([id,label])=>{ const el=document.getElementById(id); if(el) el.innerHTML=label; });
+  const minB = getAwardEligibilityMinBalls(t);
+  const minOvLbl = ballsToOv(minB).replace(/\.0$/, '');
   const statDefaults = [
     ['mvpStat','0 MVP Pts'], ['orangeStat','0 Runs'], ['purpleStat','0 Wickets'],
-    ['sixesStat','0 Sixes'], ['bestEconStat','Min. 2 ov'], ['bestSRStat','Min. 12 balls'],
+    ['sixesStat','0 Sixes'], ['bestEconStat','Min. '+minOvLbl+' ov'], ['bestSRStat','Min. '+minB+' balls'],
     ['highScoreStat','-'], ['bestBowlStat','-']
   ];
   statDefaults.forEach(([id,label])=>{ const el=document.getElementById(id); if(el) el.textContent=label; });
 
-  const stats = accumulatePlayerMatchStats(t);
-
-  let arr = Object.values(stats);
-  if(typeof isTeamTournament==='function' && isTeamTournament(t)){
-    const teamNames=new Set((t.teams||[]).map(tm=>String(tm.name||'').toLowerCase()));
-    (t.players||[]).forEach(p=>{ // players array holds team names in team mode
-      if(teamNames.has(String(p).toLowerCase()) || (t.teams||[]).some(tm=>tm.name===p)) teamNames.add(String(p).toLowerCase());
-    });
-    arr = arr.filter(s=>!teamNames.has(String(s.name||'').toLowerCase()));
-  }
+  const arr = getFilteredPlayerStatsArray(t);
   const statsKey = statsSort.key || 'mvp';
   arr.sort((a,b)=>{
     let av, bv;
@@ -10426,12 +10563,13 @@ function renderAwardsAndLeaderboards(t){
     if(typeof av === 'string') return statsSort.asc ? String(av).localeCompare(String(bv)) : String(bv).localeCompare(String(av));
     return statsSort.asc ? av-bv : bv-av;
   });
-  const topRuns = [...arr].sort((a,b)=>b.runs - a.runs)[0];
-  const topWickets = [...arr].sort((a,b)=>b.wickets - a.wickets)[0];
-  const topMVP = [...arr].sort((a,b)=>b.mvp - a.mvp)[0];
-  const topSixes = [...arr].sort((a,b)=>b.s6 - a.s6)[0];
-  const bestEcon = [...arr].filter(x=>x.ballsBowled>=12).sort((a,b)=>(a.runsConceded/a.ballsBowled) - (b.runsConceded/b.ballsBowled))[0];
-  const bestSR = [...arr].filter(x=>x.balls>=12 && x.runs>0).sort((a,b)=>(b.runs/b.balls)-(a.runs/a.balls) || b.runs-a.runs)[0];
+  const unifiedAwards = getTournamentAwardResults(t);
+  const topRuns = unifiedAwards.orangeCap || unifiedAwards.runs;
+  const topWickets = unifiedAwards.purpleCap || unifiedAwards.wickets;
+  const topMVP = unifiedAwards.mvp;
+  const topSixes = unifiedAwards.sixes;
+  const bestEcon = unifiedAwards.econ;
+  const bestSR = unifiedAwards.sr;
 
   if(document.getElementById('mvpPlayer') && topMVP && topMVP.mvp > 0){ document.getElementById('mvpPlayer').innerHTML = getAvatarHtml(topMVP.name,'team-avatar-sm') + '<span>'+esc(topMVP.name)+'</span>'; document.getElementById('mvpStat').textContent = topMVP.mvp + ' MVP Pts'; }
   if(document.getElementById('orangePlayer') && topRuns && topRuns.runs > 0){ document.getElementById('orangePlayer').innerHTML = getAvatarHtml(topRuns.name,'team-avatar-sm') + '<span>'+esc(topRuns.name)+'</span>' + '<span class="champion-cap-icon champion-cap-orange" title="Orange Cap" aria-label="Orange Cap"><svg viewBox="0 0 48 34" role="img" aria-hidden="true"><path fill="currentColor" d="M7 19.2C7.8 10.7 14.2 5 22.2 5c6.2 0 10.9 3.1 13.2 8.1-2.9-.8-6.3-.7-9.5.2-5.8 1.7-10.5 4.8-18.9 5.9Z"/><path fill="currentColor" d="M8.2 19.1c7.5-.7 12.1-3.4 17.4-5 5.3-1.6 11.7-1.1 16.2 1.1 1.6.8 1.5 2.1-.1 2.7-7.4 2.6-16.9 3.1-27.7 2.3-3.1-.2-5-.4-5.8-.7Z"/><path fill="currentColor" d="M34.7 12.9c2.8.1 5.3.9 7.2 2.1-1.4-.4-3-.6-4.6-.5-1.1.1-2.2.2-3.2.5l.6-2.1Z"/></svg></span>'; document.getElementById('orangeStat').textContent = topRuns.runs + ' Runs'; }
@@ -10458,16 +10596,30 @@ function renderAwardsAndLeaderboards(t){
       if(!bestBowl || wk>bestBowl.wkts || (wk===bestBowl.wkts && rc<bestBowl.runs)) bestBowl={name:p2, wkts:wk, runs:rc};
     }
   };
-  (t.stages||[]).forEach(st=>(st.fixtures||[]).filter(f=>f&&f.completed&&!f.isNR&&!f.isForfeit).forEach(f=>{
+  const isTeamT = typeof isTeamTournament==='function' && isTeamTournament(t);
+  (t.stages||[]).forEach(st=>(st.fixtures||[]).filter(f=>f&&f.completed&&!f.isForfeit).forEach(f=>{
     if(Array.isArray(f.legs) && f.legs.length){
-      f.legs.filter(l=>l&&l.completed&&!l.isNR&&!l.isForfeit).forEach(l=>checkMatchBest(l.p1,l.p2,l.r1,l.w2,l.o1,l.r2,l.w1,l.o2));
-    } else {
+      f.legs.filter(l=>l&&l.completed&&!l.isForfeit).forEach(l=>{
+        if(l.isNR && !hasRecordedCricketActivity(l.r1,l.o1,l.w1,l.r2,l.o2,l.s4_1,l.s6_1) && !hasRecordedCricketActivity(l.r2,l.o2,l.w2,l.r1,l.o1,l.s4_2,l.s6_2)) return;
+        checkMatchBest(l.p1,l.p2,l.r1,l.w2,l.o1,l.r2,l.w1,l.o2);
+      });
+    } else if(Array.isArray(f.playerCard) && f.playerCard.length){
+      f.playerCard.forEach(pc=>{
+        const nm = pc.name || pc.playerName;
+        if(!nm) return;
+        const rr = Number(pc.runs)||0, bb = Number(pc.balls)||Number(pc.ballsFaced)||0;
+        const wk = Number(pc.wickets)||0, rc = Number(pc.runsConceded)||0;
+        if(rr > 0 && (!bestBat || rr>bestBat.runs || (rr===bestBat.runs && bb<bestBat.balls))) bestBat={name:nm, runs:rr, wkts:null, balls:bb};
+        if(wk > 0 && (!bestBowl || wk>bestBowl.wkts || (wk===bestBowl.wkts && rc<bestBowl.runs))) bestBowl={name:nm, wkts:wk, runs:rc};
+      });
+    } else if(!isTeamT){
+      if(f.isNR && !hasRecordedCricketActivity(f.r1,f.o1,f.w2,f.r2,f.o2,f.s4_1,f.s6_1) && !hasRecordedCricketActivity(f.r2,f.o2,f.w1,f.r1,f.o1,f.s4_2,f.s6_2)) return;
       checkMatchBest(f.p1,f.p2,f.r1,f.w1,f.o1,f.r2,f.w2,f.o2);
     }
   }));
   if(document.getElementById('highScorePlayer') && bestBat && bestBat.runs>0){
     document.getElementById('highScorePlayer').innerHTML = getAvatarHtml(bestBat.name,'team-avatar-sm') + '<span>'+esc(bestBat.name)+'</span>';
-    document.getElementById('highScoreStat').textContent = bestBat.runs + '/' + bestBat.wkts + (bestBat.balls ? ' ('+ballsToOv(bestBat.balls)+')' : '');
+    document.getElementById('highScoreStat').textContent = bestBat.runs + (bestBat.wkts!=null ? '/'+bestBat.wkts : '') + (bestBat.balls ? ' ('+ballsToOv(bestBat.balls)+')' : '');
   }
   if(document.getElementById('bestBowlPlayer') && bestBowl && bestBowl.wkts>0){
     document.getElementById('bestBowlPlayer').innerHTML = getAvatarHtml(bestBowl.name,'team-avatar-sm') + '<span>'+esc(bestBowl.name)+'</span>';
@@ -10692,6 +10844,8 @@ function loadFixtureForScore(id, stageNum, opts){
   if(document.getElementById('scO2')) document.getElementById('scO2').value = found.completed ? ballsToOv(found.o2) : '';
   if(document.getElementById('scW1')) document.getElementById('scW1').value = found.completed ? (found.w1 || 0) : '';
   if(document.getElementById('scW2')) document.getElementById('scW2').value = found.completed ? (found.w2 || 0) : '';
+  if(document.getElementById('sc4s1')) document.getElementById('sc4s1').value = found.completed ? (found.s4_1 || 0) : '';
+  if(document.getElementById('sc4s2')) document.getElementById('sc4s2').value = found.completed ? (found.s4_2 || 0) : '';
   if(document.getElementById('sc6s1')) document.getElementById('sc6s1').value = found.completed ? (found.s6_1 || 0) : '';
   if(document.getElementById('sc6s2')) document.getElementById('sc6s2').value = found.completed ? (found.s6_2 || 0) : '';
   if(document.getElementById('scA1')) document.getElementById('scA1').checked = !!found.a1;
@@ -10868,8 +11022,8 @@ function loadFixtureIntoScorer(){
 
 function resetFixtureResultData(target){
   if(!target) return;
-  target.completed=false; target.isNR=false; target.isForfeit=false; target.winner=null; target.result=null;
-  ['r1','r2','o1','o2','w1','w2','s6_1','s6_2'].forEach(k=>target[k]=null);
+  target.completed=false; target.isNR=false; target.isForfeit=false; target.teamResultTie=false; target.winner=null; target.result=null;
+  ['r1','r2','o1','o2','w1','w2','s4_1','s4_2','s6_1','s6_2'].forEach(k=>target[k]=null);
   target.a1=false; target.a2=false; target.bonusPoint=false; delete target.testInnings; delete target.testResult;
   delete target.superOver1; delete target.superOver2; delete target.superOvers;
   if(Array.isArray(target.legs)){
@@ -10878,14 +11032,53 @@ function resetFixtureResultData(target){
       leg.completed=false; leg.isNR=false; leg.isForfeit=false;
       leg.winner=null; leg.result=null;
       leg.r1=null; leg.r2=null; leg.o1=null; leg.o2=null;
-      leg.w1=null; leg.w2=null;
+      leg.w1=null; leg.w2=null; leg.s4_1=null; leg.s4_2=null; leg.s6_1=null; leg.s6_2=null;
       delete leg.superOver1; delete leg.superOver2; delete leg.superOvers;
     });
   }
+  if(Array.isArray(target.playerCard)){
+    target.playerCard.forEach(pc=>{
+      if(!pc || typeof pc!=='object') return;
+      pc.runs=0; pc.balls=0; pc.ballsFaced=0; pc.fours=0; pc.s4=0; pc.sixes=0; pc.s6=0;
+      pc.wickets=0; pc.runsConceded=0; pc.ballsBowled=0;
+    });
+  }
+  delete target.blocks;
   if('legWins1' in target) target.legWins1=0;
   if('legWins2' in target) target.legWins2=0;
   if('teamScore1' in target) target.teamScore1=null;
   if('teamScore2' in target) target.teamScore2=null;
+}
+function reconcileBracketAfterErase(stage, erasedMatch){
+  if(!stage || !erasedMatch) return;
+  const mt = String(erasedMatch.matchType||'');
+  if(stage.bracketFormat==='ipl_4'){
+    const q2 = getBracketFixture(stage,'Qualifier 2');
+    const fin = getBracketFixture(stage,'Grand Final');
+    if(mt==='Qualifier 1'){
+      if(q2 && !q2.completed) q2.p1='Loser of Qualifier 1';
+      if(fin && !fin.completed) fin.p1='Winner of Qualifier 1';
+    } else if(mt.includes('Eliminator')){
+      if(q2 && !q2.completed) q2.p2='Winner of Eliminator';
+    } else if(mt==='Qualifier 2'){
+      if(fin && !fin.completed) fin.p2='Winner of Qualifier 2';
+    }
+    try{ syncFinalSeriesParticipants(stage); }catch(e){}
+    return;
+  }
+  if(stage.bracketFormat==='top_seed_3'){
+    const fin = getBracketFixture(stage,'Final');
+    if(mt==='Semi-final' && fin && !fin.completed) fin.p2='Winner of Semi-final';
+    try{ syncFinalSeriesParticipants(stage); }catch(e){}
+    return;
+  }
+  const next = (stage.fixtures||[]).find(f=>Array.isArray(f.feeds)&&f.feeds.includes(erasedMatch.id)&&!(Number(f.seriesGame)>1));
+  if(next && !next.completed){
+    const idx = next.feeds.indexOf(erasedMatch.id);
+    if(idx===0) next.p1='Winner of previous match';
+    else next.p2='Winner of previous match';
+    try{ syncFinalSeriesParticipants(stage); }catch(e){}
+  }
 }
 
 function nextGlobalFixtureId(t){
@@ -10933,6 +11126,7 @@ function eraseSelectedFixtureScore(){
   if(!target){showToast('Select a fixture first.','error');return;}
   if(confirm(`Erase scorecard / result for Match ${target.id}? Fixture stays in the schedule.`+(ref&&ref.stage?` (${ref.stage.name||('Stage '+ref.stage.stageNum)})`:''))){
     resetFixtureResultData(target);
+    if(ref && ref.stage) reconcileBracketAfterErase(ref.stage, target);
     markFixtureEdited(t, ref?.stage?.stageNum ?? window.scoreEntryStageNum ?? t.currentStage, target);
     try{
       document.querySelectorAll('#teamCaptainPairingPanel input[data-leg-r1],#teamCaptainPairingPanel input[data-leg-r2],#teamCaptainPairingPanel input[data-leg-o1],#teamCaptainPairingPanel input[data-leg-o2],#teamCaptainPairingPanel input[data-leg-w1],#teamCaptainPairingPanel input[data-leg-w2],#teamCaptainPairingPanel input[data-leg-smart]').forEach(el=>{ el.value=''; });
@@ -10953,7 +11147,7 @@ function quickEraseFixture(id, stageNum){
   const t=getActiveTournament();
   const ref=findFixtureRefById(t,id, stageNum!=null?stageNum:null);
   const target=ref?ref.fixture:null;
-  if(target && confirm(`Erase all result data for Match ${target.id}?`+(ref&&ref.stage?` (${ref.stage.name||('Stage '+ref.stage.stageNum)})`:''))){ resetFixtureResultData(target); markFixtureEdited(t, ref?.stage?.stageNum ?? target.stageNum ?? t.currentStage, target); saveDB(); renderAll(); showToast('🗑️ Match erased and reset to pending','success'); }
+  if(target && confirm(`Erase all result data for Match ${target.id}?`+(ref&&ref.stage?` (${ref.stage.name||('Stage '+ref.stage.stageNum)})`:''))){ resetFixtureResultData(target); if(ref&&ref.stage) reconcileBracketAfterErase(ref.stage, target); markFixtureEdited(t, ref?.stage?.stageNum ?? target.stageNum ?? t.currentStage, target); saveDB(); renderAll(); showToast('🗑️ Match erased and reset to pending','success'); }
 }
 
 function markMatchAsNoResult(){
@@ -10988,8 +11182,9 @@ function markAllRemainingAsNoResult(){
   const activeStage = (t.stages || []).find(s=>s.stageNum === t.currentStage) || (t.stages && t.stages[0]) || { fixtures: [] };
   (activeStage.fixtures || []).filter(f => !f.completed).forEach(f => {
     f.completed = true; f.isNR = true; f.isForfeit = false;
+    markFixtureEdited(t, activeStage.stageNum, f);
   });
-  saveDB(); renderAll(); showToast(`🌧️ Remaining matches finalized as No Result`, 'success');
+  saveDB({ config: true }); renderAll(); showToast(`🌧️ Remaining matches finalized as No Result`, 'success');
 }
 
 function submitTestMatchScore(t,target,p1,p2){
@@ -11076,14 +11271,16 @@ function submitMatchScore(){
   const s1 = document.getElementById('scO1')?.value, s2 = document.getElementById('scO2')?.value;
   const w1 = Number(document.getElementById('scW1')?.value) || 0, w2 = Number(document.getElementById('scW2')?.value) || 0;
   if(!validateLimitedOversWickets(t,w1,w2)) return;
-  const s6_1 = Number(document.getElementById('sc6s1')?.value) || 0, s6_2 = Number(document.getElementById('sc6s2')?.value) || 0;
+  const s4_1 = Math.max(0, Number(document.getElementById('sc4s1')?.value) || 0), s4_2 = Math.max(0, Number(document.getElementById('sc4s2')?.value) || 0);
+  const s6_1 = Math.max(0, Number(document.getElementById('sc6s1')?.value) || 0), s6_2 = Math.max(0, Number(document.getElementById('sc6s2')?.value) || 0);
   const a1 = document.getElementById('scA1')?.checked || false, a2 = document.getElementById('scA2')?.checked || false;
   const bonusPoint = isBonusEnabled(t) && (document.getElementById('scBonusPoint')?.checked || false);
 
   if(!p1 || !p2 || p1 === p2){ alert('Please select 2 valid teams.'); return; }
-  const maxBalls = (t.overs || 5) * 6;
-  const o1 = a1 ? maxBalls : ovToBalls(s1), o2 = a2 ? maxBalls : ovToBalls(s2);
-  if(o1 === null || o2 === null){ alert('Invalid overs format.'); return; }
+  const maxOv = Number(t.overs) || 5;
+  const maxBalls = maxOv * 6;
+  const o1 = a1 ? maxBalls : ovToBalls(s1, maxOv), o2 = a2 ? maxBalls : ovToBalls(s2, maxOv);
+  if(o1 === null || o2 === null){ alert('Invalid overs. Enter between 0.0 and ' + maxOv + '.0 (balls .0 to .5).'); return; }
 
   const fid = parseInt(document.getElementById('scoreFixtureSelect')?.value, 10);
   const activeStage = (typeof getScoreEntryStage==='function' ? getScoreEntryStage(t) : null)
@@ -11111,7 +11308,7 @@ function submitMatchScore(){
   }
 
   target.p1 = p1; target.p2 = p2; target.r1 = r1; target.r2 = r2; target.o1 = o1; target.o2 = o2;
-  target.w1 = w1; target.w2 = w2; target.s6_1 = s6_1; target.s6_2 = s6_2; target.a1 = a1; target.a2 = a2;
+  target.w1 = w1; target.w2 = w2; target.s4_1 = s4_1; target.s4_2 = s4_2; target.s6_1 = s6_1; target.s6_2 = s6_2; target.a1 = a1; target.a2 = a2; target.isNR = false; target.isForfeit = false;
   target.bonusPoint = bonusPoint;
   const tiedMain = r1 === r2;
   if(tiedMain){
@@ -11167,7 +11364,7 @@ function routeAfterTournamentResultSave(t){
   } else switchNav('view_standings','nav_standings');
 }
 function clearScoreForm(){
-  ['scR1','scR2','scO1','scO2','scW1','scW2','sc6s1','sc6s2','smartInputP1','smartInputP2','testR11','testW11','testS11','testR21','testW21','testS21','testR12','testW12','testS12','testR22','testW22','testS22','soR1','soR2','so2R1','so2R2'].forEach(id=>{
+  ['scR1','scR2','scO1','scO2','scW1','scW2','sc4s1','sc4s2','sc6s1','sc6s2','smartInputP1','smartInputP2','testR11','testW11','testS11','testR21','testW21','testS21','testR12','testW12','testS12','testR22','testW22','testS22','soR1','soR2','so2R1','so2R2'].forEach(id=>{
     const el = document.getElementById(id); if(el) el.value = '';
   });
   ['badgeSmartP1','badgeSmartP2'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.textContent=''; el.className='pill pill-pending'; } });
@@ -11190,11 +11387,15 @@ function getAdvancementMax(t,currentStage){
   return Math.max(...pools.map(p=>p.players.length));
 }
 function getNextStageParticipants(t,currentStage,advancementPlaces){
-  const pools=getAdvancementPools(t,currentStage);
+  const pools=(typeof getQualificationPools==='function') ? getQualificationPools(t,currentStage) : getAdvancementPools(t,currentStage);
   const n=Math.max(1,Number(advancementPlaces)||0);
   const names=[];
+  const W=resolvePtsConfig(t?.winPts,3), Ti=resolvePtsConfig(t?.tiePts,1), NR=resolvePtsConfig(t?.nrPts,1), B=effectiveBonusPts(t);
   pools.forEach(pool=>{
-    const rows=computeStageStandings(t,currentStage,pool.players||[]);
+    const pl=pool.players||[];
+    const fx=Array.isArray(pool.fixtures)?pool.fixtures:(currentStage?.fixtures||[]);
+    const base=(typeof getCarryBaselineMap==='function')?getCarryBaselineMap(t,currentStage,pl):null;
+    const rows=computeStandingsForList(fx,pl,W,Ti,B,NR,base);
     rows.slice(0,Math.min(n,rows.length)).forEach(r=>{ if(!names.includes(r.name)) names.push(r.name); });
   });
   return names;
@@ -11488,6 +11689,8 @@ function populateSetupForm(t){
   if(setupMode==='new') return;
   const set=(id,v)=>{const el=document.getElementById(id); if(el) el.value=v;};
   set('cfgName',t.name||'');
+  set('cfgTagline',t.tagline||'');
+  set('cfgPlayEnvironment',t.playEnvironment||'mobile');
   set('cfgMatchFormat',t.matchFormat||'limited_overs');
   set('cfgOvers',t.overs||5);
   set('cfgWinPts',resolvePtsConfig(t.winPts,3));
@@ -11813,14 +12016,18 @@ function appendMissingStageFixtures(t,stage){
   return {added,required:format==='single_league'?required:existing.length};
 }
 
-function listMissingStagePairs(stage){
+function listMissingStagePairs(stage, tOverride){
   if(!stage) return [];
+  const tRef = tOverride || (typeof getActiveTournament==='function' ? getActiveTournament() : null);
   const participants=Array.isArray(stage.participants)?stage.participants.filter(Boolean):[];
   const format=stage.format||'single_league';
   const existing=Array.isArray(stage.fixtures)?stage.fixtures:[];
-  const seen=new Set(existing.filter(f=>f&&f.p1&&f.p2).map(f=>pairKey(f.p1,f.p2)));
+  const doubleRR = (typeof stageWantsDoubleRR==='function') ? stageWantsDoubleRR(tRef, stage) : !!stage.playEachTwice;
+  const maxMeet = doubleRR ? 2 : 1;
+  const counts = {};
+  existing.filter(f=>f&&f.p1&&f.p2).forEach(f=>{ const k=pairKey(f.p1,f.p2); counts[k]=(counts[k]||0)+1; });
   const missing=[];
-  const consider=(a,b)=>{ if(!a||!b||a===b) return; const k=pairKey(a,b); if(!seen.has(k)) missing.push([a,b]); };
+  const consider=(a,b)=>{ if(!a||!b||a===b) return; const k=pairKey(a,b); const have=counts[k]||0; for(let m=have;m<maxMeet;m++) missing.push([a,b]); };
   if(format==='single_league' || !format){
     for(let i=0;i<participants.length;i++) for(let j=i+1;j<participants.length;j++) consider(participants[i],participants[j]);
   }else if(format==='custom_group_league'){
@@ -11848,8 +12055,10 @@ function listMissingStagePairs(stage){
 /** Admin repair: restore missing round-robin pairs for the current stage only. Does not delete or alter completed results. */
 
 /** Remove duplicate pair fixtures within a stage. Keeps completed (or richer) copy; drops empty duplicates. */
-function dedupeStageFixtures(stage){
+function dedupeStageFixtures(stage, tOverride){
   if(!stage || !Array.isArray(stage.fixtures)) return {removed:0,kept:0,details:[]};
+  const tRef = tOverride || (typeof getActiveTournament==='function' ? getActiveTournament() : null);
+  const maxKeep = (typeof stageWantsDoubleRR==='function' && stageWantsDoubleRR(tRef, stage)) ? 2 : 1;
   const score=(f)=>{
     let s=0;
     if(f.completed) s+=100;
@@ -11870,10 +12079,10 @@ function dedupeStageFixtures(stage){
   }
   const rebuilt=[];
   for(const [k,arr] of byPair.entries()){
-    if(arr.length===1){ rebuilt.push(arr[0]); continue; }
+    if(arr.length<=maxKeep){ rebuilt.push(...arr); continue; }
     arr.sort((a,b)=>score(b)-score(a));
-    rebuilt.push(arr[0]);
-    for(let i=1;i<arr.length;i++){
+    rebuilt.push(...arr.slice(0, maxKeep));
+    for(let i=maxKeep;i<arr.length;i++){
       details.push({pair:k, removedId:arr[i].id, keptId:arr[0].id, removedCompleted:!!arr[i].completed, keptCompleted:!!arr[0].completed});
     }
   }
@@ -11895,7 +12104,8 @@ function removeDuplicateFixturesCurrentStage(){
     if(!counts.has(k)) counts.set(k,[]);
     counts.get(k).push(f);
   });
-  const dups=[...counts.entries()].filter(([,arr])=>arr.length>1);
+  const maxKeep = (typeof stageWantsDoubleRR==='function' && stageWantsDoubleRR(t, stage)) ? 2 : 1;
+  const dups=[...counts.entries()].filter(([,arr])=>arr.length>maxKeep);
   if(!dups.length){
     showToast('✅ No duplicate pairs in '+(stage.name||('Stage '+stage.stageNum)),'success');
     return;
@@ -12171,15 +12381,33 @@ function updateActiveTournamentDetails(){
     newPlayers.forEach(nm=>{ if(!newPlayerLinks[nm] && t.playerLinks[nm]) delete t.playerLinks[nm]; });
   }
   if(Object.keys(renameMap).length){
-    (t.stages||[]).forEach(stage=>{if(Array.isArray(stage.participants))stage.participants=stage.participants.map(applyName);if(Array.isArray(stage.fixtures))stage.fixtures.forEach(f=>{if(f){f.p1=applyName(f.p1);f.p2=applyName(f.p2);if(f.winner)f.winner=applyName(f.winner);}});if(stage.groups)Object.keys(stage.groups).forEach(k=>{if(Array.isArray(stage.groups[k]))stage.groups[k]=stage.groups[k].map(applyName);});});
-    if(t.groups)Object.keys(t.groups).forEach(k=>{if(Array.isArray(t.groups[k]))t.groups[k]=t.groups[k].map(applyName);});
-    if(t.customLogos){const logos={};Object.keys(t.customLogos).forEach(k=>{logos[applyName(k)]=t.customLogos[k];});t.customLogos=logos;}
+    (t.stages||[]).forEach(stage=>{
+      if(Array.isArray(stage.participants)) stage.participants=stage.participants.map(applyName);
+      if(Array.isArray(stage.fixtures)) stage.fixtures.forEach(f=>{
+        if(!f) return;
+        f.p1=applyName(f.p1); f.p2=applyName(f.p2); if(f.winner) f.winner=applyName(f.winner);
+        if(Array.isArray(f.legs)) f.legs.forEach(l=>{ if(!l) return; l.p1=applyName(l.p1); l.p2=applyName(l.p2); if(l.winner) l.winner=applyName(l.winner); });
+        if(Array.isArray(f.playerCard)) f.playerCard.forEach(pc=>{ if(!pc) return; if(pc.name) pc.name=applyName(pc.name); if(pc.teamName) pc.teamName=applyName(pc.teamName); });
+      });
+      if(stage.groups) Object.keys(stage.groups).forEach(k=>{ if(Array.isArray(stage.groups[k])) stage.groups[k]=stage.groups[k].map(applyName); });
+    });
+    if(t.groups) Object.keys(t.groups).forEach(k=>{ if(Array.isArray(t.groups[k])) t.groups[k]=t.groups[k].map(applyName); });
+    if(t.customLogos){ const logos={}; Object.keys(t.customLogos).forEach(k=>{ logos[applyName(k)]=t.customLogos[k]; }); t.customLogos=logos; }
+    if(t.playerLinks){ const pl={}; Object.keys(t.playerLinks).forEach(k=>{ pl[applyName(k)]=t.playerLinks[k]; }); t.playerLinks=pl; }
+    if(t.playerDisplayOverrides){ const pdo={}; Object.keys(t.playerDisplayOverrides).forEach(k=>{ pdo[applyName(k)]=t.playerDisplayOverrides[k]; }); t.playerDisplayOverrides=pdo; }
     qualificationCache.clear();
   }
 
   t.name=document.getElementById('cfgName')?.value.trim()||t.name; t.tagline=(document.getElementById('cfgTagline')?.value||'').trim();
-  t.matchFormat=document.getElementById('cfgMatchFormat')?.value||'limited_overs';
-  if(t.matchFormat==='test_cricket'){t.testDays=5;t.oversPerDay=90;t.overs=90;t.maxWickets=10;}else{t.overs=parseInt(document.getElementById('cfgOvers')?.value,10)||5;t.maxWickets=parseInt(document.getElementById('cfgMaxWickets')?.value,10)||5;delete t.testDays;delete t.oversPerDay;}
+  t.playEnvironment=document.getElementById('cfgPlayEnvironment')?.value||t.playEnvironment||'mobile';
+  const reqMatchFormat=document.getElementById('cfgMatchFormat')?.value||'limited_overs';
+  const reqOvers=reqMatchFormat==='test_cricket'?90:(parseInt(document.getElementById('cfgOvers')?.value,10)||5);
+  const anyStageCompleted=(t.stages||[]).some(st=>(st.fixtures||[]).some(f=>f&&f.completed));
+  if(anyStageCompleted && (reqMatchFormat!==(t.matchFormat||'limited_overs') || reqOvers!==(Number(t.overs)||5))){
+    if(!confirm('⚠️ Matches have already been recorded in this tournament. Changing overs or match format will not rewrite past all-out ball quotas. Continue anyway?')) return;
+  }
+  t.matchFormat=reqMatchFormat;
+  if(t.matchFormat==='test_cricket'){t.testDays=5;t.oversPerDay=90;t.overs=90;t.maxWickets=10;}else{t.overs=reqOvers;t.maxWickets=parseInt(document.getElementById('cfgMaxWickets')?.value,10)||5;delete t.testDays;delete t.oversPerDay;}
   t.winPts=resolvePtsConfig(document.getElementById('cfgWinPts')?.value,3);t.tiePts=resolvePtsConfig(document.getElementById('cfgTiePts')?.value,0);t.bonusEnabled=!!document.getElementById('cfgBonusEnabled')?.checked;t.bonusPts=t.bonusEnabled?Math.max(0,resolvePtsConfig(document.getElementById('cfgBonusPts')?.value,0)):0;t.nrPts=resolvePtsConfig(document.getElementById('cfgNrPts')?.value,0);t.playoffMethod=document.getElementById('cfgPlayoffMethod')?.value||t.playoffMethod||'ipl';t.players=newPlayers; ensureStablePlayerIds(t); t.rewards=readRewardsConfig();
 
   if(requestedFormat==='custom_group_league'||isTwoGroupFormat(requestedFormat)){
@@ -12372,10 +12600,15 @@ function computeTeamFixtureFromLegs(fixture){
   fixture.isTeamLegs=true;
   if(pending===0 && fixture.legs.length){
     fixture.completed=true;
-    fixture.isNR=false;
-    if(legW1>legW2){ fixture.winner=fixture.p1; fixture.teamResultTie=false; fixture.result=legW1+'-'+legW2; }
-    else if(legW2>legW1){ fixture.winner=fixture.p2; fixture.teamResultTie=false; fixture.result=legW2+'-'+legW1; }
-    else { fixture.winner=null; fixture.teamResultTie=true; fixture.result='Tied '+legW1+'-'+legW2; }
+    const allLegsNR = fixture.legs.every(l => l && l.isNR);
+    if(allLegsNR){
+      fixture.isNR=true; fixture.winner=null; fixture.teamResultTie=false; fixture.result='No Result';
+    } else {
+      fixture.isNR=false;
+      if(legW1>legW2){ fixture.winner=fixture.p1; fixture.teamResultTie=false; fixture.result=legW1+'-'+legW2; }
+      else if(legW2>legW1){ fixture.winner=fixture.p2; fixture.teamResultTie=false; fixture.result=legW2+'-'+legW1; }
+      else { fixture.winner=null; fixture.teamResultTie=true; fixture.result='Tied '+legW1+'-'+legW2; }
+    }
   }else{
     fixture.completed=false;
     fixture.winner=null;
@@ -12454,6 +12687,10 @@ rows+=`<div class="team-roster-card" style="padding:10px;margin-bottom:10px" dat
           <div class="form-group"><label>Runs</label><input type="number" data-leg-r1="${i}" value="${leg.r1!=null?leg.r1:''}" ${!isAdmin?'disabled':''}></div>
           <div class="form-group"><label>Overs faced</label><input data-leg-o1="${i}" placeholder="${legOv}" value="${leg.o1!=null?ballsToOv(leg.o1):''}" ${!isAdmin?'disabled':''}></div>
           <div class="form-group"><label>Wkts lost (batting)</label><input type="number" data-leg-w2="${i}" value="${leg.w2!=null?leg.w2:''}" min="0" ${!isAdmin?'disabled':''}></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+            <div class="form-group" style="margin:0"><label>4s (Opt)</label><input type="number" data-leg-s4-1="${i}" value="${leg.s4_1||''}" min="0" placeholder="0" ${!isAdmin?'disabled':''}></div>
+            <div class="form-group" style="margin:0"><label>6s (Opt)</label><input type="number" data-leg-s6-1="${i}" value="${leg.s6_1||''}" min="0" placeholder="0" ${!isAdmin?'disabled':''}></div>
+          </div>
           <label style="display:flex;align-items:center;gap:6px;font-size:12px;margin-top:4px;cursor:pointer">
             <input type="checkbox" data-leg-a1="${i}" ${leg.a1?'checked':''} ${!isAdmin?'disabled':''}> All out (auto if wkts=max · full overs NRR)
           </label>
@@ -12470,6 +12707,10 @@ rows+=`<div class="team-roster-card" style="padding:10px;margin-bottom:10px" dat
           <div class="form-group"><label>Runs</label><input type="number" data-leg-r2="${i}" value="${leg.r2!=null?leg.r2:''}" ${!isAdmin?'disabled':''}></div>
           <div class="form-group"><label>Overs faced</label><input data-leg-o2="${i}" placeholder="${legOv}" value="${leg.o2!=null?ballsToOv(leg.o2):''}" ${!isAdmin?'disabled':''}></div>
           <div class="form-group"><label>Wkts lost (batting)</label><input type="number" data-leg-w1="${i}" value="${leg.w1!=null?leg.w1:''}" min="0" ${!isAdmin?'disabled':''}></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+            <div class="form-group" style="margin:0"><label>4s (Opt)</label><input type="number" data-leg-s4-2="${i}" value="${leg.s4_2||''}" min="0" placeholder="0" ${!isAdmin?'disabled':''}></div>
+            <div class="form-group" style="margin:0"><label>6s (Opt)</label><input type="number" data-leg-s6-2="${i}" value="${leg.s6_2||''}" min="0" placeholder="0" ${!isAdmin?'disabled':''}></div>
+          </div>
           <label style="display:flex;align-items:center;gap:6px;font-size:12px;margin-top:4px;cursor:pointer">
             <input type="checkbox" data-leg-a2="${i}" ${leg.a2?'checked':''} ${!isAdmin?'disabled':''}> All out (auto if wkts=max · full overs NRR)
           </label>
@@ -12595,9 +12836,16 @@ function saveTeamLegScore(fid, legIndex){
   const w2v=document.querySelector('#teamCaptainPairingPanel input[data-leg-w2="'+legIndex+'"]')?.value;
   if(!Number.isFinite(r1)||!Number.isFinite(r2)){ alert('Enter runs for both players.'); return; }
 
-  const maxBalls=(Number(t.teamSettings?.legMatchOvers||t.overs||5))*6;
+  const legMaxOv=Number(t.teamSettings?.legMatchOvers||t.overs||5);
+  const maxBalls=legMaxOv*6;
   const maxWk=Number(t.teamSettings?.legMatchWickets||t.maxWickets||5);
-  let o1=ovToBalls(o1s); let o2=ovToBalls(o2s);
+  const s4_1=Math.max(0, Number(document.querySelector('#teamCaptainPairingPanel input[data-leg-s4-1="'+legIndex+'"]')?.value)||0);
+  const s6_1=Math.max(0, Number(document.querySelector('#teamCaptainPairingPanel input[data-leg-s6-1="'+legIndex+'"]')?.value)||0);
+  const s4_2=Math.max(0, Number(document.querySelector('#teamCaptainPairingPanel input[data-leg-s4-2="'+legIndex+'"]')?.value)||0);
+  const s6_2=Math.max(0, Number(document.querySelector('#teamCaptainPairingPanel input[data-leg-s6-2="'+legIndex+'"]')?.value)||0);
+  let o1=(o1s&&String(o1s).trim())?ovToBalls(o1s, legMaxOv):maxBalls;
+  let o2=(o2s&&String(o2s).trim())?ovToBalls(o2s, legMaxOv):maxBalls;
+  if(o1===null||o2===null){ alert('Invalid leg overs. Must be between 0.0 and '+legMaxOv+'.0'); return; }
   const w1=w1v===''||w1v==null?0:Math.max(0, Number(w1v)||0);
   const w2=w2v===''||w2v==null?0:Math.max(0, Number(w2v)||0);
   const a1Manual=!!document.querySelector('#teamCaptainPairingPanel input[data-leg-a1="'+legIndex+'"]')?.checked;
@@ -12609,7 +12857,7 @@ function saveTeamLegScore(fid, legIndex){
   if(a1) o1=maxBalls; else if(o1===null) o1=maxBalls;
   if(a2) o2=maxBalls; else if(o2===null) o2=maxBalls;
 
-  leg.r1=r1; leg.r2=r2; leg.o1=o1; leg.o2=o2; leg.w1=w1; leg.w2=w2;
+  leg.r1=r1; leg.r2=r2; leg.o1=o1; leg.o2=o2; leg.w1=w1; leg.w2=w2; leg.s4_1=s4_1; leg.s6_1=s6_1; leg.s4_2=s4_2; leg.s6_2=s6_2;
   leg.a1=a1; leg.a2=a2; leg.isNR=false; leg.completed=true;
   if(r1>r2){ leg.winner=leg.p1; leg.needsSuperOver=false; }
   else if(r2>r1){ leg.winner=leg.p2; leg.needsSuperOver=false; }
@@ -12787,7 +13035,7 @@ function launchNewTournament(){
   }else{
     players.forEach((name,i)=>flatPlayerRecords.push({id:'player_'+Date.now().toString(36)+'_'+i.toString(36),name}));
   }
-  const _creatorAcc=(typeof hsGetSession==='function')?hsGetSession():null; db.tournaments[newId]={id:newId,name,tagline:(document.getElementById('cfgTagline')?.value||'').trim(),ownerAccountId:_creatorAcc?_creatorAcc.id:null,organizerEmail:_creatorAcc?String(_creatorAcc.contact||'').trim().toLowerCase():null,coOwnerEmails:[],competitionType:competitionType==='team'?'team':'player',teamSettings:competitionType==='team'?teamSettings:null,teams:competitionType==='team'?JSON.parse(JSON.stringify(teams)):null,matchFormat,overs:isTest?90:(parseInt(document.getElementById('cfgOvers')?.value,10)||5),maxWickets:isTest?10:(parseInt(document.getElementById('cfgMaxWickets')?.value,10)||5),testDays:isTest?5:null,oversPerDay:isTest?90:null,format,playEachTwice,bannerUrl:(document.getElementById('cfgBannerUrl')?.value||'').trim(),playoffMethod,qualifyCount,qualifyPerGroup:qpg,groupCount:custom?groupCount:(isTwoGroupFormat(format)?2:null),groupDistribution:custom?(document.getElementById('cfgGroupDistribution')?.value||'balanced'):(isTwoGroupFormat(format)?'manual':null),winPts:parseInt(document.getElementById('cfgWinPts')?.value,10)||3,tiePts:parseInt(document.getElementById('cfgTiePts')?.value,10)||1,bonusEnabled:!!document.getElementById('cfgBonusEnabled')?.checked,bonusPts:document.getElementById('cfgBonusEnabled')?.checked?Math.max(0,parseInt(document.getElementById('cfgBonusPts')?.value,10)||0):0,nrPts:parseInt(document.getElementById('cfgNrPts')?.value,10)||1,rewards:readRewardsConfig(),adminPins:[newPin],players:players.slice(),playerRecords:flatPlayerRecords,currentStage:1,groups:groups?JSON.parse(JSON.stringify(groups)):null,stages:[stage]};
+  const _creatorAcc=(typeof hsGetSession==='function')?hsGetSession():null; db.tournaments[newId]={id:newId,name,tagline:(document.getElementById('cfgTagline')?.value||'').trim(),playEnvironment:document.getElementById('cfgPlayEnvironment')?.value||'mobile',ownerAccountId:_creatorAcc?_creatorAcc.id:null,organizerEmail:_creatorAcc?String(_creatorAcc.contact||'').trim().toLowerCase():null,coOwnerEmails:[],competitionType:competitionType==='team'?'team':'player',teamSettings:competitionType==='team'?teamSettings:null,teams:competitionType==='team'?JSON.parse(JSON.stringify(teams)):null,matchFormat,overs:isTest?90:(parseInt(document.getElementById('cfgOvers')?.value,10)||5),maxWickets:isTest?10:(parseInt(document.getElementById('cfgMaxWickets')?.value,10)||5),testDays:isTest?5:null,oversPerDay:isTest?90:null,format,playEachTwice,bannerUrl:(document.getElementById('cfgBannerUrl')?.value||'').trim(),playoffMethod,qualifyCount,qualifyPerGroup:qpg,groupCount:custom?groupCount:(isTwoGroupFormat(format)?2:null),groupDistribution:custom?(document.getElementById('cfgGroupDistribution')?.value||'balanced'):(isTwoGroupFormat(format)?'manual':null),winPts:resolvePtsConfig(document.getElementById('cfgWinPts')?.value,3),tiePts:resolvePtsConfig(document.getElementById('cfgTiePts')?.value,1),bonusEnabled:!!document.getElementById('cfgBonusEnabled')?.checked,bonusPts:document.getElementById('cfgBonusEnabled')?.checked?Math.max(0,resolvePtsConfig(document.getElementById('cfgBonusPts')?.value,0)):0,nrPts:resolvePtsConfig(document.getElementById('cfgNrPts')?.value,1),rewards:readRewardsConfig(),adminPins:[newPin],players:players.slice(),playerRecords:flatPlayerRecords,currentStage:1,groups:groups?JSON.parse(JSON.stringify(groups)):null,stages:[stage]};
   db.activeId=newId;
   selectedTournamentId=newId;
   generateStageFixtures(db.tournaments[newId],1);
@@ -12948,7 +13196,29 @@ function exportDataBackup(){
 function importDataBackup(e){
   const file = e.target.files[0]; if(!file) return;
   const reader = new FileReader();
-  reader.onload = () => { try { db = JSON.parse(reader.result); saveDB(); renderAll(); showToast('Restored!', 'success'); }catch(err){ alert('Invalid backup'); } };
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      if(!parsed || typeof parsed !== 'object' || !parsed.tournaments || typeof parsed.tournaments !== 'object'){
+        alert('Invalid backup file: missing tournaments data.');
+        return;
+      }
+      const tIds = Object.keys(parsed.tournaments);
+      if(!tIds.length){ alert('Backup file contains 0 tournaments.'); return; }
+      if(!confirm(`Restore ${tIds.length} tournament(s) from "${file.name}"?\n\nThis will replace local tournament data and sync the restored tournaments to cloud while keeping your current sign-in session.`)) return;
+      const keepAccounts = db?.accounts ? { ...db.accounts } : {};
+      const keepSession = db?.session ? { ...db.session } : { accountId: null };
+      db = parsed;
+      ensureRecoveryStores();
+      db.accounts = { ...(db.accounts||{}), ...keepAccounts };
+      if(keepSession.accountId) db.session = keepSession;
+      tIds.forEach(id => { if(isAdmin) markTournamentDirty(id, { config: true }); });
+      saveDB({ config: true });
+      renderAll();
+      showToast(`✅ Restored ${tIds.length} tournament(s)!`, 'success');
+    }catch(err){ alert('Invalid JSON backup file: ' + (err.message||err)); }
+    finally { try{ e.target.value = ''; }catch(_){} }
+  };
   reader.readAsText(file);
 }
 
@@ -13010,6 +13280,9 @@ function homeCard(id, t, bucket){
 
 function logoutAccountHome(){
   window.__explicitLogoutInProgress = true;
+  developerMode = false;
+  lastCloudDataStr = '';
+  try{ window.__safeSession.removeItem('apex_developer_mode'); }catch(e){}
   if(__fbReady){ fbLogout().catch(function(){}).finally(()=>{ window.__explicitLogoutInProgress = false; }); }
   else { setTimeout(()=>{ window.__explicitLogoutInProgress = false; }, 300); }
   hsSaveSession(null);
@@ -13113,7 +13386,7 @@ function restoreDeletedTournament(id){
     const pin=prompt('Enter this tournament\'s admin PIN to restore:');
     if(pin==null) return;
     const pins=Array.isArray(t.adminPins)?t.adminPins.map(String):[];
-    if(String(pin).trim()===DEVELOPER_PIN){ developerMode=true; try{ window.__safeSession.setItem('apex_developer_mode','1'); }catch(e){} }
+    if(isDeveloperAccount()){ developerMode=true; try{ window.__safeSession.setItem('apex_developer_mode','1'); }catch(e){} }
     else if(!pins.includes(String(pin).trim())){
       showToast('PIN incorrect. Only the tournament owner PIN can restore.','error');
       return;
@@ -13504,15 +13777,13 @@ window.addEventListener('pagehide', ()=>{
   }
 
   function enableDeveloperMode() {
-    const pin = prompt('Developer / Master access PIN:');
-    if (pin == null) return;
-    if (String(pin).trim() !== DEVELOPER_PIN) {
-      showToast('Incorrect developer PIN.', 'error');
+    if (!isDeveloperAccount()) {
+      showToast('🔒 Developer Mode is restricted to the authorized developer Google/Email account. Please Sign In first.', 'error');
       return;
     }
     developerMode = true;
     try { window.__safeSession.setItem('apex_developer_mode', '1'); } catch(e) {}
-    showToast('👨‍💻 Developer Mode ON (All PINs bypassed)', 'success');
+    showToast('👨‍💻 Developer Mode ON (Verified Developer Account)', 'success');
     hsNav('devtools');
   }
 
@@ -13614,7 +13885,7 @@ window.addEventListener('pagehide', ()=>{
     const target = db.tournaments[selectedId];
     const pin = (document.getElementById('pinInputModal')?.value || document.getElementById('pinInput')?.value || '').trim();
 
-    if (developerMode || pin === DEVELOPER_PIN) {
+    if (developerMode && isDeveloperAccount()) {
       developerMode = true;
       try { window.__safeSession.setItem('apex_developer_mode', '1'); } catch(e) {}
       resetTournamentBoundUI();
@@ -14032,14 +14303,19 @@ function createTestTournamentFromDev() {
                ${myOwned.length ? listHtml(myOwned, 'live') : '<div class="hs-empty">You have 0 tournaments yet. Tap <b>＋ Create New Tournament</b> to launch one, or <b>Unlock Any by PIN</b> to manage an existing tournament.</div>'}`;
     }
     else if (panel === 'career') {
-      const cr = computeUserCareerRecord(acc);
+      const cEnv = window.__careerEnvFilter || 'mobile';
+      const cr = computeUserCareerRecord(acc, cEnv);
       const sr = cr.balls ? ((cr.runs / cr.balls) * 100).toFixed(1) : '0.0';
       const econ = cr.ballsBowled ? ((cr.runsConceded / cr.ballsBowled) * 6).toFixed(2) : '0.00';
       body += `<button type="button" class="hs-back" onclick="hsNav('menu')">‹ Back to Home</button>
                <div class="hs-hero-v9">
                  <div class="hs-kicker">${acc?.userId ? '@' + esc(acc.userId) : 'PLAYER PROFILE'}</div>
                  <h1>🏏 Career Record</h1>
-                 <p>${esc(acc?.name || 'Player')} • Official Linked Tournament Stats</p>
+                 <p>${esc(acc?.name || 'Player')} • ${cEnv==='real_life' ? 'Real-Life Cricket Stats' : 'Mobile Game (Real Cricket) Stats'}</p>
+               </div>
+               <div style="display:flex;gap:8px;margin-bottom:12px">
+                 <button type="button" class="btn btn-sm ${cEnv==='mobile'?'btn-primary':'btn-secondary'}" style="flex:1;justify-content:center" onclick="window.__careerEnvFilter='mobile';hsNav('career')">📱 Mobile Game</button>
+                 <button type="button" class="btn btn-sm ${cEnv==='real_life'?'btn-primary':'btn-secondary'}" style="flex:1;justify-content:center" onclick="window.__careerEnvFilter='real_life';hsNav('career')">🏏 Real-Life Cricket</button>
                </div>
                <div class="statgrid" style="margin-bottom:14px">
                  <div class="stat"><span>Cups</span><b>${cr.tournamentsPlayed}</b></div>
@@ -14047,7 +14323,7 @@ function createTestTournamentFromDev() {
                  <div class="stat"><span>Matches</span><b>${cr.matches}</b></div>
                  <div class="stat"><span>Runs</span><b>${cr.runs}</b></div>
                  <div class="stat"><span>Wickets</span><b>${cr.wickets}</b></div>
-                 <div class="stat"><span>Sixes</span><b>${cr.sixes}</b></div>
+                 <div class="stat"><span>4s / 6s</span><b>${cr.fours} / ${cr.sixes}</b></div>
                  <div class="stat"><span>Strike Rate</span><b>${sr}</b></div>
                  <div class="stat"><span>Economy</span><b>${econ}</b></div>
                  <div class="stat"><span>MVP Pts</span><b>${cr.mvp}</b></div>
@@ -14056,8 +14332,8 @@ function createTestTournamentFromDev() {
                ${cr.history.length ? '<div class="hs-list">' + cr.history.map(h => `
                  <div class="hs-card" onclick="openTournamentFromHome('${esc(h.id)}')" style="cursor:pointer">
                    <div class="hs-card-title">${esc(h.name)} ${h.champion ? '<span class="hs-badge">🏆 CHAMPION</span>' : ''}</div>
-                   <div class="hs-card-meta">Slot: ${esc(h.slot)} · ${h.matches} M · ${h.runs} runs · ${h.wickets} wkts · ${h.mvp} MVP pts</div>
-                 </div>`).join('') : '<div class="hs-empty">No linked tournaments yet. Ask your tournament organiser to link your <b>@' + esc(acc?.userId || 'UserID') + '</b> in Setup, or tap <b>Claim Stats</b> inside any tournament&apos;s Qualification view.</div>'}`;
+                   <div class="hs-card-meta">${h.playEnvironment==='real_life'?'🏏 Real-Life':'📱 Mobile'} · Slot: ${esc(h.slot)} · ${h.matches} M · ${h.runs} runs · ${h.wickets} wkts · ${h.mvp} MVP pts</div>
+                 </div>`).join('') : '<div class="hs-empty">No linked '+(cEnv==='real_life'?'Real-Life Cricket':'Mobile Game')+' tournaments yet. Ask your tournament organiser to link your <b>@' + esc(acc?.userId || 'UserID') + '</b> in Manage, or tap <b>Claim Stats</b> inside any tournament&apos;s Qualification view.</div>'}`;
     }
     else if (panel === 'live') {
       body += `<button type="button" class="hs-back" onclick="hsNav('menu')">‹ Back to Home</button>
