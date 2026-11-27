@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,viewport-fit=cover">
   
-<title>APEX Cricket Hub v49 V14 • Pro Cricket Tournament Hub</title>
+<title>APEX Cricket Hub v49 V16 • Pro Cricket Tournament Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
 :root{
@@ -2730,6 +2730,188 @@ details.qi-pro-others[open] > div {
 }
 </style>
 
+
+<style id="apex-v15-polish">
+/* === 1. SIDE-BY-SIDE COMPACT BAT 1ST / BAT 2ND RADIO TABS === */
+.nrr-tabs {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  margin: 8px 0 10px !important;
+}
+.nrr-tab {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  padding: 8px 10px !important;
+  border-radius: 12px !important;
+  border: 1.5px solid var(--card-border) !important;
+  background: rgba(56, 189, 248, 0.08) !important;
+  color: var(--text) !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: none !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.18s, background 0.18s !important;
+}
+.nrr-tab:active { transform: scale(0.95) !important; }
+.nrr-tab:has(input:checked) {
+  border-color: var(--accent) !important;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(37, 99, 235, 0.18)) !important;
+  box-shadow: 0 3px 10px rgba(2, 132, 199, 0.22);
+}
+.nrr-tab input[type="radio"] {
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  accent-color: var(--accent);
+}
+
+/* === 2. LIVE AI INSIGHT BAR IN QUALIFICATION INTELLIGENCE === */
+.qi-ai-summary-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 9px 11px;
+  margin-bottom: 9px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(139, 92, 246, 0.13));
+  border: 1.5px solid rgba(56, 189, 248, 0.42);
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text);
+}
+body.theme-light .qi-ai-summary-bar {
+  background: linear-gradient(135deg, #e0f2fe, #ede9fe);
+  border-color: #38bdf8;
+  color: #0f172a;
+}
+.qi-ai-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #38bdf8, #6366f1);
+  color: #ffffff;
+}
+
+/* === 3. DECIDING MATCH SCENARIO BLOCKS (0 MATCHES LEFT) === */
+.qi-wait-block {
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: 8px;
+}
+body.theme-light .qi-wait-block {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(37, 99, 235, 0.25);
+}
+.qi-wait-match {
+  font-size: 12px;
+  margin-bottom: 7px;
+  color: var(--text);
+}
+.qi-wait-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.qi-wait-scen {
+  padding: 7px 8px;
+  border-radius: 9px;
+  border: 1px solid var(--card-border);
+  background: rgba(56, 189, 248, 0.05);
+  text-align: center;
+}
+.qi-wait-scen-full {
+  grid-column: 1 / -1;
+}
+.qi-wait-lbl {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+/* === 4. ADMIN MVP STAT VISIBILITY TOGGLE CHIPS === */
+.mvp-vis-chip {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 5px;
+  margin: 0 !important;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: none !important;
+  cursor: pointer;
+  border: 1.5px solid var(--card-border);
+  background: rgba(244, 63, 94, 0.10);
+  color: var(--muted) !important;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.18s, border-color 0.18s;
+}
+.mvp-vis-chip:active { transform: scale(0.93); }
+.mvp-vis-chip.on {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.16);
+  color: var(--text) !important;
+}
+
+/* === 5. BOUNCY POP-UP TRANSITIONS FOR CARDS, DETAILS & MODALS === */
+@keyframes apexBouncyPop {
+  0% { opacity: 0; transform: translateY(8px) scale(0.975); }
+  68% { opacity: 1; transform: translateY(-1.5px) scale(1.006); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.view-panel:not(.hidden) {
+  animation: apexBouncyPop 0.22s cubic-bezier(0.34, 1.45, 0.64, 1) both !important;
+}
+.cric-scorecard, .match-item, .award-card {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease !important;
+}
+.cric-scorecard:active, .match-item:active, .award-card:active {
+  transform: scale(0.98) !important;
+}
+</style>
+
+
+<style id="apex-v16-qi-mode">
+.qi-mode-toggle {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 11px;
+  border: 1.5px solid var(--card-border);
+  background: rgba(56, 189, 248, 0.08);
+  gap: 2px;
+}
+.qi-mode-btn {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 5px 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.18s, color 0.18s;
+}
+.qi-mode-btn:active { transform: scale(0.93); }
+.qi-mode-btn.active {
+  background: linear-gradient(145deg, #38bdf8, #0284c7, #1d4ed8);
+  color: #ffffff !important;
+  box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
+}
+</style>
+
 </head>
 
  <body>
@@ -2812,7 +2994,7 @@ details.qi-pro-others[open] > div {
    <nav id="mainNav">
     <button id="nav_standings" class="active" onclick="switchNav('view_standings', 'nav_standings')">🏆 Standings</button>
     <button id="nav_champion" class="hidden" onclick="switchNav('view_champion', 'nav_champion')">🏆 Champion</button>
-    <button id="nav_fixtures" onclick="switchNav('view_fixtures', 'nav_fixtures')">📅 Fixtures &amp; Schedule</button>
+    <button id="nav_fixtures" onclick="switchNav('view_fixtures', 'nav_fixtures')">🏏 Fixtures &amp; Schedule</button>
     <button id="nav_results" onclick="switchNav('view_results', 'nav_results')">📋 Scorecards</button>
     <button id="nav_awards" onclick="switchNav('view_awards', 'nav_awards')">🎖️ MVP &amp; Leaderboards</button>
     <button id="nav_query" onclick="switchNav('view_query', 'nav_query')">🔎 Qualification</button>
@@ -2928,7 +3110,7 @@ Group B: Player C, Player D"></textarea></div>
    <div class="card">
     <div class="card-header">
      <div>
-      <div class="card-title">📅 Match Schedule &amp; Fixtures</div>
+      <div class="card-title">🏏 Match Schedule &amp; Fixtures</div>
       <div class="muted">Search or filter upcoming and completed matches by player name</div>
      </div>
      <div style="display:flex;gap:6px;flex-wrap:wrap">
@@ -2967,15 +3149,21 @@ Group B: Player C, Player D"></textarea></div>
       <div class="card-title">🎖️ Tournament Honors &amp; Player Stats</div>
       <div class="muted">Live automatic calculation across all match scorecards</div>
      </div>
+     <button type="button" id="btnMvpVisAdmin" class="btn btn-secondary btn-sm hidden" onclick="toggleMvpVisPanel()">👁️ Hide/Show Stats</button>
+    </div>
+    <div id="mvpVisAdminPanel" class="hidden" style="margin-bottom:14px;padding:12px;border-radius:14px;border:1.5px solid rgba(56,189,248,0.4);background:rgba(56,189,248,0.06)">
+     <div style="font-size:11.5px;font-weight:900;color:var(--accent);margin-bottom:6px">🔒 Admin / Developer Display Controls (Synced for All Viewers)</div>
+     <div class="muted" style="font-size:11px;margin-bottom:8px">Uncheck any award card or stat column you don't use (e.g. Maximum Sixes or 4s) to hide it cleanly from the public MVP page.</div>
+     <div id="mvpVisToggleGrid" style="display:flex;flex-wrap:wrap;gap:6px"></div>
     </div>
     <div class="awards-grid">
-     <div class="award-card mvp" style="position:relative;overflow:hidden;border:1.5px solid rgba(245,158,11,0.5);background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(15,23,42,0.8))">
+     <div class="award-card mvp" data-award-key="mvp" style="position:relative;overflow:hidden;border:1.5px solid rgba(245,158,11,0.5);background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(15,23,42,0.8))">
       <div style="font-size:36px;position:absolute;right:14px;top:14px;line-height:1">🏆</div>
       <div class="award-title" style="color:#f59e0b">TOURNAMENT MVP</div>
       <div class="award-player-row"><span id="mvpPlayer" class="award-player-name" style="font-size:20px;font-weight:800;color:#fff">TBD</span></div>
       <div id="mvpStat" class="award-stat" style="color:#fbbf24;font-size:16px;font-weight:800">0 Pts</div>
      </div>
-     <div class="award-card orange" style="position:relative;overflow:hidden;border:1.5px solid rgba(249,115,22,0.5);background:linear-gradient(135deg,rgba(249,115,22,0.15),rgba(15,23,42,0.8))">
+     <div class="award-card orange" data-award-key="runs" style="position:relative;overflow:hidden;border:1.5px solid rgba(249,115,22,0.5);background:linear-gradient(135deg,rgba(249,115,22,0.15),rgba(15,23,42,0.8))">
       <div style="position:absolute;right:12px;top:12px;line-height:1">
        <span class="award-cap-icon award-cap-orange" title="Orange Cap" aria-label="Orange Cap"><svg viewBox="0 0 48 34" role="img" aria-hidden="true"><path fill="currentColor" d="M7 19.2C7.8 10.7 14.2 5 22.2 5c6.2 0 10.9 3.1 13.2 8.1-2.9-.8-6.3-.7-9.5.2-5.8 1.7-10.5 4.8-18.9 5.9Z"/><path fill="currentColor" d="M8.2 19.1c7.5-.7 12.1-3.4 17.4-5 5.3-1.6 11.7-1.1 16.2 1.1 1.6.8 1.5 2.1-.1 2.7-7.4 2.6-16.9 3.1-27.7 2.3-3.1-.2-5-.4-5.8-.7Z"/><path fill="currentColor" d="M34.7 12.9c2.8.1 5.3.9 7.2 2.1-1.4-.4-3-.6-4.6-.5-1.1.1-2.2.2-3.2.5l.6-2.1Z"/></svg></span>
       </div>
@@ -2983,7 +3171,7 @@ Group B: Player C, Player D"></textarea></div>
       <div class="award-player-row"><span id="orangePlayer" class="award-player-name" style="font-size:20px;font-weight:800;color:#fff">TBD</span></div>
       <div id="orangeStat" class="award-stat" style="color:#fdba74;font-size:16px;font-weight:800">0 Runs</div>
      </div>
-     <div class="award-card purple" style="position:relative;overflow:hidden;border:1.5px solid rgba(168,85,247,0.5);background:linear-gradient(135deg,rgba(168,85,247,0.15),rgba(15,23,42,0.8))">
+     <div class="award-card purple" data-award-key="wickets" style="position:relative;overflow:hidden;border:1.5px solid rgba(168,85,247,0.5);background:linear-gradient(135deg,rgba(168,85,247,0.15),rgba(15,23,42,0.8))">
       <div style="position:absolute;right:12px;top:12px;line-height:1">
        <span class="award-cap-icon award-cap-purple" title="Purple Cap" aria-label="Purple Cap"><svg viewBox="0 0 48 34" role="img" aria-hidden="true"><path fill="currentColor" d="M7 19.2C7.8 10.7 14.2 5 22.2 5c6.2 0 10.9 3.1 13.2 8.1-2.9-.8-6.3-.7-9.5.2-5.8 1.7-10.5 4.8-18.9 5.9Z"/><path fill="currentColor" d="M8.2 19.1c7.5-.7 12.1-3.4 17.4-5 5.3-1.6 11.7-1.1 16.2 1.1 1.6.8 1.5 2.1-.1 2.7-7.4 2.6-16.9 3.1-27.7 2.3-3.1-.2-5-.4-5.8-.7Z"/><path fill="currentColor" d="M34.7 12.9c2.8.1 5.3.9 7.2 2.1-1.4-.4-3-.6-4.6-.5-1.1.1-2.2.2-3.2.5l.6-2.1Z"/></svg></span>
       </div>
@@ -2991,7 +3179,7 @@ Group B: Player C, Player D"></textarea></div>
       <div class="award-player-row"><span id="purplePlayer" class="award-player-name" style="font-size:20px;font-weight:800;color:#fff">TBD</span></div>
       <div id="purpleStat" class="award-stat" style="color:#d8b4fe;font-size:16px;font-weight:800">0 Wickets</div>
      </div>
-     <div class="award-card" style="position:relative;overflow:hidden;border:1.5px solid rgba(16,185,129,0.5);background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(15,23,42,0.8))">
+     <div class="award-card" data-award-key="s6" style="position:relative;overflow:hidden;border:1.5px solid rgba(16,185,129,0.5);background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(15,23,42,0.8))">
       <div style="position:absolute;right:12px;top:10px;line-height:1">
        <svg width="44" height="44" viewBox="0 0 60 60" fill="none" style="filter:drop-shadow(0 4px 10px rgba(16,185,129,0.5));">
         <defs>
@@ -3006,25 +3194,25 @@ Group B: Player C, Player D"></textarea></div>
       <div class="award-player-row"><span id="sixesPlayer" class="award-player-name" style="font-size:20px;font-weight:800;color:#fff">TBD</span></div>
       <div id="sixesStat" class="award-stat" style="color:#6ee7b7;font-size:16px;font-weight:800">0 Sixes</div>
      </div>
-     <div class="award-card" style="position:relative;overflow:hidden;border:1.5px solid rgba(56,189,248,0.4);background:linear-gradient(135deg,rgba(56,189,248,0.1),rgba(15,23,42,0.8))">
+     <div class="award-card" data-award-key="econ" style="position:relative;overflow:hidden;border:1.5px solid rgba(56,189,248,0.4);background:linear-gradient(135deg,rgba(56,189,248,0.1),rgba(15,23,42,0.8))">
       <div style="font-size:36px;position:absolute;right:14px;top:14px;line-height:1">🛡️</div>
       <div class="award-title" style="color:#38bdf8">BEST ECONOMY</div>
       <div class="award-player-row"><span id="bestEconPlayer" class="award-player-name" style="font-size:20px;font-weight:800;color:#fff">TBD</span></div>
       <div id="bestEconStat" class="award-stat" style="color:#7dd3fc;font-size:16px;font-weight:800">-</div>
      </div>
-     <div class="award-card" style="position:relative;overflow:hidden;border:1.5px solid rgba(236,72,153,0.45);background:linear-gradient(135deg,rgba(236,72,153,0.12),rgba(15,23,42,0.8))">
+     <div class="award-card" data-award-key="sr" style="position:relative;overflow:hidden;border:1.5px solid rgba(236,72,153,0.45);background:linear-gradient(135deg,rgba(236,72,153,0.12),rgba(15,23,42,0.8))">
       <div style="font-size:36px;position:absolute;right:14px;top:14px;line-height:1">⚡</div>
       <div class="award-title" style="color:#f472b6">BEST STRIKE RATE</div>
       <div class="award-player-row"><span id="bestSRPlayer" class="award-player-name" style="font-size:20px;font-weight:800;color:#fff">TBD</span></div>
       <div id="bestSRStat" class="award-stat" style="color:#f9a8d4;font-size:16px;font-weight:800">-</div>
      </div>
-     <div class="award-card" style="position:relative;overflow:hidden;border:1.5px solid rgba(251,146,60,0.45);background:linear-gradient(135deg,rgba(251,146,60,0.12),rgba(15,23,42,0.8))">
+     <div class="award-card" data-award-key="highScore" style="position:relative;overflow:hidden;border:1.5px solid rgba(251,146,60,0.45);background:linear-gradient(135deg,rgba(251,146,60,0.12),rgba(15,23,42,0.8))">
       <div style="font-size:36px;position:absolute;right:14px;top:14px;line-height:1">🔥</div>
       <div class="award-title" style="color:#fb923c">HIGHEST SCORE</div>
       <div class="award-player-row"><span id="highScorePlayer" class="award-player-name" style="font-size:20px;font-weight:800;color:#fff">TBD</span></div>
       <div id="highScoreStat" class="award-stat" style="color:#fdba74;font-size:16px;font-weight:800">-</div>
      </div>
-     <div class="award-card" style="position:relative;overflow:hidden;border:1.5px solid rgba(192,132,252,0.45);background:linear-gradient(135deg,rgba(192,132,252,0.12),rgba(15,23,42,0.8))">
+     <div class="award-card" data-award-key="bestBowl" style="position:relative;overflow:hidden;border:1.5px solid rgba(192,132,252,0.45);background:linear-gradient(135deg,rgba(192,132,252,0.12),rgba(15,23,42,0.8))">
       <div style="font-size:36px;position:absolute;right:14px;top:14px;line-height:1">🎯</div>
       <div class="award-title" style="color:#c084fc">BEST BOWLING</div>
       <div class="award-player-row"><span id="bestBowlPlayer" class="award-player-name" style="font-size:20px;font-weight:800;color:#fff">TBD</span></div>
@@ -3056,17 +3244,17 @@ Group B: Player C, Player D"></textarea></div>
        <thead>
         <tr id="mvpStatsHeadRow">
          <th data-sort-col="name" class="align-left sortable" style="min-width:130px;padding-left:10px" onclick="toggleStatsSort('name')">Player</th>
-         <th data-sort-col="matches" class="align-center sortable" onclick="toggleStatsSort('matches')">Matches</th>
-         <th data-sort-col="runs" class="align-center sortable" onclick="toggleStatsSort('runs')">Runs</th>
-         <th data-sort-col="balls" class="align-center sortable" onclick="toggleStatsSort('balls')">Balls</th>
-         <th class="align-center">4s</th>
-         <th data-sort-col="s6" class="align-center sortable" onclick="toggleStatsSort('s6')">6s</th>
-         <th data-sort-col="sr" class="align-center sortable" onclick="toggleStatsSort('sr')">SR</th>
-         <th data-sort-col="wickets" class="align-center sortable" onclick="toggleStatsSort('wickets')">Wickets</th>
-         <th class="align-center">Runs Con.</th>
-         <th class="align-center">Overs</th>
-         <th data-sort-col="econ" class="align-center sortable" onclick="toggleStatsSort('econ')">Econ</th>
-         <th data-sort-col="mvp" class="align-center sortable" onclick="toggleStatsSort('mvp')">MVP Pts</th>
+         <th data-sort-col="matches" data-mvp-col="matches" class="align-center sortable" onclick="toggleStatsSort('matches')">Matches</th>
+         <th data-sort-col="runs" data-mvp-col="runs" class="align-center sortable" onclick="toggleStatsSort('runs')">Runs</th>
+         <th data-sort-col="balls" data-mvp-col="balls" class="align-center sortable" onclick="toggleStatsSort('balls')">Balls</th>
+         <th data-mvp-col="s4" class="align-center">4s</th>
+         <th data-sort-col="s6" data-mvp-col="s6" class="align-center sortable" onclick="toggleStatsSort('s6')">6s</th>
+         <th data-sort-col="sr" data-mvp-col="sr" class="align-center sortable" onclick="toggleStatsSort('sr')">SR</th>
+         <th data-sort-col="wickets" data-mvp-col="wickets" class="align-center sortable" onclick="toggleStatsSort('wickets')">Wickets</th>
+         <th data-mvp-col="runsConceded" class="align-center">Runs Con.</th>
+         <th data-mvp-col="overs" class="align-center">Overs</th>
+         <th data-sort-col="econ" data-mvp-col="econ" class="align-center sortable" onclick="toggleStatsSort('econ')">Econ</th>
+         <th data-sort-col="mvp" data-mvp-col="mvp" class="align-center sortable" onclick="toggleStatsSort('mvp')">MVP Pts</th>
         </tr>
        </thead>
        <tbody id="playerStatsBody"></tbody>
@@ -3087,7 +3275,16 @@ Group B: Player C, Player D"></textarea></div>
     <div class="card-header">
      <div><div class="card-title">🔎 Qualification Intelligence</div><div class="muted">Select the stage you want to inspect. Each league/group stage has its own qualification scenario.</div></div>
     </div>
-    <div style="margin-bottom:12px"><label>Select Stage</label><select id="queryStageSelect" onchange="selectQualificationStage(this.value)"></select></div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-bottom:12px">
+     <div><label>Select Stage</label><select id="queryStageSelect" onchange="selectQualificationStage(this.value)"></select></div>
+     <div>
+      <label style="font-size:10px">Odds Mode</label>
+      <div class="qi-mode-toggle" id="qiTieNrToggleWrap">
+       <button type="button" id="qiModeTieOn" class="qi-mode-btn active" onclick="setQiIncludeTieNR(true)">Include Tie/NR</button>
+       <button type="button" id="qiModeTieOff" class="qi-mode-btn" onclick="setQiIncludeTieNR(false)">W/L Only</button>
+      </div>
+     </div>
+    </div>
     <div id="qualificationStageContext" class="muted" style="margin:-4px 0 12px;font-size:11px"></div>
     <div class="query-grid">
      <div class="form-group"><label>Select Player</label><select id="queryPlayer" onchange="renderQualificationQuery()"></select></div>
@@ -4163,14 +4360,10 @@ function seedHunterPremierLeagueIfMissing(force){
       }
     }catch(fxErr){ console.warn('[HPL] fixture gen partial', fxErr); }
 
-    try{
-      if(typeof markTournamentDirty==='function') markTournamentDirty(id);
-      else if(typeof getCloudSyncMeta==='function' && typeof setCloudSyncMeta==='function'){
-        const meta=getCloudSyncMeta()||{};
-        meta.dirty=meta.dirty||{}; meta.dirty[id]=true; meta.lastLocalWrite=Date.now();
-        setCloudSyncMeta(meta);
-      }
-    }catch(e){}
+    // Only mark dirty when explicitly force-installed by user/developer, never on passive load
+    if(force){
+      try{ if(typeof markTournamentDirty==='function') markTournamentDirty(id, { config: true }); }catch(e){}
+    }
 
     try{ window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db)); }catch(e){}
     console.info('[HPL] HUNTER PREMIER LEAGUE installed');
@@ -4581,16 +4774,32 @@ function getDeletedDirtyIds(){ return Object.keys(getCloudSyncMeta().deletedDirt
 function getDeletedDirtyAction(id){ const v=getCloudSyncMeta().deletedDirty?.[id]; return v==='restore'||v==='purge'?v:'delete'; }
 function clearDeletedDirtyIds(ids){ const meta=getCloudSyncMeta(); meta.deletedDirty=meta.deletedDirty||{}; (ids||[]).forEach(id=>delete meta.deletedDirty[id]); setCloudSyncMeta(meta); }
 
-function markTournamentDirty(tournamentId){
+function markTournamentDirty(tournamentId, opts){
   if(!tournamentId || !db?.tournaments?.[tournamentId]) return;
   const t=db.tournaments[tournamentId];
   const now=Date.now();
   const prev=t._sync||{};
-  t._sync={updatedAt:Math.max(now,Number(prev.updatedAt)||0),revision:(Number(prev.revision)||0)+1,updatedBy:getCloudDeviceId()};
+  t._sync={updatedAt:Math.max(now,(Number(prev.updatedAt)||0)+1),revision:(Number(prev.revision)||0)+1,updatedBy:getCloudDeviceId()};
   const meta=getCloudSyncMeta();
   meta.dirty=meta.dirty||{}; meta.dirty[tournamentId]=true;
+  meta.dirtyFixtures=meta.dirtyFixtures||{};
+  meta.dirtyConfig=meta.dirtyConfig||{};
+  if(opts && opts.fixtureKey){
+    meta.dirtyFixtures[tournamentId]=meta.dirtyFixtures[tournamentId]||{};
+    meta.dirtyFixtures[tournamentId][String(opts.fixtureKey)]=now;
+  } else {
+    // Structural / tournament-level edit (player removal, rename, stages, settings, banner, logos, hidden stats)
+    meta.dirtyConfig[tournamentId]=now;
+  }
   meta.lastLocalWrite=now;
   setCloudSyncMeta(meta);
+}
+function markFixtureEdited(t, stageNum, fixture){
+  if(!t || !fixture) return;
+  const now = Date.now();
+  fixture._editedAt = now;
+  fixture._editedBy = getCloudDeviceId();
+  window.__pendingFixtureEditKey = `${Number(stageNum ?? fixture.stageNum ?? t.currentStage ?? 1)}:${Number(fixture.id)}`;
 }
 function getDirtyTournamentIds(){
   const d=getCloudSyncMeta().dirty||{};
@@ -4598,7 +4807,13 @@ function getDirtyTournamentIds(){
 }
 function clearDirtyTournamentIds(ids){
   const meta=getCloudSyncMeta(); meta.dirty=meta.dirty||{};
-  (ids||[]).forEach(id=>{delete meta.dirty[id];});
+  meta.dirtyFixtures=meta.dirtyFixtures||{};
+  meta.dirtyConfig=meta.dirtyConfig||{};
+  (ids||[]).forEach(id=>{
+    delete meta.dirty[id];
+    delete meta.dirtyFixtures[id];
+    delete meta.dirtyConfig[id];
+  });
   setCloudSyncMeta(meta);
 }
 function preserveUrlTournament(data){
@@ -4643,36 +4858,95 @@ function preserveUrlTournament(data){
   }catch(e){}
 }
 
-function saveDB(){
+function saveDB(opts){
   ensureRecoveryStores();
   invalidateQualificationCache();
-  if(isAdmin && selectedTournamentId && db?.tournaments?.[selectedTournamentId]) markTournamentDirty(selectedTournamentId);
+  const fKey = (opts && opts.fixtureKey) || window.__pendingFixtureEditKey || null;
+  window.__pendingFixtureEditKey = null;
+  if(isAdmin && selectedTournamentId && db?.tournaments?.[selectedTournamentId]){
+    markTournamentDirty(selectedTournamentId, fKey ? { fixtureKey: fKey } : { config: true });
+  }
   window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db));
   if(isAdmin) queueCloudPush();
 }
 
 function tournamentDataWeight(t){
-  if(!t) return 0;
-  let completed=0, total=0, stages=Array.isArray(t.stages)?t.stages:[];
-  stages.forEach(st=>{ const fs=Array.isArray(st.fixtures)?st.fixtures:[]; total+=fs.length; completed+=fs.filter(f=>f&&f.completed===true).length; });
-  return completed*100000 + total*100 + stages.length;
+  return Number(t?._sync?.revision)||0;
 }
 function protectLocalAheadOfCloud(localData,cloudData){
-  if(!isAdmin) return [];
-  const ids=Object.keys(localData?.tournaments||{});
-  const protectedIds=[];
-  ids.forEach(id=>{
-    const lt=localData.tournaments[id], ct=cloudData?.tournaments?.[id];
-    if(lt && ct && tournamentDataWeight(lt)>tournamentDataWeight(ct)){
-      db.tournaments[id]=lt;
-      const meta=getCloudSyncMeta(); meta.dirty=meta.dirty||{}; meta.dirty[id]=true; meta.recoveryProtectedAt=Date.now(); setCloudSyncMeta(meta);
-      protectedIds.push(id);
-    }
+  // V15: Retired match-count weight resurrection so deleted players & erased scores stay deleted permanently!
+  return [];
+}
+
+function mergeTournamentForPush(localT, cloudT, fixtureKeysMap, hasConfigEdit){
+  if(!cloudT || typeof cloudT !== 'object') return localT;
+  const dirtyKeys = Object.keys(fixtureKeysMap || {});
+  // Case 1: Pure match score / erase edit (no structural Setup/Manage changes)
+  // Start from the LATEST CLOUD tournament and splice ONLY the edited fixture(s) in!
+  if(!hasConfigEdit && dirtyKeys.length){
+    const merged = JSON.parse(JSON.stringify(cloudT));
+    const cloudPlayersSet = new Set((merged.players||[]).map(p=>String(p)));
+    const localStageMap = new Map((localT.stages||[]).map(st => [Number(st.stageNum), st]));
+    (merged.stages||[]).forEach(cStage => {
+      const lStage = localStageMap.get(Number(cStage.stageNum));
+      if(!lStage) return;
+      const lFixById = new Map((lStage.fixtures||[]).map(f => [Number(f.id), f]));
+      cStage.fixtures = (cStage.fixtures||[]).map(cf => {
+        const key = `${Number(cStage.stageNum)}:${Number(cf.id)}`;
+        if(!fixtureKeysMap[key]) return cf;
+        const lf = lFixById.get(Number(cf.id));
+        if(!lf) return cf;
+        // Skip resurrecting a match whose player was already deleted in cloud
+        if(cloudPlayersSet.size && (!cloudPlayersSet.has(String(lf.p1)) || !cloudPlayersSet.has(String(lf.p2)))) return cf;
+        return JSON.parse(JSON.stringify(lf));
+      });
+      // Append any ad-hoc newly created fixture that was edited locally
+      dirtyKeys.forEach(k => {
+        const [stN, fId] = k.split(':').map(Number);
+        if(stN !== Number(cStage.stageNum)) return;
+        if((cStage.fixtures||[]).some(f => Number(f.id) === fId)) return;
+        const lf = lFixById.get(fId);
+        if(lf && (!cloudPlayersSet.size || (cloudPlayersSet.has(String(lf.p1)) && cloudPlayersSet.has(String(lf.p2))))){
+          cStage.fixtures.push(JSON.parse(JSON.stringify(lf)));
+        }
+      });
+      if(typeof handlePlayoffAdvancement === 'function'){
+        dirtyKeys.forEach(k => {
+          const [stN, fId] = k.split(':').map(Number);
+          if(stN !== Number(cStage.stageNum)) return;
+          const mf = (cStage.fixtures||[]).find(f => Number(f.id) === fId);
+          if(mf && mf.completed) handlePlayoffAdvancement(merged, mf);
+        });
+      }
+      if(typeof repairStageCompletionState === 'function') repairStageCompletionState(merged);
+    });
+    return merged;
+  }
+  // Case 2: Structural / Manage edit (e.g. player deletion, rename, settings, hidden stats)
+  // Keep local structural changes, while preserving newer cloud fixture results for surviving players!
+  const merged = JSON.parse(JSON.stringify(localT));
+  const localPlayersSet = new Set((merged.players||[]).map(p=>String(p)));
+  const cloudStageMap = new Map((cloudT.stages||[]).map(st => [Number(st.stageNum), st]));
+  (merged.stages||[]).forEach(lStage => {
+    const cStage = cloudStageMap.get(Number(lStage.stageNum));
+    if(!cStage) return;
+    const cFixById = new Map((cStage.fixtures||[]).map(f => [Number(f.id), f]));
+    lStage.fixtures = (lStage.fixtures||[]).map(lf => {
+      const key = `${Number(lStage.stageNum)}:${Number(lf.id)}`;
+      if(fixtureKeysMap && fixtureKeysMap[key]) return lf;
+      const cf = cFixById.get(Number(lf.id));
+      if(!cf) return lf;
+      if(!localPlayersSet.has(String(cf.p1)) || !localPlayersSet.has(String(cf.p2))) return lf;
+      const cAt = Number(cf._editedAt)||0, lAt = Number(lf._editedAt)||0;
+      if(cAt > lAt && (cf.p1 === lf.p1 && cf.p2 === lf.p2)) return JSON.parse(JSON.stringify(cf));
+      return lf;
+    });
   });
-  return protectedIds;
+  return merged;
 }
 
 async function fetchCloudData(){
+  if(cloudSyncBusy) return; // Never race an active cloud push!
   try {
     const localBeforeFetch=db;
     const res=await fetch(await getAuthedFirebaseUrl(),{cache:'no-store'});
@@ -4681,7 +4955,6 @@ async function fetchCloudData(){
     data.deletedTournaments=data.deletedTournaments||{}; data.deletedTombstones=data.deletedTombstones||{};
     Object.keys(data.deletedTombstones).forEach(id=>{ delete data.tournaments?.[id]; });
     if(!data || !data.tournaments || !Object.keys(data.tournaments).length){ updateCloudStatus('◌'); return; }
-    const protectedIds=protectLocalAheadOfCloud(localBeforeFetch,data);
     const dirtyIds=isAdmin ? getDirtyTournamentIds() : [];
     const deletedDirtyIds=isAdmin ? getDeletedDirtyIds() : [];
     const preserveLocalAuth = (targetObj) => {
@@ -4694,7 +4967,7 @@ async function fetchCloudData(){
         }
       }catch(e){}
     };
-    if(!isAdmin && protectedIds.length===0){
+    if(!isAdmin || (!dirtyIds.length && !deletedDirtyIds.length)){
       const newStr=JSON.stringify(data);
       if(newStr!==lastCloudDataStr){
         lastCloudDataStr=newStr;
@@ -4710,27 +4983,23 @@ async function fetchCloudData(){
     const merged={...data,tournaments:{...(data.tournaments||{})},deletedTournaments:{...(data.deletedTournaments||{})},deletedTombstones:{...(data.deletedTombstones||{})}};
     preserveLocalAuth(merged);
     deletedDirtyIds.forEach(id=>{ const a=getDeletedDirtyAction(id); if(a==='delete' && db.deletedTournaments?.[id]){ merged.deletedTournaments[id]=db.deletedTournaments[id]; merged.deletedTombstones[id]=db.deletedTombstones?.[id]||{deletedAt:Date.now()}; delete merged.tournaments[id]; } else if(a==='purge'){ delete merged.tournaments[id]; delete merged.deletedTournaments[id]; merged.deletedTombstones[id]=db.deletedTombstones?.[id]||{deletedAt:Date.now(),permanent:true}; } else if(a==='restore' && db.tournaments?.[id]){ merged.tournaments[id]=db.tournaments[id]; delete merged.deletedTournaments[id]; delete merged.deletedTombstones[id]; }});
-    dirtyIds.forEach(id=>{ if(db?.tournaments?.[id]) merged.tournaments[id]=db.tournaments[id]; });
-    if(dirtyIds.length){
-      db=merged;
-      window.__safeStorage.setItem(APP_STORAGE_KEY,JSON.stringify(db));
-      preserveUrlTournament(db);
-      renderAll();
-      updateCloudStatus('☁');
-      if(isAdmin) queueCloudPush();
-      return;
-    }
-    const newStr=JSON.stringify(data);
-    if(newStr!==lastCloudDataStr){
-      lastCloudDataStr=newStr;
-      preserveLocalAuth(data);
-      db=data; ensureRecoveryStores();
-      try{ if(typeof seedHunterPremierLeagueIfMissing==='function') seedHunterPremierLeagueIfMissing(); }catch(e){}
-      window.__safeStorage.setItem(APP_STORAGE_KEY,JSON.stringify(db));
-      preserveUrlTournament(db);
-      renderAll();
-    }
+    const meta = getCloudSyncMeta();
+    dirtyIds.forEach(id=>{
+      if(db?.tournaments?.[id]){
+        merged.tournaments[id] = mergeTournamentForPush(
+          db.tournaments[id],
+          data.tournaments?.[id],
+          meta.dirtyFixtures?.[id] || {},
+          !!(meta.dirtyConfig && meta.dirtyConfig[id])
+        );
+      }
+    });
+    db=merged;
+    window.__safeStorage.setItem(APP_STORAGE_KEY,JSON.stringify(db));
+    preserveUrlTournament(db);
+    renderAll();
     updateCloudStatus('☁');
+    if(isAdmin && !window.__cloudAuthWarned) queueCloudPush();
   } catch(e) {
     updateCloudStatus('◌');
   }
@@ -4738,7 +5007,13 @@ async function fetchCloudData(){
 
 function queueCloudPush(){
   if(cloudPushPromise) return cloudPushPromise;
-  cloudPushPromise=pushCloudData().finally(()=>{cloudPushPromise=null;});
+  cloudPushPromise=pushCloudData().finally(()=>{
+    cloudPushPromise=null;
+    // If another edit arrived while pushing, push the follow-up immediately!
+    if(isAdmin && !window.__cloudAuthWarned && (getDirtyTournamentIds().length || getDeletedDirtyIds().length)){
+      setTimeout(()=>{ if(!cloudPushPromise) queueCloudPush(); }, 120);
+    }
+  });
   return cloudPushPromise;
 }
 
@@ -4749,8 +5024,6 @@ async function pushCloudData(){
   if(!isAdmin || (!dirtyIds.length && !deletedIds.length)) return true;
   cloudSyncBusy=true; updateCloudStatus('◌');
   try{
-    // 1. Targeted per-tournament PUT so two devices never overwrite each other's tournaments
-    //    AND clock-safe monotonic revision so intentional erases/edits always win over stale cloud!
     const isLocalFile = (location.protocol === 'content:' || location.protocol === 'file:');
     const fbCurrent = __fbUser || (__fbAuth && __fbAuth.currentUser) || null;
     if(isLocalFile && !fbCurrent){
@@ -4766,11 +5039,9 @@ async function pushCloudData(){
       if(payload !== undefined){ opts.headers = {'Content-Type':'application/json'}; opts.body = JSON.stringify(payload); }
       let res = await fetch(await getAuthedFirebaseUrl(path, false), opts);
       if(res.status === 401){
-        // Force-refresh Firebase ID token and retry once
         res = await fetch(await getAuthedFirebaseUrl(path, true), opts);
       }
       if(res.status === 401){
-        // Fallback: try root merge PUT if DB rules allow root only
         const err = new Error('AUTH_401');
         err.status = 401;
         throw err;
@@ -4779,57 +5050,77 @@ async function pushCloudData(){
       return res;
     };
 
+    // 1. Atomic Pull-Merge-Push per dirty tournament (never overwrites another device's match results!)
     for(const id of dirtyIds){
       const localT = db?.tournaments?.[id];
       if(!localT) continue;
-      let cloudUpdatedAt = 0, cloudRev = 0;
+      const metaSnap = getCloudSyncMeta();
+      const fMapSnap = { ...(metaSnap.dirtyFixtures?.[id] || {}) };
+      const hasCfgSnap = !!(metaSnap.dirtyConfig && metaSnap.dirtyConfig[id]);
+      let cloudT = null;
       try{
-        const chkRes = await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(id) + '/_sync', false), {cache:'no-store'});
-        if(chkRes.ok){
-          const cs = await chkRes.json();
-          cloudUpdatedAt = Number(cs?.updatedAt)||0;
-          cloudRev = Number(cs?.revision)||0;
-        }
+        const chkRes = await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(id), false), {cache:'no-store'});
+        if(chkRes.ok) cloudT = await chkRes.json();
       }catch(e){}
-      localT._sync = {
+      const cloudUpdatedAt = Number(cloudT?._sync?.updatedAt)||0;
+      const cloudRev = Number(cloudT?._sync?.revision)||0;
+      const finalT = mergeTournamentForPush(localT, cloudT, fMapSnap, hasCfgSnap);
+      finalT._sync = {
         updatedAt: Math.max(Date.now(), cloudUpdatedAt + 1),
         revision: Math.max(Number(localT._sync?.revision)||0, cloudRev) + 1,
         updatedBy: getCloudDeviceId()
       };
-      await writeWithRetry401('tournaments/' + encodeURIComponent(id), 'PUT', localT);
-      const meta = getCloudSyncMeta();
-      meta.dirty = meta.dirty || {};
-      delete meta.dirty[id];
-      meta.lastSyncedAt = Date.now();
-      setCloudSyncMeta(meta);
+      await writeWithRetry401('tournaments/' + encodeURIComponent(id), 'PUT', finalT);
+      db.tournaments[id] = finalT;
+
+      // Clear ONLY the dirty flags we actually pushed (preserve any new edits made during await!)
+      const metaNow = getCloudSyncMeta();
+      metaNow.dirty = metaNow.dirty || {};
+      metaNow.dirtyFixtures = metaNow.dirtyFixtures || {};
+      metaNow.dirtyConfig = metaNow.dirtyConfig || {};
+      if(metaNow.dirtyFixtures[id]){
+        Object.keys(fMapSnap).forEach(k => {
+          if(metaNow.dirtyFixtures[id][k] === fMapSnap[k]) delete metaNow.dirtyFixtures[id][k];
+        });
+        if(!Object.keys(metaNow.dirtyFixtures[id]).length) delete metaNow.dirtyFixtures[id];
+      }
+      if(hasCfgSnap && metaNow.dirtyConfig[id] === metaSnap.dirtyConfig?.[id]){
+        delete metaNow.dirtyConfig[id];
+      }
+      if(!metaNow.dirtyFixtures[id] && !metaNow.dirtyConfig[id]){
+        delete metaNow.dirty[id];
+      }
+      metaNow.lastSyncedAt = Date.now();
+      setCloudSyncMeta(metaNow);
     }
 
-    // 2. Targeted delete/restore/purge updates
+    // 2. Targeted delete/restore/purge updates routed through writeWithRetry401
     if(deletedIds.length){
       for(const id of deletedIds){
         const action=getDeletedDirtyAction(id), deleted=db?.deletedTournaments?.[id], tomb=db?.deletedTombstones?.[id];
         if(action==='restore'){
           if(db?.tournaments?.[id]){
-            await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(id)), {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(db.tournaments[id])});
+            await writeWithRetry401('tournaments/' + encodeURIComponent(id), 'PUT', db.tournaments[id]);
           }
-          await fetch(await getAuthedFirebaseUrl('deletedTournaments/' + encodeURIComponent(id)), {method:'DELETE'});
-          await fetch(await getAuthedFirebaseUrl('deletedTombstones/' + encodeURIComponent(id)), {method:'DELETE'});
+          await writeWithRetry401('deletedTournaments/' + encodeURIComponent(id), 'DELETE');
+          await writeWithRetry401('deletedTombstones/' + encodeURIComponent(id), 'DELETE');
         } else if(action==='purge'){
-          await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(id)), {method:'DELETE'});
-          await fetch(await getAuthedFirebaseUrl('deletedTournaments/' + encodeURIComponent(id)), {method:'DELETE'});
-          await fetch(await getAuthedFirebaseUrl('deletedTombstones/' + encodeURIComponent(id)), {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(tomb||{deletedAt:Date.now(),permanent:true})});
+          await writeWithRetry401('tournaments/' + encodeURIComponent(id), 'DELETE');
+          await writeWithRetry401('deletedTournaments/' + encodeURIComponent(id), 'DELETE');
+          await writeWithRetry401('deletedTombstones/' + encodeURIComponent(id), 'PUT', tomb||{deletedAt:Date.now(),permanent:true});
         } else {
-          if(deleted) await fetch(await getAuthedFirebaseUrl('deletedTournaments/' + encodeURIComponent(id)), {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(deleted)});
-          if(tomb) await fetch(await getAuthedFirebaseUrl('deletedTombstones/' + encodeURIComponent(id)), {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(tomb)});
-          await fetch(await getAuthedFirebaseUrl('tournaments/' + encodeURIComponent(id)), {method:'DELETE'});
+          if(deleted) await writeWithRetry401('deletedTournaments/' + encodeURIComponent(id), 'PUT', deleted);
+          if(tomb) await writeWithRetry401('deletedTombstones/' + encodeURIComponent(id), 'PUT', tomb);
+          await writeWithRetry401('tournaments/' + encodeURIComponent(id), 'DELETE');
         }
       }
       clearDeletedDirtyIds(deletedIds);
     }
 
     window.__safeStorage.setItem(APP_STORAGE_KEY, JSON.stringify(db));
-    lastCloudDataStr = ''; // allow next fetchCloudData to refresh cleanly
+    lastCloudDataStr = '';
     updateCloudStatus('☁');
+    try{ if(typeof renderAll === 'function' && selectedTournamentId) renderAll(); }catch(_){}
     return true;
   }catch(e){
     console.error('pushCloudData error:', e);
@@ -5109,9 +5400,14 @@ function renderQualificationQuery(){
     if(ctx) ctx.textContent=`${stage.name||'Stage'} • ${stage.completed?'Completed':'In progress'} • Qualification target not set`;
     return;
   }
+  const poolFixtures = (pool?.fixtures) || (stage.fixtures||[]).filter(f=>poolPlayers.includes(String(f.p1))&&poolPlayers.includes(String(f.p2)));
+  const allowCross = !!(pool && pool.allowCrossGroup);
+  const baselineMap = (typeof getCarryBaselineMap === 'function') ? getCarryBaselineMap(t, stage, poolPlayers) : null;
+  const oversQuota = Math.max(1, Number(t.overs)||Number(stage.overs)||5);
+  const qiOpts = { oversQuota, allowCrossGroup: allowCross };
   const rows=computeStandingsWithPermutations(
-    stage.fixtures||[], poolPlayers,
-    resolvePtsConfig(t.winPts,3), resolvePtsConfig(t.tiePts,1), effectiveBonusPts(t), k, resolvePtsConfig(t.nrPts,1)
+    poolFixtures, poolPlayers,
+    resolvePtsConfig(t.winPts,3), resolvePtsConfig(t.tiePts,1), effectiveBonusPts(t), k, resolvePtsConfig(t.nrPts,1), baselineMap
   );
   const x=rows.find(r=>r.name===name)||rows[0]; if(!x) return;
   const ranked=[...rows].sort((a,b)=>b.pts-a.pts||b.nrr-a.nrr||b.w-a.w||a.name.localeCompare(b.name));
@@ -5121,16 +5417,16 @@ function renderQualificationQuery(){
   const worstPos=x.worstPos??x.worstRank??rows.length;
   const qAnswer=document.getElementById('queryAnswer');
   const qSpots=document.getElementById('queryQualify'); if(qSpots) qSpots.value=k;
-  const ctx=document.getElementById('qualificationStageContext'); if(ctx) ctx.textContent=`${stage.name||'Stage'} • ${stage.completed?'Completed':'In progress'} • Qualification: Top ${k}${pool?.label&&pool.label!=='GROUP ' ? ' • '+pool.label:''}`;
+  const cfTag = baselineMap ? ' • Carry-Forward Active' : '';
+  const ctx=document.getElementById('qualificationStageContext'); if(ctx) ctx.textContent=`${stage.name||'Stage'} • ${stage.completed?'Completed':'In progress'} • Qualification: Top ${k}${pool?.label&&pool.label!=='GROUP ' ? ' • '+pool.label:''}${cfTag}`;
   if(!qAnswer) return;
 
-  const fixtures = (pool?.fixtures) || (stage.fixtures||[]).filter(f=>poolPlayers.includes(String(f.p1))&&poolPlayers.includes(String(f.p2)));
+  const fixtures = poolFixtures;
   const winPts=resolvePtsConfig(t.winPts,3), tiePts=resolvePtsConfig(t.tiePts,1), bonusPts=effectiveBonusPts(t), nrPts=resolvePtsConfig(t.nrPts,1);
-  const oversQuota = Math.max(1, Number(t.overs)||Number(stage.overs)||5);
   let pack={base:x, scenarios:[], myRem:[]};
   try{
     if(typeof qiV2BuildScenarios==='function'){
-      pack = qiV2BuildScenarios(fixtures, poolPlayers, x.name, k, winPts, tiePts, bonusPts, nrPts, oversQuota);
+      pack = qiV2BuildScenarios(fixtures, poolPlayers, x.name, k, winPts, tiePts, bonusPts, nrPts, oversQuota, baselineMap, allowCross);
     }
   }catch(e){ console.warn(e); }
   const b = Object.assign({}, x, pack.base||{});
@@ -5138,7 +5434,7 @@ function renderQualificationQuery(){
   const pct = (b.pct!=null) ? b.pct : (b.status==='Q'?100:b.status==='E'?0:null);
   const statusWord = b.status==='Q' ? 'QUALIFIED (Q)' : b.status==='E' ? 'ELIMINATED (E)' : 'IN CONTENTION';
   const statusBig = (pct!=null && b.status!=='Q' && b.status!=='E')
-    ? (pct+'% · '+statusWord)
+    ? ((pct===0 && !isQiIncludeTieNR()) ? ('0% (Tie/NR only) · '+statusWord) : (pct+'% · '+statusWord))
     : ((b.status==='Q'||b.status==='E') ? (statusWord+(pct!=null?' · '+pct+'%':'')) : statusWord);
   const statusCls = b.status==='Q' ? 'qi-pro-q' : b.status==='E' ? 'qi-pro-e' : 'qi-pro-c';
   const nrrStr = (Number(b.nrr)>=0?'+':'') + (Number(b.nrr)||0).toFixed(3);
@@ -5159,8 +5455,8 @@ function renderQualificationQuery(){
   uniqueOpps.forEach(opp => {
     const f = oppMap.get(opp);
     const iAmP1 = String(f.p1) === String(x.name);
-    const ifW = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, iAmP1?'w1':'w2')[x.name] || {};
-    const ifL = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, iAmP1?'w2':'w1')[x.name] || {};
+    const ifW = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, iAmP1?'w1':'w2', f.id, baselineMap, qiOpts)[x.name] || {};
+    const ifL = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, iAmP1?'w2':'w1', f.id, baselineMap, qiOpts)[x.name] || {};
     const wPct = ifW.pct!=null ? Number(ifW.pct) : (ifW.status==='Q'?100:0);
     const lPct = ifL.pct!=null ? Number(ifL.pct) : (ifL.status==='Q'?100:0);
     const swing = Math.round((wPct - lPct) * 10) / 10;
@@ -5177,8 +5473,91 @@ function renderQualificationQuery(){
   if(!selectedOpp || !uniqueOpps.includes(selectedOpp)) selectedOpp = (aiBest && aiBest.opp) || uniqueOpps[0] || '';
   window.__qiSelectedNextOppMap[mapKey] = selectedOpp;
 
-  let nextHtml = '<div class="muted" style="font-size:11.5px;padding:6px 0">No remaining matches for this player.</div>';
-  if(selectedOpp && oppOutcomes[selectedOpp]){
+  const otherRem = (pack.allRem || []).filter(f => String(f.p1)!==String(x.name) && String(f.p2)!==String(x.name));
+  const seenPairs = new Set();
+  const smartOthers = [];
+  otherRem.forEach(f => {
+    const pairKey = [String(f.p1), String(f.p2)].sort().join('||');
+    if(seenPairs.has(pairKey)) return;
+    seenPairs.add(pairKey);
+    const rA = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w1', f.id, baselineMap, qiOpts)[x.name] || {};
+    const rB = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w2', f.id, baselineMap, qiOpts)[x.name] || {};
+    const rT = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'tie', f.id, baselineMap, qiOpts)[x.name] || {};
+    const pA = rA.pct!=null ? Number(rA.pct) : (rA.status==='Q'?100:0);
+    const pB = rB.pct!=null ? Number(rB.pct) : (rB.status==='Q'?100:0);
+    const pT = rT.pct!=null ? Number(rT.pct) : (rT.status==='Q'?100:0);
+    const swing = Math.round(Math.abs(pA - pB) * 10) / 10;
+    const fav = pA >= pB ? f.p1 : f.p2;
+    const otherSide = pA >= pB ? f.p2 : f.p1;
+    const bestP = Math.max(pA, pB), altP = Math.min(pA, pB);
+    smartOthers.push({ f, p1:f.p1, p2:f.p2, fav, otherSide, bestP, altP, pA, pB, pT, rA, rB, rT, swing });
+  });
+  smartOthers.sort((a,b) => Math.max(b.swing, Math.abs(b.pT - b.bestP)) - Math.max(a.swing, Math.abs(a.pT - a.bestP)));
+
+  // ✨ LIVE AI SUMMARY BAR (100% Math-Exact Plain English Explanation)
+  let aiSummaryTxt = '';
+  if(b.status === 'Q'){
+    aiSummaryTxt = `✅ <b>Clinched Top ${k} (100%):</b> Your worst possible finish is <b>#${worstPos}</b>. No remaining results can push you out of qualification.`;
+  } else if(b.status === 'E'){
+    aiSummaryTxt = `❌ <b>Eliminated (0%):</b> Maximum finish is <b>#${bestPos}</b> (max ${b.maxPts??x.maxPts} pts). Remaining matches cannot put you into the Top ${k}.`;
+  } else if(left === 0){
+    const keyM = smartOthers[0];
+    if(keyM && keyM.pA === 0 && keyM.pB === 0 && keyM.pT > 0){
+      aiSummaryTxt = `⏳ <b>Waiting on ${esc(keyM.p1)} vs ${esc(keyM.p2)} (${basePct}% chance):</b> Your matches are finished (${x.pts} pts, NRR ${nrrStr}). A decisive win by either side knocks you out on NRR — you qualify only if the match ends in a <b>Tie or No Result</b>.`;
+    } else if(keyM && keyM.swing >= 1){
+      aiSummaryTxt = `⏳ <b>Matches Complete (${x.pts} pts, NRR ${nrrStr}):</b> Your Top ${k} fate depends on <b>${smartOthers.length}</b> remaining match(es). Best outcome: cheer for <b>${esc(keyM.fav)}</b> vs ${esc(keyM.otherSide)} (lifts your chance to <b>${keyM.bestP}%</b>).`;
+    } else if(keyM){
+      aiSummaryTxt = `⏳ <b>Matches Complete (${x.pts} pts, NRR ${nrrStr}):</b> Waiting on <b>${esc(keyM.p1)} vs ${esc(keyM.p2)}</b> (${basePct}% chance). Check the exact scenario blocks below to see how each result affects your finish.`;
+    } else {
+      aiSummaryTxt = `⏳ <b>Matches Complete (${x.pts} pts, NRR ${nrrStr}):</b> Your points and NRR are locked; final rank depends on remaining fixtures.`;
+    }
+  } else if(selectedOpp && oppOutcomes[selectedOpp]){
+    const sel = oppOutcomes[selectedOpp];
+    if(sel.ifW.status === 'Q' && sel.ifL.status === 'E'){
+      aiSummaryTxt = `⚔️ <b>Virtual Knockout vs ${esc(selectedOpp)}:</b> Win to lock Top ${k} (<b>100%</b>); a loss eliminates you immediately.`;
+    } else if(sel.ifW.status === 'Q'){
+      aiSummaryTxt = `🎯 <b>Win &amp; You're In:</b> Beating <b>${esc(selectedOpp)}</b> clinches Top ${k} immediately. Losing leaves you at <b>${sel.lPct}%</b>.`;
+    } else if(sel.ifL.status === 'E'){
+      aiSummaryTxt = `🔥 <b>Must-Win vs ${esc(selectedOpp)}:</b> A loss eliminates you (0%). Winning lifts your qualification chance to <b>${sel.wPct}%</b>${b.magicWin>1 ? ` (${b.magicWin} wins needed to reach the ${b.cutPts}-pt cut)` : ''}.`;
+    } else {
+      aiSummaryTxt = `📊 <b>Live Outlook (${basePct}%):</b> Beating <b>${esc(selectedOpp)}</b> boosts your chances to <b>${sel.wPct}%</b> (loss drops to <b>${sel.lPct}%</b>).${aiBest && uniqueOpps.length>1 ? ` Highest-impact game: <b>vs ${esc(aiBest.opp)}</b>.` : ''}`;
+    }
+  }
+  const aiSummaryBarHtml = aiSummaryTxt ? `<div class="qi-ai-summary-bar"><span class="qi-ai-badge">✨ AI INSIGHT</span><div>${aiSummaryTxt}</div></div>` : '';
+
+  let nextHtml = '';
+  if(left === 0){
+    // Dedicated Scenario Blocks for players who finished all matches!
+    if(b.status === 'In Contention' && smartOthers.length){
+      const fmtOutcomePill = (r, p) => r.status==='Q'
+        ? '<span class="pill pill-done">✅ Qualifies (100%)</span>'
+        : (r.status==='E' || p === 0)
+          ? '<span class="pill" style="background:rgba(244,63,94,.16);color:var(--red);border:1px solid rgba(244,63,94,.35)">❌ Eliminated (0%)</span>'
+          : `<span class="pill pill-pending">⏳ Alive (${p}%)</span>`;
+      const blocksHtml = smartOthers.slice(0, 4).map(o => `
+        <div class="qi-wait-block">
+          <div class="qi-wait-match">🏏 Deciding Match: <b>${esc(o.p1)} vs ${esc(o.p2)}</b></div>
+          <div class="qi-wait-grid">
+            <div class="qi-wait-scen">
+              <div class="qi-wait-lbl">If ${esc(o.p1)} wins</div>
+              <div>${fmtOutcomePill(o.rA, o.pA)}</div>
+            </div>
+            <div class="qi-wait-scen">
+              <div class="qi-wait-lbl">If ${esc(o.p2)} wins</div>
+              <div>${fmtOutcomePill(o.rB, o.pB)}</div>
+            </div>
+            <div class="qi-wait-scen qi-wait-scen-full">
+              <div class="qi-wait-lbl">If Match is Tied / No Result</div>
+              <div>${fmtOutcomePill(o.rT, o.pT)}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      nextHtml = `<div style="margin:6px 0 8px"><div style="font-size:11px;font-weight:900;color:var(--accent);letter-spacing:.05em;margin-bottom:6px">📌 DECIDING MATCHES &amp; EXACT SCENARIOS</div>${blocksHtml}</div>`;
+    } else {
+      nextHtml = '<div class="muted" style="font-size:11.5px;padding:4px 0">All league matches completed for this player.</div>';
+    }
+  } else if(selectedOpp && oppOutcomes[selectedOpp]){
     const sel = oppOutcomes[selectedOpp];
     const wSt = sel.ifW.status==='Q' ? 'Clinched (100%)' : sel.ifW.status==='E' ? 'Out (0%)' : `${sel.wPct}% · Max ${sel.ifW.maxPts??'—'} pts`;
     const lSt = sel.ifL.status==='Q' ? 'Safe (100%)' : sel.ifL.status==='E' ? 'Eliminated (0%)' : `${sel.lPct}% · Max ${sel.ifL.maxPts??'—'} pts`;
@@ -5202,64 +5581,51 @@ function renderQualificationQuery(){
       </div>`;
   }
 
-  // Deduplicated Smart 1-Line "Results That Matter" (Collapsed by default!)
-  const otherRem = (pack.allRem || []).filter(f => String(f.p1)!==String(x.name) && String(f.p2)!==String(x.name));
-  const seenPairs = new Set();
-  const smartOthers = [];
-  otherRem.forEach(f => {
-    const pairKey = [String(f.p1), String(f.p2)].sort().join('||');
-    if(seenPairs.has(pairKey)) return;
-    seenPairs.add(pairKey);
-    const rA = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w1')[x.name] || {};
-    const rB = qiV2SimulateOutcome(fixtures, poolPlayers, k, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, 'w2')[x.name] || {};
-    const pA = rA.pct!=null ? Number(rA.pct) : (rA.status==='Q'?100:0);
-    const pB = rB.pct!=null ? Number(rB.pct) : (rB.status==='Q'?100:0);
-    const swing = Math.round(Math.abs(pA - pB) * 10) / 10;
-    const fav = pA >= pB ? f.p1 : f.p2;
-    const otherSide = pA >= pB ? f.p2 : f.p1;
-    const bestP = Math.max(pA, pB), altP = Math.min(pA, pB);
-    smartOthers.push({ p1:f.p1, p2:f.p2, fav, otherSide, bestP, altP, swing });
-  });
-  smartOthers.sort((a,b) => b.swing - a.swing);
+  // Collapsed-by-default "Results That Matter" ONLY when player still has matches left (0-left players already see full scenario blocks above!)
   let othersHtml = '';
-  if(smartOthers.length && b.status === 'In Contention'){
+  if(left > 0 && smartOthers.length && b.status === 'In Contention'){
     const rowsHtml = smartOthers.slice(0, 8).map(o => {
       if(o.swing < 1.0){
-        return `<div class="qi-pro-other-row"><span>${esc(o.p1)} vs ${esc(o.p2)}</span><span class="muted" style="font-size:10.5px;font-weight:700">~${o.bestP}% either way</span></div>`;
+        const tieNote = Math.abs(o.pT - o.bestP) >= 5 ? ` · Tie/NR: ${o.pT}%` : '';
+        return `<div class="qi-pro-other-row"><span>${esc(o.p1)} vs ${esc(o.p2)}</span><span class="muted" style="font-size:10.5px;font-weight:700">~${o.bestP}% either way${tieNote}</span></div>`;
       }
       return `<div class="qi-pro-other-row"><span>Cheer for <b>${esc(o.fav)}</b> <span class="muted">(vs ${esc(o.otherSide)})</span></span><span class="qi-pro-other-st" style="color:var(--green)">+${o.swing.toFixed(1)}% <span class="muted" style="font-weight:600">(${o.bestP}% vs ${o.altP}%)</span></span></div>`;
     }).join('');
     othersHtml = `<details class="qi-pro-others"><summary>📌 Results That Matter (${smartOthers.length} key matches) — tap to expand</summary><div style="margin-top:6px">${rowsHtml}</div></details>`;
   }
 
-  // Collapsed-by-default NRR Margins ONLY for selected opponent / key cut rival (hides trivial 0+ rows!)
+  // NRR Margins & Live Ball-by-Ball Calculator ONLY when player STILL has matches left (left > 0)!
   let nrrHtml = '';
-  try{
-    if(b.status === 'In Contention' && ranked.length > 1){
-      const cutRival = ranked[Math.min(ranked.length-1, Math.max(0, k-1))];
-      const targetRival = (selectedOpp && ranked.find(r=>r.name===selectedOpp)) || (cutRival && cutRival.name!==x.name ? cutRival : ranked.find(r=>r.name!==x.name));
-      if(targetRival && targetRival.name !== x.name){
-        const isDirect = selectedOpp && targetRival.name === selectedOpp;
-        const mg = qiV2MarginVsLocked(x, targetRival, oversQuota, isDirect);
-        if(mg){
-          let innerGuide = '';
-          if(mg.alreadyAhead){
-            const nonTrivialBat2 = (mg.shieldTable||[]).filter(r=>r.bat2MinRuns!=null && r.bat2MinRuns > 0);
-            const nonTrivialBat1 = (mg.shieldTable||[]).filter(r=>r.bat1MinBalls!=null && r.bat1MinBalls > 6);
-            if(!nonTrivialBat2.length && !nonTrivialBat1.length){
-              innerGuide = `<div class="nrr-guide">🛡️ <b>Strong NRR Cushion vs ${esc(targetRival.name)}</b> (Your NRR ${nrrStr} vs ${(targetRival.nrr>=0?'+':'')+targetRival.nrr.toFixed(3)}). Completing your ${oversQuota}.0 overs even in a close defeat keeps you ahead.</div>`;
+  let liveCalcHtml = '';
+  if(left > 0){
+    try{
+      if(b.status === 'In Contention' && ranked.length > 1){
+        const cutRival = ranked[Math.min(ranked.length-1, Math.max(0, k-1))];
+        const targetRival = (selectedOpp && ranked.find(r=>r.name===selectedOpp)) || (cutRival && cutRival.name!==x.name ? cutRival : ranked.find(r=>r.name!==x.name));
+        if(targetRival && targetRival.name !== x.name){
+          const isDirect = selectedOpp && targetRival.name === selectedOpp;
+          const mg = qiV2MarginVsLocked(x, targetRival, oversQuota, isDirect);
+          if(mg){
+            let innerGuide = '';
+            if(mg.alreadyAhead){
+              const nonTrivialBat2 = (mg.shieldTable||[]).filter(r=>r.bat2MinRuns!=null && r.bat2MinRuns > 0);
+              const nonTrivialBat1 = (mg.shieldTable||[]).filter(r=>r.bat1MinBalls!=null && r.bat1MinBalls > 6);
+              if(!nonTrivialBat2.length && !nonTrivialBat1.length){
+                innerGuide = `<div class="nrr-guide">🛡️ <b>Strong NRR Cushion vs ${esc(targetRival.name)}</b> (Your NRR ${nrrStr} vs ${(targetRival.nrr>=0?'+':'')+targetRival.nrr.toFixed(3)}). Completing your ${oversQuota}.0 overs even in a close defeat keeps you ahead.</div>`;
+              } else {
+                mg.shieldTable = (mg.shieldTable||[]).filter(r => (r.bat2MinRuns!=null && r.bat2MinRuns>0) || (r.bat1MinBalls!=null && r.bat1MinBalls>6));
+                innerGuide = qiV2MarginGuideHtml(targetRival.name, mg, 'defence', selectedOpp || targetRival.name);
+              }
             } else {
-              mg.shieldTable = (mg.shieldTable||[]).filter(r => (r.bat2MinRuns!=null && r.bat2MinRuns>0) || (r.bat1MinBalls!=null && r.bat1MinBalls>6));
-              innerGuide = qiV2MarginGuideHtml(targetRival.name, mg, 'defence', selectedOpp || targetRival.name);
+              innerGuide = qiV2MarginGuideHtml(targetRival.name, mg, 'hunter', selectedOpp || targetRival.name);
             }
-          } else {
-            innerGuide = qiV2MarginGuideHtml(targetRival.name, mg, 'hunter', selectedOpp || targetRival.name);
+            nrrHtml = `<details class="qi-pro-others" style="margin-top:8px"><summary>📊 NRR Margins vs ${esc(targetRival.name)} — tap to expand</summary><div style="margin-top:8px">${innerGuide}</div></details>`;
           }
-          nrrHtml = `<details class="qi-pro-others" style="margin-top:8px"><summary>📊 NRR Margins vs ${esc(targetRival.name)} — tap to expand</summary><div style="margin-top:8px">${innerGuide}</div></details>`;
         }
       }
-    }
-  }catch(e){}
+    }catch(e){}
+    liveCalcHtml = buildLiveNrrCalcWidgetHtml(x, ranked, k, oversQuota, selectedOpp);
+  }
 
   // Optional 1-tap Player Claim button if logged in and slot not yet linked
   const curAcc = hsGetSession();
@@ -5280,13 +5646,14 @@ function renderQualificationQuery(){
         </div>
       </div>
       <div class="qi-pro-status ${statusCls}" style="padding:8px 10px;font-size:13.5px;margin-bottom:8px">${esc(statusBig)} <span style="font-size:10px;opacity:.8">• Top ${k} qualify</span></div>
+      ${aiSummaryBarHtml}
       <div class="qi-pro-pills" style="margin-bottom:8px">
         <div class="qi-pro-pill"><span>Best</span><b>#${bestPos}</b></div>
         <div class="qi-pro-pill"><span>Cut</span><b>Top ${k}</b></div>
         <div class="qi-pro-pill"><span>Worst</span><b>#${worstPos}</b></div>
         <div class="qi-pro-pill"><span>Max Pts</span><b>${b.maxPts!=null?b.maxPts:x.maxPts}</b></div>
       </div>
-      ${(b.magicWin!=null || b.elimNumber!=null) ? `<div class="qi-pro-magic" style="padding:6px 9px;margin-bottom:8px;font-size:10.5px">
+      ${(left > 0 && (b.magicWin!=null || b.elimNumber!=null)) ? `<div class="qi-pro-magic" style="padding:6px 9px;margin-bottom:8px;font-size:10.5px">
         ${b.magicWin!=null ? `<span><b>Wins to cut:</b> ${b.magicWin===0?'On/above cut line':b.magicWin}</span>` : ''}
         ${b.elimNumber!=null ? `<span><b>Losses to E risk:</b> ${b.elimNumber}</span>` : ''}
         ${b.cutPts!=null ? `<span><b>Cut pts:</b> ${b.cutPts}</span>` : ''}
@@ -5294,8 +5661,8 @@ function renderQualificationQuery(){
       ${nextHtml}
       ${othersHtml}
       ${nrrHtml}
-      ${buildLiveNrrCalcWidgetHtml(x, ranked, k, oversQuota, selectedOpp)}
-      <p class="qi-pro-foot">Weighted cricket simulation (3,000 trials / exact tree) · ICC All-Out NRR math (${oversQuota} overs)</p>
+      ${liveCalcHtml}
+      <p class="qi-pro-foot">Score-aware exact tree + RF/OF/RA/OB simulation (${isQiIncludeTieNR() ? '49/49/2% Tie·NR' : '50/50 W/L Only'}) · ICC All-Out NRR (${oversQuota} ov)</p>
     </div>`;
   try{ updateLiveNrrCalcWidget(); }catch(e){}
 }
@@ -5316,13 +5683,27 @@ function buildLiveNrrCalcWidgetHtml(me, ranked, qualifyK, oversQuota, nextOpp){
     oversQuota: Math.max(1, Number(oversQuota)||5),
     nextOpp: String(nextOpp || '')
   };
-  const cutIdx = Math.min(rivals.length - 1, Math.max(0, qualifyK - 1));
-  const defaultRival = (rivals.find(r => r.name === nextOpp) || rivals[cutIdx] || rivals[0]).name;
+  const myCurPts = Number(me.pts)||0;
+  const myMaxPts = Number(me.maxPts != null ? me.maxPts : myCurPts);
+  const isReachable = (r) => {
+    const rCur = Number(r.pts)||0;
+    const rMax = Number(r.maxPts != null ? r.maxPts : rCur);
+    return (myMaxPts >= rCur && rMax >= myCurPts);
+  };
+  const sortedRivals = [...rivals].sort((a,b) => {
+    if(a.name === nextOpp) return -1;
+    if(b.name === nextOpp) return 1;
+    const ra = isReachable(a) ? 0 : 1, rb = isReachable(b) ? 0 : 1;
+    if(ra !== rb) return ra - rb;
+    return Math.abs((Number(a.pts)||0) - myMaxPts) - Math.abs((Number(b.pts)||0) - myMaxPts);
+  });
+  const defaultRival = (sortedRivals.find(r => r.name === nextOpp) || sortedRivals.find(isReachable) || sortedRivals[0]).name;
   const defaultScore = oversQuota <= 6 ? 60 : oversQuota <= 12 ? 100 : oversQuota <= 25 ? 160 : 270;
-  const opts = rivals.map((r,i)=>{
+  const opts = sortedRivals.map(r => {
     const nrrS = (Number(r.nrr)>=0?'+':'')+(Number(r.nrr)||0).toFixed(3);
     const isH2H = nextOpp && r.name === nextOpp ? ' • Next Opp' : '';
-    return `<option value="${esc(r.name)}" ${r.name===defaultRival?'selected':''}>${esc(r.name)} (${r.pts} pts, NRR ${nrrS}${isH2H})</option>`;
+    const reachTag = isReachable(r) ? '' : ' • NRR only';
+    return `<option value="${esc(r.name)}" ${r.name===defaultRival?'selected':''}>${esc(r.name)} (${r.pts} pts, NRR ${nrrS}${isH2H}${reachTag})</option>`;
   }).join('');
   return `
     <div class="qi-live-calc-box" style="margin-top:10px;padding:12px;border-radius:14px;border:1.5px solid rgba(56,189,248,0.45);background:rgba(56,189,248,0.06)">
@@ -6966,40 +7347,132 @@ function qv3AnalysePlayer(fixtures, players, targetName, winPts, tiePts, bonusPt
    ======================================================================== */
 /* F3_LEAF_NRR_FIX_01: leaf rem=0 for complete enum; CF+QI baseline; carry-forward numeric seed; AUDIT_ADV_QUAL_GUARD: manual advance does not overwrite source qualifyCount;  closed F2 ||2 + cfg save; isolation/stage/champion/12-11 source audit; resolvePtsConfig (zero points safe); Lab runs qiV2+qv3 */
 const QI_V2 = {
-  MAX_ENUM_FIXTURES: 6,   // exact tree if remaining fixtures <= 6
-  MAX_OUTCOMES: 25000,    // safety cap
-  MC_TRIALS: 3000,        // seeded realistic Monte Carlo trials when > 6 fixtures remain
+  MAX_ENUM_FIXTURES: 5,       // Exact outcome tree up to 5 remaining matches (<= 1,024 leaves)
+  MAX_OUTCOMES: 25000,        // Safety cap
+  MC_TRIALS: 3000,            // Seeded score-aware Monte Carlo trials when > 5 fixtures remain
+  TIE_LEAF_SUBTRIALS: 80,     // Deterministic score-aware cricket sub-trials for open NRR cut ties
   enabled: true
 };
 
-function qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts){
+window.__qiIncludeTieNR = true;
+function isQiIncludeTieNR(){
+  return window.__qiIncludeTieNR !== false;
+}
+function setQiIncludeTieNR(val){
+  window.__qiIncludeTieNR = !!val;
+  const onBtn = document.getElementById('qiModeTieOn');
+  const offBtn = document.getElementById('qiModeTieOff');
+  if(onBtn) onBtn.classList.toggle('active', window.__qiIncludeTieNR);
+  if(offBtn) offBtn.classList.toggle('active', !window.__qiIncludeTieNR);
+  invalidateQualificationCache();
+  try{ renderQualificationQuery(); }catch(e){}
+  try{
+    const t = getActiveTournament();
+    const st = t && ((t.stages||[]).find(s=>s.stageNum===t.currentStage) || t.stages[0]);
+    if(t && st && uiState && uiState.viewId === 'view_standings') renderStandingsTables(t, st);
+  }catch(e){}
+}
+
+function qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts, includeTieNR){
   const W = Math.max(0, Number(winPts)||0);
   const B = Math.max(0, Number(bonusPts)||0);
   const T = Math.max(0, Number(tiePts)||0);
   const N = Math.max(0, Number(nrPts)||0);
-  // Realistic cricket weights for % probabilities (while unweighted feasibility guarantees Q/E strictly)
-  const outs = B > 0 ? [
-    { tag:'w1',  pts1:W,   pts2:0,   w1:1, w2:0, weight:0.37 },
-    { tag:'w2',  pts1:0,   pts2:W,   w1:0, w2:1, weight:0.37 },
-    { tag:'w1b', pts1:W+B, pts2:0,   w1:1, w2:0, weight:0.10 },
-    { tag:'w2b', pts1:0,   pts2:W+B, w1:0, w2:1, weight:0.10 },
-    { tag:'tie', pts1:T,   pts2:T,   w1:0, w2:0, weight:0.03 },
-    { tag:'nr',  pts1:N,   pts2:N,   w1:0, w2:0, weight:0.03 }
+  const useTieNR = (includeTieNR === undefined) ? isQiIncludeTieNR() : !!includeTieNR;
+  if(!useTieNR){
+    return B > 0 ? [
+      { tag:'w1',  pts1:W,   pts2:0,   w1:1, w2:0, weight:0.40 },
+      { tag:'w2',  pts1:0,   pts2:W,   w1:0, w2:1, weight:0.40 },
+      { tag:'w1b', pts1:W+B, pts2:0,   w1:1, w2:0, weight:0.10 },
+      { tag:'w2b', pts1:0,   pts2:W+B, w1:0, w2:1, weight:0.10 }
+    ] : [
+      { tag:'w1',  pts1:W, pts2:0, w1:1, w2:0, weight:0.50 },
+      { tag:'w2',  pts1:0, pts2:W, w1:0, w2:1, weight:0.50 }
+    ];
+  }
+  // Realistic mobile cricket weights: 49% Win A, 49% Win B, 1.5% Tie, 0.5% No Result
+  const tW = 0.015, nW = 0.005;
+  const winEach = (1.0 - tW - nW) / 2.0; // 0.49
+  return B > 0 ? [
+    { tag:'w1',  pts1:W,   pts2:0,   w1:1, w2:0, weight:winEach * 0.80 },
+    { tag:'w2',  pts1:0,   pts2:W,   w1:0, w2:1, weight:winEach * 0.80 },
+    { tag:'w1b', pts1:W+B, pts2:0,   w1:1, w2:0, weight:winEach * 0.20 },
+    { tag:'w2b', pts1:0,   pts2:W+B, w1:0, w2:1, weight:winEach * 0.20 },
+    { tag:'tie', pts1:T,   pts2:T,   w1:0, w2:0, weight:tW },
+    { tag:'nr',  pts1:N,   pts2:N,   w1:0, w2:0, weight:nW }
   ] : [
-    { tag:'w1',  pts1:W, pts2:0, w1:1, w2:0, weight:0.47 },
-    { tag:'w2',  pts1:0, pts2:W, w1:0, w2:1, weight:0.47 },
-    { tag:'tie', pts1:T, pts2:T, w1:0, w2:0, weight:0.03 },
-    { tag:'nr',  pts1:N, pts2:N, w1:0, w2:0, weight:0.03 }
+    { tag:'w1',  pts1:W, pts2:0, w1:1, w2:0, weight:winEach },
+    { tag:'w2',  pts1:0, pts2:W, w1:0, w2:1, weight:winEach },
+    { tag:'tie', pts1:T, pts2:T, w1:0, w2:0, weight:tW },
+    { tag:'nr',  pts1:N, pts2:N, w1:0, w2:0, weight:nW }
   ];
-  return outs;
 }
 
-function qiV2RemainingFixtures(fixtures, players){
+function qiV2RemainingFixtures(fixtures, players, allowCrossGroup){
   const set = new Set((players||[]).map(String));
   return (fixtures||[]).filter(f=>{
     if(!f || f.completed) return false;
-    return set.has(String(f.p1)) && set.has(String(f.p2));
+    const h1 = set.has(String(f.p1)), h2 = set.has(String(f.p2));
+    return allowCrossGroup ? (h1 || h2) : (h1 && h2);
   });
+}
+
+function qiV2EstimateAvgRuns(fixtures, oversQuota){
+  const Q = Math.max(1, Number(oversQuota)||5);
+  let sumR = 0, cnt = 0;
+  (fixtures||[]).forEach(f=>{
+    if(!f || !f.completed || f.isNR || f.isForfeit) return;
+    if(Number.isFinite(Number(f.r1)) && Number(f.r1) > 0){ sumR += Number(f.r1); cnt++; }
+    if(Number.isFinite(Number(f.r2)) && Number(f.r2) > 0){ sumR += Number(f.r2); cnt++; }
+  });
+  return cnt >= 4 ? Math.max(18, sumR / cnt) : Math.max(25, Q * 11.5);
+}
+
+function qiV2MakeRng(players, baseMap, salt){
+  let seed = 2166136261;
+  (players||[]).forEach(p=>{
+    const b = baseMap[p]||{};
+    const s = p + ':' + (b.pts||0) + ':' + (b.rf||0) + ':' + (b.of||0) + ':' + (b.ra||0) + ':' + (b.ob||0);
+    for(let i=0;i<s.length;i++){ seed ^= s.charCodeAt(i); seed = Math.imul(seed, 16777619); }
+  });
+  seed ^= Math.imul((Number(salt)||1), 2654435761);
+  return function(){
+    seed = (seed + 0x6D2B79F5) >>> 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function qiV2ApplyRealisticMatchScore(u, v, tag, rf, ofB, ra, obB, Q, avgRuns, rand){
+  if(tag === 'nr') return;
+  const s1 = Math.max(15, Math.round(avgRuns * (0.72 + (rand() + rand()) * 0.28)));
+  if(tag === 'tie'){
+    if(u >= 0){ rf[u] += s1; ofB[u] += Q; ra[u] += s1; obB[u] += Q; }
+    if(v >= 0){ rf[v] += s1; ofB[v] += Q; ra[v] += s1; obB[v] += Q; }
+    return;
+  }
+  const win1 = (tag === 'w1' || tag === 'w1b');
+  const winner = win1 ? u : v;
+  const loser  = win1 ? v : u;
+  const isBonus = (tag === 'w1b' || tag === 'w2b');
+  if(rand() < 0.5){
+    // Winner bats 1st (defend win)
+    const maxM = Math.max(4, Math.floor(s1 * (isBonus ? 0.55 : 0.38)));
+    const minM = isBonus ? Math.max(1, Math.floor(s1 * 0.20)) : 1;
+    const margin = Math.min(s1, minM + Math.floor(rand() * rand() * (maxM - minM + 1)));
+    const s2 = Math.max(0, s1 - margin);
+    if(winner >= 0){ rf[winner] += s1; ofB[winner] += Q; ra[winner] += s2; obB[winner] += Q; }
+    if(loser  >= 0){ rf[loser]  += s2; ofB[loser]  += Q; ra[loser]  += s1; obB[loser]  += Q; }
+  } else {
+    // Winner bats 2nd (chase win)
+    const minB = Math.max(6, Math.floor(Q * (isBonus ? 0.55 : 0.72)));
+    const maxB = isBonus ? Math.max(minB, Math.floor(Q * 0.80)) : Q;
+    const b = Math.max(6, Math.min(Q, minB + Math.floor((1.0 - rand() * rand()) * (maxB - minB + 1))));
+    const target = s1 + 1 + Math.floor(rand() * 4);
+    if(winner >= 0){ rf[winner] += target; ofB[winner] += b; ra[winner] += s1;     obB[winner] += Q; }
+    if(loser  >= 0){ rf[loser]  += s1;     ofB[loser]  += Q; ra[loser]  += target; obB[loser]  += b; }
+  }
 }
 
 function qiV2BaseRows(fixtures, players, winPts, tiePts, bonusPts, nrPts, baselineMap){
@@ -7019,12 +7492,6 @@ function qiV2CompareRank(a, b){
   return String(a.name||'').localeCompare(String(b.name||''));
 }
 
-/**
- * How many rivals MUST finish strictly above target given final points map.
- * NRR is only decisive when BOTH players had 0 remaining matches at base state
- * (locked equal-points order — Vikas rule). If either still had games left at base,
- * equal points means NRR can still go either way → rival is NOT forced above.
- */
 function qiV2MustBeAboveCount(target, players, finalMap, baseMap, remCount){
   const t = String(target);
   const tPts = Number(finalMap[t]?.pts)||0;
@@ -7045,14 +7512,14 @@ function qiV2MustBeAboveCount(target, players, finalMap, baseMap, remCount){
   return must;
 }
 
-/** Best/worst position for target under a points completion (NRR-aware only when locked). */
+/** Best/worst position for target under a points completion (NRR-aware only when BOTH had 0 remaining matches). */
 function qiV2PositionRange(target, players, finalMap, baseMap, remCount){
   const t = String(target);
   const tPts = Number(finalMap[t]?.pts)||0;
   const tNrr = Number(finalMap[t]?.nrr!=null ? finalMap[t].nrr : baseMap[t]?.nrr)||0;
   const tRem = Number(remCount[t])||0;
   let mustAbove = 0;
-  let canAbove = 0; // rivals who might still place above (open NRR equal pts or higher pts)
+  let canAbove = 0;
   players.forEach(r=>{
     if(String(r)===t) return;
     const rPts = Number(finalMap[r]?.pts)||0;
@@ -7062,18 +7529,13 @@ function qiV2PositionRange(target, players, finalMap, baseMap, remCount){
     if(rPts < tPts) return;
     if(tRem===0 && rRem===0){
       if(rNrr > tNrr){ mustAbove++; canAbove++; }
-      else if(rNrr < tNrr){ /* target above */ }
-      else { canAbove++; } // true tie — either order
-    }else if(tRem===0 && rRem>0){
-      if(rNrr > tNrr){ mustAbove++; canAbove++; }
+      else if(rNrr < tNrr){ /* target strictly ahead on locked NRR */ }
       else { canAbove++; }
     }else{
       canAbove++;
     }
   });
-  const bestPos = mustAbove + 1;
-  const worstPos = canAbove + 1;
-  return { bestPos, worstPos, mustAbove, canAbove };
+  return { bestPos: mustAbove + 1, worstPos: canAbove + 1, mustAbove, canAbove };
 }
 
 function qiV2RankNames(ptsMap, players, baseMap, remCount){
@@ -7090,12 +7552,8 @@ function qiV2RankNames(ptsMap, players, baseMap, remCount){
   });
   list.sort((a,b)=>{
     if(b.pts!==a.pts) return b.pts-a.pts;
-    if(a.rem===0 && b.rem===0){
-      if(b.nrr!==a.nrr) return b.nrr-a.nrr;
-      if(b.w!==a.w) return b.w-a.w;
-      return String(a.name).localeCompare(String(b.name));
-    }
     if(b.nrr!==a.nrr) return b.nrr-a.nrr;
+    if(b.w!==a.w) return b.w-a.w;
     return String(a.name).localeCompare(String(b.name));
   });
   const pos = {};
@@ -7103,7 +7561,6 @@ function qiV2RankNames(ptsMap, players, baseMap, remCount){
   return { list, pos };
 }
 
-/** Apply a list of outcome assignments onto a copy of base points (NRR frozen at base). */
 function qiV2ApplyOutcomes(baseMap, remaining, assignment, players){
   const pts = {};
   const wins = {};
@@ -7116,10 +7573,8 @@ function qiV2ApplyOutcomes(baseMap, remaining, assignment, players){
     const o = assignment[i];
     if(!o) return;
     const a = String(f.p1), b = String(f.p2);
-    pts[a] = (pts[a]||0) + (o.pts1||0);
-    pts[b] = (pts[b]||0) + (o.pts2||0);
-    wins[a] = (wins[a]||0) + (o.w1||0);
-    wins[b] = (wins[b]||0) + (o.w2||0);
+    if(pts[a] !== undefined){ pts[a] += (o.pts1||0); wins[a] += (o.w1||0); }
+    if(pts[b] !== undefined){ pts[b] += (o.pts2||0); wins[b] += (o.w2||0); }
   });
   const map = {};
   players.forEach(n=>{
@@ -7129,39 +7584,59 @@ function qiV2ApplyOutcomes(baseMap, remaining, assignment, players){
   return map;
 }
 
+function qiV2FilterClassesForForced(classes, forcedTag){
+  if(!forcedTag) return classes;
+  if(forcedTag === 'w1') return classes.filter(c => c.tag==='w1' || c.tag==='w1b');
+  if(forcedTag === 'w2') return classes.filter(c => c.tag==='w2' || c.tag==='w2b');
+  if(forcedTag === 'tie') return classes.filter(c => c.tag==='tie' || c.tag==='nr');
+  if(forcedTag === 'nr') return classes.filter(c => c.tag==='nr');
+  return classes;
+}
+
 /**
- * Enumerate all outcome combinations for remaining fixtures.
- * Returns for each player: { qualifyCount, total, bestPos, worstPos, maxPts, minPts }
+ * Exact Outcome Tree + Score-Aware NRR Tie Resolution per Leaf (when remaining <= 5).
+ * Eliminates blind coin flips AND eliminates Monte Carlo sampling jitter!
  */
-function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, lockRem, baselineMap){
+function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, lockRem, baselineMap, opts){
+  const oversQuota = Math.max(1, Number(opts?.oversQuota) || Number(getActiveTournament()?.overs) || 5);
+  const allowCross = !!opts?.allowCrossGroup;
+  const includeTieNR = (opts && typeof opts.includeTieNR === 'boolean') ? opts.includeTieNR : isQiIncludeTieNR();
+  const forcedSpec = opts?.forcedMatch || null;
+
   const { map: baseMap } = qiV2BaseRows(fixtures, players, winPts, tiePts, bonusPts, nrPts, baselineMap);
-  const remaining = qiV2RemainingFixtures(fixtures, players);
-  const classes = qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts);
+  const remaining = qiV2RemainingFixtures(fixtures, players, allowCross);
+  // Feasibility ALWAYS includes legal Tie/NR outcomes when tournament awards points, while probability weights respect includeTieNR!
+  const legalClasses = qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts, true);
+  const probClasses = qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts, includeTieNR);
+  const probWeightByTag = Object.fromEntries(probClasses.map(c => [c.tag, c.weight]));
+  const classes = legalClasses.map(c => ({ ...c, probWeight: probWeightByTag[c.tag] || 0 }));
+
   const n = remaining.length;
+  const N = players.length;
   const stats = {};
   players.forEach(p=>{
     stats[p] = {
       qualifyCount:0, total:0,
       wQual:0, wTotal:0,
-      bestPos: players.length, worstPos: 1,
+      bestPos: N, worstPos: 1,
       maxPts: Number(baseMap[p]?.pts)||0,
       minPts: Number(baseMap[p]?.pts)||0,
-      sumPos: 0
+      sumPos: 0,
+      strictQualCount: 0
     };
   });
 
-  if(n===0){
+  if(n === 0){
     const baseRem = {};
     players.forEach(nm=>{ baseRem[nm]=0; });
     players.forEach(p=>{
       const range = qiV2PositionRange(p, players, baseMap, baseMap, baseRem);
       const s = stats[p];
       s.total = 1; s.wTotal = 1;
-      s.bestPos = range.bestPos;
-      s.worstPos = range.worstPos;
+      s.bestPos = range.bestPos; s.worstPos = range.worstPos;
       s.maxPts = s.minPts = Number(baseMap[p]?.pts)||0;
       s.sumPos = range.bestPos;
-      if(range.mustAbove < qualifyK){ s.qualifyCount = 1; s.wQual = 1; }
+      if(range.mustAbove < qualifyK){ s.qualifyCount = 1; s.wQual = 1; s.strictQualCount = 1; }
     });
     return { stats, remaining, enumerated:true, totalOutcomes:1, baseMap };
   }
@@ -7170,39 +7645,133 @@ function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nr
     return { stats:null, remaining, enumerated:false, totalOutcomes:0, baseMap };
   }
 
+  const baseRem = {};
+  players.forEach(p=>{ baseRem[p] = 0; });
+  if(lockRem && typeof lockRem === 'object'){
+    players.forEach(p=>{ baseRem[p] = Number(lockRem[p])||0; });
+  } else {
+    remaining.forEach(f=>{
+      const a = String(f.p1), b = String(f.p2);
+      if(baseRem[a] !== undefined) baseRem[a]++;
+      if(baseRem[b] !== undefined) baseRem[b]++;
+    });
+  }
+
+  // Locate forced fixture index if simulating a single forced match outcome
+  let forcedIdx = -1;
+  if(forcedSpec){
+    forcedIdx = remaining.findIndex(f =>
+      (forcedSpec.id != null ? Number(f.id) === Number(forcedSpec.id) : true) &&
+      String(f.p1) === String(forcedSpec.p1) && String(f.p2) === String(forcedSpec.p2)
+    );
+  }
+
+  const pIndex = Object.fromEntries(players.map((p,i)=>[p,i]));
+  const edges = remaining.map(f => [
+    pIndex[String(f.p1)] !== undefined ? pIndex[String(f.p1)] : -1,
+    pIndex[String(f.p2)] !== undefined ? pIndex[String(f.p2)] : -1
+  ]);
+  const Q = Math.max(6, Math.round(oversQuota * 6));
+  const avgRuns = qiV2EstimateAvgRuns(fixtures, oversQuota);
+  const rand = qiV2MakeRng(players, baseMap, n * 97 + (includeTieNR ? 1 : 0));
+  const SUB = QI_V2.TIE_LEAF_SUBTRIALS || 80;
+
+  const baseRf = players.map(p => Number(baseMap[p]?.rf)||0);
+  const baseOf = players.map(p => Number(baseMap[p]?.of)||0);
+  const baseRa = players.map(p => Number(baseMap[p]?.ra)||0);
+  const baseOb = players.map(p => Number(baseMap[p]?.ob)||0);
+  const rfBuf = new Float64Array(N);
+  const ofBuf = new Float64Array(N);
+  const raBuf = new Float64Array(N);
+  const obBuf = new Float64Array(N);
+  const nrrBuf = new Float64Array(N);
+  const ord = Array.from({length:N}, (_,i)=>i);
+
   let total = 0;
   const assignment = new Array(n);
 
   function rec(idx, pathWeight){
     if(total >= QI_V2.MAX_OUTCOMES) return;
-    if(idx===n){
+    if(idx === n){
       total++;
       const finalMap = qiV2ApplyOutcomes(baseMap, remaining, assignment, players);
-      const leafRem = {};
-      players.forEach(p=>{ leafRem[p] = 0; });
-      players.forEach(p=>{
+
+      // Compute exact feasibility ranges & detect if any player sits on an open cut-line tie
+      const ranges = new Array(N);
+      let hasOpenCutTie = false;
+      for(let i=0;i<N;i++){
+        const p = players[i];
+        const rg = qiV2PositionRange(p, players, finalMap, baseMap, baseRem);
+        ranges[i] = rg;
+        if(rg.bestPos <= qualifyK && rg.worstPos > qualifyK) hasOpenCutTie = true;
+      }
+
+      // Resolve any open cut-line tie using exact score-aware RF/OF/RA/OB cricket sub-trials!
+      let subQualFrac = null;
+      if(hasOpenCutTie && pathWeight > 0){
+        const subHits = new Int32Array(N);
+        const ptsArr = players.map(p => Number(finalMap[p]?.pts)||0);
+        for(let st=0; st<SUB; st++){
+          for(let i=0;i<N;i++){
+            rfBuf[i]=baseRf[i]; ofBuf[i]=baseOf[i]; raBuf[i]=baseRa[i]; obBuf[i]=baseOb[i];
+          }
+          for(let e=0; e<n; e++){
+            qiV2ApplyRealisticMatchScore(edges[e][0], edges[e][1], assignment[e].tag, rfBuf, ofBuf, raBuf, obBuf, Q, avgRuns, rand);
+          }
+          for(let i=0;i<N;i++){
+            nrrBuf[i] = (ofBuf[i] ? (rfBuf[i]/ofBuf[i])*6 : 0) - (obBuf[i] ? (raBuf[i]/obBuf[i])*6 : 0);
+          }
+          ord.sort((a,b)=> (ptsArr[b]-ptsArr[a]) || (nrrBuf[b]-nrrBuf[a]) || (a-b));
+          for(let pos=0; pos<qualifyK && pos<N; pos++) subHits[ord[pos]]++;
+        }
+        subQualFrac = new Float64Array(N);
+        for(let i=0;i<N;i++) subQualFrac[i] = subHits[i] / SUB;
+      }
+
+      for(let i=0;i<N;i++){
+        const p = players[i];
         const pts = Number(finalMap[p]?.pts)||0;
         const s = stats[p];
+        const rg = ranges[i];
         s.total++;
         s.wTotal += pathWeight;
-        const range = qiV2PositionRange(p, players, finalMap, baseMap, leafRem);
-        if(range.bestPos < s.bestPos) s.bestPos = range.bestPos;
-        if(range.worstPos > s.worstPos) s.worstPos = range.worstPos;
-        s.sumPos += range.bestPos;
+        if(rg.bestPos < s.bestPos) s.bestPos = rg.bestPos;
+        if(rg.worstPos > s.worstPos) s.worstPos = rg.worstPos;
+        s.sumPos += (rg.bestPos + rg.worstPos) / 2;
         if(pts > s.maxPts) s.maxPts = pts;
         if(pts < s.minPts) s.minPts = pts;
-        if(range.mustAbove < qualifyK){
+
+        if(rg.worstPos <= qualifyK){
           s.qualifyCount++;
-          // If boundary tie is open, credit 0.5 probability weight (NRR coin-flip), else full weight
-          const credit = (range.worstPos <= qualifyK) ? 1.0 : 0.5;
-          s.wQual += pathWeight * credit;
+          s.strictQualCount++;
+          s.wQual += pathWeight;
+        } else if(rg.bestPos <= qualifyK){
+          // Score-aware NRR check: if sub-trials show player qualifies (or pathWeight===0 feasibility branch)
+          const frac = subQualFrac ? subQualFrac[i] : 0;
+          if(pathWeight === 0 || frac > 0 || baseRem[p] > 0){
+            s.qualifyCount++;
+          }
+          s.wQual += pathWeight * frac;
         }
-      });
+      }
       return;
     }
-    for(const o of classes){
+
+    let stepClasses = classes;
+    if(idx === forcedIdx && forcedSpec){
+      stepClasses = qiV2FilterClassesForForced(classes, forcedSpec.tag);
+      if(!stepClasses.length) stepClasses = classes;
+      // Re-normalize forced branch weights so conditional probability sums to 1.0!
+      const sumW = stepClasses.reduce((acc, c) => acc + (c.probWeight || c.weight || 0), 0);
+      stepClasses = stepClasses.map(c => ({
+        ...c,
+        probWeight: sumW > 0 ? ((c.probWeight || c.weight || 0) / sumW) : (1 / stepClasses.length)
+      }));
+    }
+
+    for(const o of stepClasses){
       assignment[idx] = o;
-      rec(idx+1, pathWeight * (o.weight || 0.25));
+      rec(idx + 1, pathWeight * (o.probWeight || 0));
       if(total >= QI_V2.MAX_OUTCOMES) return;
     }
   }
@@ -7211,27 +7780,38 @@ function qiV2Enumerate(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nr
   players.forEach(p=>{
     const s = stats[p];
     if(!s || !s.total) return;
-    if(s.qualifyCount === 0 && s.bestPos <= qualifyK){
-      s.bestPos = qualifyK + 1;
-    }
-    if(s.qualifyCount === s.total && s.worstPos > qualifyK){
-    }
+    if(s.qualifyCount === 0 && s.bestPos <= qualifyK) s.bestPos = qualifyK + 1;
   });
 
-  return { stats, remaining, enumerated:true, totalOutcomes:total, baseMap };
+  return { stats, remaining, enumerated:true, totalOutcomes:total, baseMap, includeTieNR };
 }
 
-/** Deterministic seeded Monte Carlo + Exact Points Bounds when >6 fixtures remain */
-function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, baselineMap){
+/** Deterministic Score-Aware Cricket Monte Carlo + Exact Points Bounds when >5 fixtures remain */
+function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, baselineMap, opts){
+  const oversQuota = Math.max(1, Number(opts?.oversQuota) || Number(getActiveTournament()?.overs) || 5);
+  const allowCross = !!opts?.allowCrossGroup;
+  const includeTieNR = (opts && typeof opts.includeTieNR === 'boolean') ? opts.includeTieNR : isQiIncludeTieNR();
+  const forcedSpec = opts?.forcedMatch || null;
+
   const { map: baseMap } = qiV2BaseRows(fixtures, players, winPts, tiePts, bonusPts, nrPts, baselineMap);
-  const remaining = qiV2RemainingFixtures(fixtures, players);
+  const remaining = qiV2RemainingFixtures(fixtures, players, allowCross);
   const winV = Math.max(0,Number(winPts)||0) + Math.max(0,Number(bonusPts)||0);
   const remCount = {};
   players.forEach(p=>{ remCount[p]=0; });
   remaining.forEach(f=>{
-    remCount[String(f.p1)] = (remCount[String(f.p1)]||0)+1;
-    remCount[String(f.p2)] = (remCount[String(f.p2)]||0)+1;
+    const a = String(f.p1), b = String(f.p2);
+    if(remCount[a] !== undefined) remCount[a]++;
+    if(remCount[b] !== undefined) remCount[b]++;
   });
+
+  let forcedIdx = -1;
+  if(forcedSpec){
+    forcedIdx = remaining.findIndex(f =>
+      (forcedSpec.id != null ? Number(f.id) === Number(forcedSpec.id) : true) &&
+      String(f.p1) === String(forcedSpec.p1) && String(f.p2) === String(forcedSpec.p2)
+    );
+  }
+
   const maxPts = {}, minPts = {};
   players.forEach(p=>{
     const cur = Number(baseMap[p]?.pts)||0;
@@ -7239,22 +7819,7 @@ function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts,
     minPts[p] = cur;
   });
 
-  // Deterministic PRNG seeded from pool state so percentages are stable across re-renders
-  let seed = 2166136261;
-  players.forEach(p=>{
-    const b = baseMap[p]||{};
-    const s = p + ':' + (b.pts||0) + ':' + Math.round((b.nrr||0)*1000) + ':' + (remCount[p]||0);
-    for(let i=0;i<s.length;i++){ seed ^= s.charCodeAt(i); seed = Math.imul(seed, 16777619); }
-  });
-  seed ^= remaining.length * 2654435761;
-  const rand = () => {
-    seed = (seed + 0x6D2B79F5) >>> 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-
-  const classes = qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts);
+  const classes = qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts, includeTieNR);
   const cdf = [];
   let acc = 0;
   classes.forEach(o=>{ acc += (o.weight || 0.25); cdf.push(acc); });
@@ -7263,30 +7828,58 @@ function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts,
   const N = players.length;
   const pIndex = Object.fromEntries(players.map((p,i)=>[p,i]));
   const basePtsArr = players.map(p=>Number(baseMap[p]?.pts)||0);
-  const baseNrrArr = players.map(p=>Number(baseMap[p]?.nrr)||0);
-  const remArr = players.map(p=>remCount[p]||0);
-  const edges = remaining.map(f=>[pIndex[String(f.p1)], pIndex[String(f.p2)]]).filter(e=>e[0]!==undefined && e[1]!==undefined);
+  const baseRfArr  = players.map(p=>Number(baseMap[p]?.rf)||0);
+  const baseOfArr  = players.map(p=>Number(baseMap[p]?.of)||0);
+  const baseRaArr  = players.map(p=>Number(baseMap[p]?.ra)||0);
+  const baseObArr  = players.map(p=>Number(baseMap[p]?.ob)||0);
+  const edges = remaining.map(f=>[
+    pIndex[String(f.p1)] !== undefined ? pIndex[String(f.p1)] : -1,
+    pIndex[String(f.p2)] !== undefined ? pIndex[String(f.p2)] : -1
+  ]);
+  const Q = Math.max(6, Math.round(oversQuota * 6));
+  const avgRuns = qiV2EstimateAvgRuns(fixtures, oversQuota);
+  const rand = qiV2MakeRng(players, baseMap, remaining.length * 131 + (includeTieNR ? 1 : 0));
 
   const mcQual = new Float64Array(N);
   const mcSumPos = new Float64Array(N);
   const mcBest = new Int32Array(N).fill(N);
   const mcWorst = new Int32Array(N).fill(1);
+  const mcMaxPts = new Float64Array(N).fill(-1e9);
+  const mcMinPts = new Float64Array(N).fill(1e9);
   const ptsBuf = new Float64Array(N);
+  const rfBuf  = new Float64Array(N);
+  const ofBuf  = new Float64Array(N);
+  const raBuf  = new Float64Array(N);
+  const obBuf  = new Float64Array(N);
   const nrrBuf = new Float64Array(N);
   const ord = Array.from({length:N}, (_,i)=>i);
 
+  const forcedStepClasses = (forcedIdx >= 0 && forcedSpec)
+    ? qiV2FilterClassesForForced(qiV2OutcomeClasses(winPts, tiePts, nrPts, bonusPts, true), forcedSpec.tag)
+    : null;
+
   for(let tr=0; tr<TRIALS; tr++){
-    for(let i=0;i<N;i++){ ptsBuf[i]=basePtsArr[i]; nrrBuf[i]=baseNrrArr[i]; }
+    for(let i=0;i<N;i++){
+      ptsBuf[i]=basePtsArr[i]; rfBuf[i]=baseRfArr[i]; ofBuf[i]=baseOfArr[i]; raBuf[i]=baseRaArr[i]; obBuf[i]=baseObArr[i];
+    }
     for(let e=0; e<edges.length; e++){
       const u = edges[e][0], v = edges[e][1];
-      const r = rand() * acc;
-      let o = classes[classes.length-1];
-      for(let c=0;c<cdf.length;c++){ if(r <= cdf[c]){ o = classes[c]; break; } }
-      ptsBuf[u] += o.pts1; ptsBuf[v] += o.pts2;
-      // Realistic NRR swing per match so tiebreaks reflect match margins naturally
-      const swing = (0.15 + rand() * 0.55);
-      if(o.w1){ nrrBuf[u] += swing; nrrBuf[v] -= swing; }
-      else if(o.w2){ nrrBuf[v] += swing; nrrBuf[u] -= swing; }
+      let o;
+      if(e === forcedIdx && forcedStepClasses && forcedStepClasses.length){
+        o = forcedStepClasses[Math.floor(rand() * forcedStepClasses.length)];
+      } else {
+        const r = rand() * acc;
+        o = classes[classes.length-1];
+        for(let c=0;c<cdf.length;c++){ if(r <= cdf[c]){ o = classes[c]; break; } }
+      }
+      if(u >= 0) ptsBuf[u] += o.pts1;
+      if(v >= 0) ptsBuf[v] += o.pts2;
+      qiV2ApplyRealisticMatchScore(u, v, o.tag, rfBuf, ofBuf, raBuf, obBuf, Q, avgRuns, rand);
+    }
+    for(let i=0;i<N;i++){
+      nrrBuf[i] = (ofBuf[i] ? (rfBuf[i]/ofBuf[i])*6 : 0) - (obBuf[i] ? (raBuf[i]/obBuf[i])*6 : 0);
+      if(ptsBuf[i] > mcMaxPts[i]) mcMaxPts[i] = ptsBuf[i];
+      if(ptsBuf[i] < mcMinPts[i]) mcMinPts[i] = ptsBuf[i];
     }
     ord.sort((a,b)=> (ptsBuf[b]-ptsBuf[a]) || (nrrBuf[b]-nrrBuf[a]) || (a-b));
     for(let pos=0; pos<N; pos++){
@@ -7304,14 +7897,16 @@ function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts,
 
   const results = {};
   players.forEach((target, idx)=>{
-    const aboveMax = players.filter(p=>p!==target && (Number(baseMap[p]?.pts)||0) > maxPts[target]).length;
-    const foreverBelow = players.filter(p=>p!==target && maxPts[p] < minPts[target]).length;
+    const effMax = forcedIdx >= 0 ? Math.max(Number(baseMap[target]?.pts)||0, mcMaxPts[idx]) : maxPts[target];
+    const effMin = forcedIdx >= 0 ? Math.min(effMax, mcMinPts[idx]) : minPts[target];
+    const aboveMax = players.filter(p=>p!==target && (Number(baseMap[p]?.pts)||0) > effMax).length;
+    const foreverBelow = players.filter(p=>p!==target && maxPts[p] < effMin).length;
     const lockedAhead = qiV2PermanentlyAheadCount(target, players, baseMap, remCount, maxPts, minPts);
     const eliminated = aboveMax >= qualifyK || lockedAhead >= qualifyK;
     const clinched = !eliminated && foreverBelow >= (N - qualifyK);
 
     const bestPos = Math.min(N, Math.max(aboveMax, lockedAhead) + 1);
-    const canReach = players.filter(p=>p!==target && maxPts[p] >= minPts[target]).length;
+    const canReach = players.filter(p=>p!==target && maxPts[p] >= effMin).length;
     const worstPos = Math.min(N, Math.max(canReach + 1, lockedAhead + 1));
 
     let status, pct;
@@ -7320,7 +7915,7 @@ function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts,
     else {
       status='In Contention';
       const rawPct = Math.round((mcQual[idx] / TRIALS) * 1000) / 10;
-      pct = Math.max(0.1, Math.min(99.9, rawPct));
+      pct = includeTieNR ? Math.max(0.1, Math.min(99.9, rawPct)) : Math.max(0, Math.min(99.9, rawPct));
     }
 
     const curPts = Number(baseMap[target]?.pts)||0;
@@ -7340,65 +7935,45 @@ function qiV2PointsBounds(fixtures, players, qualifyK, winPts, tiePts, bonusPts,
       status, pct, prob: pct,
       bestPos, worstPos,
       avgPos: Math.round((mcSumPos[idx] / TRIALS) * 10) / 10,
-      maxPts: maxPts[target], minPts: minPts[target],
+      maxPts: effMax, minPts: effMin,
       rem: myRem,
       possible: !eliminated,
       guaranteed: clinched,
-      outlook: eliminated?'Mathematically eliminated':clinched?'Guaranteed qualification':('~'+pct+'% chance (Monte Carlo)'),
+      outlook: eliminated?'Mathematically eliminated':clinched?'Guaranteed qualification':(pct===0 && !includeTieNR ? 'Tie/NR only (0% W/L)' : ('~'+pct+'% chance (Score-Aware Sim)')),
       nrrDependent:false,
       cutPts, magicWin, elimNumber, lockedAhead,
-      engine:'qiV2-montecarlo'
+      engine:'qiV2-score-mc'
     };
   });
   return results;
 }
 
 /**
- * Main entry: analyse all players in a pool for top-qualifyK.
- * Returns map name -> analysis fields for standings rows.
- */
-
-/**
  * Count rivals permanently ahead of target (cannot be overtaken in any legal completion).
- * - Rival minPts > target maxPts → always ahead on points
- * - Both finished (0 remaining), equal points, rival NRR > target NRR → locked NRR order
- * - Rival current pts > target maxPts → always ahead
  */
 function qiV2PermanentlyAheadCount(target, players, baseMap, remCount, maxPtsAll, minPtsAll){
   const tName = String(target);
   const tMax = Number(maxPtsAll[tName])||0;
-  const tMin = Number(minPtsAll[tName])||0;
   const tCur = Number(baseMap[tName]?.pts)||0;
   const tNrr = Number(baseMap[tName]?.nrr)||0;
   const tRem = Number(remCount[tName])||0;
   let ahead = 0;
   players.forEach(r=>{
     if(String(r)===tName) return;
-    const rMax = Number(maxPtsAll[r])||0;
     const rMin = Number(minPtsAll[r])||0;
     const rCur = Number(baseMap[r]?.pts)||0;
     const rNrr = Number(baseMap[r]?.nrr)||0;
     const rRem = Number(remCount[r])||0;
-
-    if(rMin > tMax){ ahead++; return; }
-    if(rCur > tMax){ ahead++; return; }
-
+    if(rMin > tMax || rCur > tMax){ ahead++; return; }
     if(tRem===0 && rRem===0){
-      const tFinal = tCur;
-      const rFinal = rCur;
-      if(rFinal > tFinal){ ahead++; return; }
-      if(rFinal === tFinal && rNrr > tNrr){ ahead++; return; }
-      return;
+      if(rCur > tCur){ ahead++; return; }
+      if(rCur === tCur && rNrr > tNrr){ ahead++; return; }
     }
-
-    if(rRem===0 && rCur > tMax){ ahead++; return; }
-
-    if(tRem===0 && rRem===0 && rCur === tCur && rNrr > tNrr){ ahead++; return; }
   });
   return ahead;
 }
 
-function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, lockRem, baselineMap){
+function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, lockRem, baselineMap, opts){
   players = (players||[]).map(String);
   const k = Math.max(0, Math.min(Number(qualifyK)||0, players.length||0));
   if(k<=0 || !players.length){
@@ -7411,18 +7986,19 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
     return out;
   }
 
-  const enumResult = qiV2Enumerate(fixtures, players, k, winPts, tiePts, bonusPts, nrPts, lockRem, baselineMap);
+  const enumResult = qiV2Enumerate(fixtures, players, k, winPts, tiePts, bonusPts, nrPts, lockRem, baselineMap, opts);
 
   if(!enumResult.enumerated || !enumResult.stats){
-    return qiV2PointsBounds(fixtures, players, k, winPts, tiePts, bonusPts, nrPts, baselineMap);
+    return qiV2PointsBounds(fixtures, players, k, winPts, tiePts, bonusPts, nrPts, baselineMap, opts);
   }
 
-  const { stats, remaining } = enumResult;
+  const { stats, remaining, includeTieNR } = enumResult;
   const remCount = {};
   players.forEach(p=>{ remCount[p]=0; });
   (remaining||[]).forEach(f=>{
-    remCount[String(f.p1)] = (remCount[String(f.p1)]||0)+1;
-    remCount[String(f.p2)] = (remCount[String(f.p2)]||0)+1;
+    const a = String(f.p1), b = String(f.p2);
+    if(remCount[a] !== undefined) remCount[a]++;
+    if(remCount[b] !== undefined) remCount[b]++;
   });
 
   const out = {};
@@ -7441,111 +8017,68 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
       ? stats[p].maxPts
       : (Number(baseMap[p]?.pts)||0) + (remCount[p]||0)*winV;
   });
+  const minPtsAll = {};
+  players.forEach(n=>{
+    minPtsAll[n] = (stats[n] && stats[n].minPts != null) ? stats[n].minPts : (Number(baseMap[n]?.pts)||0);
+  });
 
   players.forEach(p=>{
     const s = stats[p];
     const total = Math.max(1, s.total||1);
-    const wTot = s.wTotal > 0 ? s.wTotal : total;
-    const wQ = s.wTotal > 0 ? s.wQual : s.qualifyCount;
-    let pct = Math.round((wQ / wTot) * 1000) / 10;
+    const wTot = s.wTotal > 0 ? s.wTotal : 1;
+    let pct = s.wTotal > 0 ? (Math.round((s.wQual / wTot) * 1000) / 10) : 0;
     let status, guaranteed, possible;
-    if(s.qualifyCount === 0){
-      status = 'E'; guaranteed = false; possible = false;
-    }else if(s.qualifyCount === total){
-      status = 'Q'; guaranteed = true; possible = true;
-    }else{
+
+    if(s.bestPos > k || s.qualifyCount === 0){
+      status = 'E'; guaranteed = false; possible = false; pct = 0;
+    } else if(s.worstPos <= k || (s.wTotal > 0 && pct >= 99.95 && s.qualifyCount === total)){
+      status = 'Q'; guaranteed = true; possible = true; pct = 100;
+    } else {
       status = 'In Contention'; guaranteed = false; possible = true;
     }
 
-    const minPts = s.minPts;
-
-    const myMaxPtsEarly = maxPtsAll[p] != null ? maxPtsAll[p] : (Number(baseMap[p]?.pts)||0) + (remCount[p]||0)*winV;
-    if(s.bestPos > k || (s.qualifyCount||0) === 0){
-      status = 'E';
-      guaranteed = false;
-      possible = false;
-      pct = 0;
-      if(s.bestPos <= k && (s.qualifyCount||0) === 0) s.bestPos = k + 1;
-    } else if(status === 'E' && myMaxPtsEarly >= cutPts && s.bestPos <= k && (s.qualifyCount||0) > 0){
-      status = 'In Contention';
-      guaranteed = false;
-      possible = true;
-      if(pct == null || pct === 0) pct = 5;
-    }
-
-    const minPtsAll = {};
-    players.forEach(n=>{ minPtsAll[n] = (stats[n] && stats[n].minPts != null) ? stats[n].minPts : (Number(baseMap[n]?.pts)||0); });
     const lockedAhead = qiV2PermanentlyAheadCount(p, players, baseMap, remCount, maxPtsAll, minPtsAll);
-
     if(lockedAhead >= k){
-      status = 'E';
-      guaranteed = false;
-      possible = false;
-      pct = 0;
+      status = 'E'; guaranteed = false; possible = false; pct = 0;
       if(s.bestPos < lockedAhead + 1) s.bestPos = Math.min(N, lockedAhead + 1);
       s.worstPos = Math.max(s.worstPos, lockedAhead + 1);
     }
 
-    if(status === 'E' && lockedAhead < k && s.maxPts >= cutPts && cutPts >= 0 && s.bestPos <= k && (s.qualifyCount||0) > 0){
-      status = 'In Contention';
-      possible = true;
-      guaranteed = false;
-      pct = pct > 0 ? pct : 1;
+    // If a forced outcome left 0% realistic chance across all score sub-trials (e.g. Suhas after Suryakant beats Riju),
+    // treat that conditional scenario as Eliminated (0%) cleanly!
+    const isForcedMode = !!(opts && opts.forcedMatch);
+    if(isForcedMode && status === 'In Contention' && pct === 0 && s.wQual === 0){
+      status = 'E'; guaranteed = false; possible = false;
+    }
+    if(isForcedMode && status === 'In Contention' && pct >= 99.95 && s.wTotal > 0 && Math.abs(s.wQual - s.wTotal) < 1e-6){
+      status = 'Q'; guaranteed = true; possible = true; pct = 100;
     }
 
-    const rivalsNeverCatch = players.filter(r=>{
-      if(r===p) return false;
-      return (maxPtsAll[r]||0) < minPts;
-    }).length;
+    const rivalsNeverCatch = players.filter(r => r !== p && (maxPtsAll[r]||0) < s.minPts).length;
     const pointsClinched = rivalsNeverCatch >= (N - k);
-    if(status === 'Q' && !pointsClinched && s.worstPos > k){
-      status = 'In Contention';
-      guaranteed = false;
-      possible = true;
-      pct = pct >= 100 ? 99 : pct;
-    } else if(status === 'Q' && !pointsClinched){
-      const threat = players.some(r=>{
-        if(r===p) return false;
-        return (maxPtsAll[r]||0) >= minPts && (remCount[r]||0) > 0;
-      });
-      if(threat){
-        status = 'In Contention';
-        guaranteed = false;
-        possible = true;
-        pct = Math.max(pct < 100 ? pct : 95, 50);
-      }
-    }
-
     const curPts = Number(baseMap[p]?.pts)||0;
     const myRem = remCount[p]||0;
     let magicWin = null;
     if(status !== 'Q' && status !== 'E' && myRem > 0 && curPts < cutPts){
-      const need = cutPts - curPts;
-      magicWin = Math.min(myRem, Math.ceil(need / Math.max(1, winV || 1)));
+      magicWin = Math.min(myRem, Math.ceil((cutPts - curPts) / Math.max(1, winV || 1)));
     } else if(status !== 'Q' && status !== 'E' && myRem > 0){
       magicWin = 0;
     }
     let elimNumber = null;
-    if(status !== 'E' && myRem > 0){
-      if(winV > 0){
-        const maxL = myRem;
-        let L = null;
-        for(let losses=0; losses<=maxL; losses++){
-          const mx = curPts + (myRem - losses) * winV;
-          if(mx < cutPts){ L = losses; break; }
-        }
-        elimNumber = L; // null means even with all losses still on cut
+    if(status !== 'E' && myRem > 0 && winV > 0){
+      for(let losses=0; losses<=myRem; losses++){
+        if(curPts + (myRem - losses) * winV < cutPts){ elimNumber = losses; break; }
       }
     }
 
-    if(s.bestPos > k){
-      status = 'E';
-      guaranteed = false;
-      possible = false;
-      pct = 0;
-    }
     const avgPos = Math.round((s.sumPos / total) * 10) / 10;
-    const finalPct = (status==='In Contention') ? Math.max(0.1, Math.min(99.9, pct)) : (status==='Q' ? 100 : 0);
+    const finalPct = (status === 'Q') ? 100 : (status === 'E') ? 0 : (includeTieNR ? Math.max(0.1, Math.min(99.9, pct)) : Math.max(0, Math.min(99.9, pct)));
+    const outlookTxt = status === 'Q'
+      ? 'Guaranteed qualification'
+      : status === 'E'
+        ? (s.bestPos > k ? ('Eliminated — best possible finish is #'+s.bestPos+' (top '+k+' qualify)') : 'Mathematically eliminated')
+        : (finalPct === 0 && !includeTieNR ? 'Tie/NR only (0% W/L)' : ('~'+finalPct+'% chance'));
+
     out[p] = {
       status,
       pct: finalPct,
@@ -7556,10 +8089,11 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
       maxPts: s.maxPts,
       minPts: s.minPts,
       rem: myRem,
-      possible, guaranteed: status==='Q',
-      outlook: status==='Q'?'Guaranteed qualification':status==='E'?(s.bestPos>k?('Eliminated — best possible finish is #'+s.bestPos+' (top '+k+' qualify)'):(lockedAhead>=k?'Eliminated — enough players locked above (points/NRR)':'Mathematically eliminated')):('~'+pct+'% of outcomes qualify'),
+      possible,
+      guaranteed: status === 'Q',
+      outlook: outlookTxt,
       nrrDependent: false,
-      engine: 'qiV2-enum-locknrr',
+      engine: 'qiV2-exact-scoreaware',
       qualifyScenarios: s.qualifyCount,
       totalScenarios: total,
       cutPts,
@@ -7572,9 +8106,9 @@ function qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, n
   return out;
 }
 
-/** Single-player helper (detail / scenarios later). */
-function qiV2AnalysePlayer(fixtures, players, targetName, winPts, tiePts, bonusPts, nrPts, qualifyK, baselineMap){
-  const all = qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, null, baselineMap);
+/** Single-player helper. */
+function qiV2AnalysePlayer(fixtures, players, targetName, winPts, tiePts, bonusPts, nrPts, qualifyK, baselineMap, opts){
+  const all = qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, null, baselineMap, opts);
   return all[targetName] || {
     status:'E', pct:0, bestPos:players.length, worstPos:players.length,
     maxPts:0, rem:0, possible:false, guaranteed:false,
@@ -7582,38 +8116,15 @@ function qiV2AnalysePlayer(fixtures, players, targetName, winPts, tiePts, bonusP
   };
 }
 
-/** Clone fixtures and force one remaining match to a discrete outcome tag. */
-function qiV2HypotheticalFixtures(fixtures, matchSpec){
-  return (fixtures||[]).map(f=>{
-    const copy = Object.assign({}, f);
-    if(matchSpec && String(f.p1)===String(matchSpec.p1) && String(f.p2)===String(matchSpec.p2) && !f.completed){
-      copy.completed = true;
-      const tag = matchSpec.tag || 'w1';
-      copy.isNR = false;
-      copy.teamResultTie = false;
-      copy.bonusPoint = false;
-      if(tag==='w1'){
-        copy.winner = f.p1; copy.r1 = 1; copy.r2 = 0; copy.o1 = 0.1; copy.o2 = 0.1;
-      }else if(tag==='w2'){
-        copy.winner = f.p2; copy.r1 = 0; copy.r2 = 1; copy.o1 = 0.1; copy.o2 = 0.1;
-      }else if(tag==='tie'){
-        copy.winner = null; copy.teamResultTie = true; copy.r1 = 1; copy.r2 = 1; copy.o1 = 0.1; copy.o2 = 0.1;
-      }else if(tag==='nr'){
-        copy.winner = null; copy.isNR = true; copy.r1 = 0; copy.r2 = 0;
-      }
-    }
-    return copy;
-  });
-}
-
 /**
- * Re-run QI after forcing one fixture outcome.
- * Returns analysis map for all players.
+ * Re-run score-aware QI after forcing ONE specific remaining match to w1 / w2 / tie / nr.
+ * Uses the exact same score-aware RF/OF/RA/OB simulation + carry-forward baselineMap!
  */
-function qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, p1, p2, tag){
-  const hypo = qiV2HypotheticalFixtures(fixtures, { p1, p2, tag });
-  const { remCount } = qiV2RemCountMap(fixtures, players);
-  return qiV2AnalyseAll(hypo, players, qualifyK, winPts, tiePts, bonusPts, nrPts, remCount, null);
+function qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, p1, p2, tag, fixtureId, baselineMap, opts){
+  const simOpts = Object.assign({}, opts || {}, {
+    forcedMatch: { p1, p2, tag, id: fixtureId }
+  });
+  return qiV2AnalyseAll(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, null, baselineMap || null, simOpts);
 }
 
 function qiV2RemainingForPlayer(fixtures, players, name){
@@ -7943,8 +8454,8 @@ function qiV2RemCountMap(fixtures, players){
 }
 
 /** Threats: can finish on same points band or already above. */
-function qiV2Threats(fixtures, players, target, winPts, tiePts, bonusPts, nrPts){
-  const { map } = qiV2BaseRows(fixtures, players, winPts, tiePts, bonusPts, nrPts);
+function qiV2Threats(fixtures, players, target, winPts, tiePts, bonusPts, nrPts, baselineMap, allowCrossGroup){
+  const { map } = qiV2BaseRows(fixtures, players, winPts, tiePts, bonusPts, nrPts, baselineMap);
   const { rem, remCount } = qiV2RemCountMap(fixtures, players);
   const winV = Math.max(0,Number(winPts)||0) + Math.max(0,Number(bonusPts)||0);
   const me = map[target];
@@ -7970,17 +8481,18 @@ function qiV2Threats(fixtures, players, target, winPts, tiePts, bonusPts, nrPts)
   return list;
 }
 
-function qiV2BuildScenarios(fixtures, players, target, qualifyK, winPts, tiePts, bonusPts, nrPts, oversQuota){
-  const base = qiV2AnalysePlayer(fixtures, players, target, winPts, tiePts, bonusPts, nrPts, qualifyK);
-  const myRem = qiV2RemainingForPlayer(fixtures, players, target);
-  const allRem = qiV2RemainingFixtures(fixtures, players);
-  const { map: baseMap } = qiV2BaseRows(fixtures, players, winPts, tiePts, bonusPts, nrPts);
-  const { remCount } = qiV2RemCountMap(fixtures, players);
+function qiV2BuildScenarios(fixtures, players, target, qualifyK, winPts, tiePts, bonusPts, nrPts, oversQuota, baselineMap, allowCrossGroup){
+  const qiOpts = { oversQuota: Math.max(1, Number(oversQuota)||5), allowCrossGroup: !!allowCrossGroup };
+  const base = qiV2AnalysePlayer(fixtures, players, target, winPts, tiePts, bonusPts, nrPts, qualifyK, baselineMap, qiOpts);
+  const allRem = qiV2RemainingFixtures(fixtures, players, !!allowCrossGroup);
+  const myRem = allRem.filter(f=>String(f.p1)===String(target)||String(f.p2)===String(target));
+  const { map: baseMap } = qiV2BaseRows(fixtures, players, winPts, tiePts, bonusPts, nrPts, baselineMap);
+  const remCount = {}; players.forEach(p=>{ remCount[p]=0; }); allRem.forEach(f=>{ if(remCount[String(f.p1)]!==undefined) remCount[String(f.p1)]++; if(remCount[String(f.p2)]!==undefined) remCount[String(f.p2)]++; });
   const winV = Math.max(0,Number(winPts)||0) + Math.max(0,Number(bonusPts)||0);
   const quota = Math.max(1, Number(oversQuota)||5);
   const scenarios = [];
   const margins = [];
-  const threats = qiV2Threats(fixtures, players, target, winPts, tiePts, bonusPts, nrPts);
+  const threats = qiV2Threats(fixtures, players, target, winPts, tiePts, bonusPts, nrPts, baselineMap, !!allowCrossGroup);
   const me = baseMap[target]||{};
   const myPts = Number(me.pts)||0;
   const myMax = myPts + (remCount[target]||0)*winV;
@@ -7990,8 +8502,8 @@ function qiV2BuildScenarios(fixtures, players, target, qualifyK, winPts, tiePts,
     const iAmP1 = String(f.p1)===String(target);
     const winTag = iAmP1 ? 'w1' : 'w2';
     const loseTag = iAmP1 ? 'w2' : 'w1';
-    const ifWin = qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, winTag);
-    const ifLose = qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, loseTag);
+    const ifWin = qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, winTag, f.id, baselineMap, qiOpts);
+    const ifLose = qiV2SimulateOutcome(fixtures, players, qualifyK, winPts, tiePts, bonusPts, nrPts, f.p1, f.p2, loseTag, f.id, baselineMap, qiOpts);
     const w = ifWin[target]||{}, l = ifLose[target]||{};
     const winPtsAfter = myPts + winV;
     let nrrTargets = threats.filter(th=>th.locked && th.kind==='can-meet' && Number(th.rPts)===winPtsAfter);
@@ -8193,7 +8705,8 @@ function renderQiPlayerDetail(){
 
   let pack;
   try{
-    pack = qiV2BuildScenarios(fixtures, players, name, k, winPts, tiePts, bonusPts, nrPts);
+    const __detBase = (typeof getCarryBaselineMap === 'function') ? getCarryBaselineMap(t, stage, players) : null;
+    pack = qiV2BuildScenarios(fixtures, players, name, k, winPts, tiePts, bonusPts, nrPts, Number(t.overs)||5, __detBase, !!(pool && pool.allowCrossGroup));
   }catch(e){
     host.innerHTML = '<div class="muted">Could not build scenarios: '+esc(String(e.message||e))+'</div>';
     return;
@@ -8266,7 +8779,9 @@ function computeStandingsWithPermutations(fixtures, playerList, winPts, tiePts, 
     bonusPoint:!!f?.bonusPoint, r1:f?.r1, r2:f?.r2, o1:f?.o1, o2:f?.o2,
     w1:f?.w1, w2:f?.w2, s6_1:f?.s6_1, s6_2:f?.s6_2
   })));
-  const __cacheKey=__tid+"|"+__fp+"|POOL:"+__poolKey+"|FIX:"+__fixtureKey+"|"+qualifyK+"|"+winPts+"|"+tiePts+"|"+bonusPts+"|"+nrPts+"|qiV2f";
+  const __tieModeKey = isQiIncludeTieNR() ? 'tie1' : 'wl0';
+  const __baseKey = baselineOverride ? JSON.stringify(baselineOverride) : '';
+  const __cacheKey=__tid+"|"+__fp+"|POOL:"+__poolKey+"|FIX:"+__fixtureKey+"|"+qualifyK+"|"+winPts+"|"+tiePts+"|"+bonusPts+"|"+nrPts+"|"+__tieModeKey+"|"+__baseKey+"|qiV16";
   if(qualificationCache.has(__cacheKey)) return qualificationCache.get(__cacheKey);
 
   const players=playerList||[];
@@ -8302,7 +8817,8 @@ function computeStandingsWithPermutations(fixtures, playerList, winPts, tiePts, 
   }
 
   if(typeof QI_V2!=='undefined' && QI_V2.enabled && typeof qiV2AnalyseAll==='function'){
-    const v2 = qiV2AnalyseAll(fixtures, players, k, resolvePtsConfig(winPts,3), resolvePtsConfig(tiePts,1), bonusPts, resolvePtsConfig(nrPts,1), null, __baseline);
+    const __isCross = (__t && (String(__t.format||'')==='two_groups_cross' || String(__t.format||'')==='two_groups_hybrid'));
+    const v2 = qiV2AnalyseAll(fixtures, players, k, resolvePtsConfig(winPts,3), resolvePtsConfig(tiePts,1), bonusPts, resolvePtsConfig(nrPts,1), null, __baseline, { oversQuota: Number(__t?.overs)||5, allowCrossGroup: __isCross });
     rows.forEach(row=>{
       const a = v2[row.name] || {};
       Object.assign(row, a);
@@ -8348,15 +8864,28 @@ function getStageQualificationTarget(t, stage){
 }
 function getQualificationPools(t, stage){
   const participants=stage?.participants||t?.players||[];
+  const stageFixtures=Array.isArray(stage?.fixtures)?stage.fixtures:[];
+  const fmt=String(stage?.format||t?.format||'single_league');
+  const isCrossFmt=(fmt==='two_groups_cross'||fmt==='two_groups_hybrid');
   const groups=(stage?.groups&&typeof stage.groups==='object')?stage.groups:((t?.groups&&typeof t.groups==='object')?t.groups:null);
   const keys=groups?Object.keys(groups).filter(k=>Array.isArray(groups[k])&&groups[k].some(p=>participants.includes(p))):[];
-  if(keys.length<2){ const configuredK=getStageQualificationTarget(t,stage); return [{key:'',label:'',players:participants,qualify:Math.max(0,Math.min(configuredK,participants.length))}]; }
+  if(keys.length<2){
+    const configuredK=getStageQualificationTarget(t,stage);
+    return [{key:'',label:'',players:participants,fixtures:stageFixtures,allowCrossGroup:false,qualify:Math.max(0,Math.min(configuredK,participants.length))}];
+  }
   const configured=stage?.qualification?.groups||t?.qualification?.groups||t?.groupQualification||{};
   const stageTarget=getStageQualificationTarget(t,stage);
   const hasExplicitPerGroup=stage?.qualifyPerGroup != null;
   const defaultPer=hasExplicitPerGroup ? Math.max(0,Number(stage.qualifyPerGroup)||0) : (stageTarget>0 ? Math.max(1,Math.floor(stageTarget/keys.length)||1) : 0);
   const counts={}; keys.forEach(k=>{ const raw=configured[k]; counts[k]=raw!=null ? Math.max(0,Math.floor(Number(raw)||0)) : defaultPer; });
-  return keys.map(k=>({key:k,label:`GROUP ${k}`,players:groups[k].filter(p=>participants.includes(p)),qualify:Math.max(0,Math.min(counts[k],groups[k].filter(p=>participants.includes(p)).length))}));
+  return keys.map(k=>{
+    const gp=groups[k].filter(p=>participants.includes(p));
+    const gSet=new Set(gp.map(String));
+    const gFixtures=isCrossFmt
+      ? stageFixtures.filter(f=>f&&(gSet.has(String(f.p1))||gSet.has(String(f.p2))))
+      : stageFixtures.filter(f=>f&&gSet.has(String(f.p1))&&gSet.has(String(f.p2)));
+    return {key:k,label:`GROUP ${k}`,players:gp,fixtures:gFixtures,allowCrossGroup:isCrossFmt,qualify:Math.max(0,Math.min(counts[k],gp.length))};
+  });
 }
 function bracketFixtureHtml(f){
   if(!f) return '';
@@ -8727,8 +9256,7 @@ function renderStandingsTables(t, stage){
   };
 
   const buildRows = (players, fixtures, k) => {
-    const baseline = (fixtures === (stage.fixtures || []) || fixtures === stage.fixtures)
-      ? getCarryBaselineMap(t, stage, players) : null;
+    const baseline = (typeof getCarryBaselineMap === 'function') ? getCarryBaselineMap(t, stage, players) : null;
     const rows = Number(k)>0
       ? computeStandingsWithPermutations(fixtures || [], players || [], resolvePtsConfig(t.winPts,3), resolvePtsConfig(t.tiePts,1), effectiveBonusPts(t), k, resolvePtsConfig(t.nrPts,1), baseline)
       : computeStandingsForList(fixtures || [], players || [], resolvePtsConfig(t.winPts,3), resolvePtsConfig(t.tiePts,1), effectiveBonusPts(t), resolvePtsConfig(t.nrPts,1), baseline);
@@ -9794,6 +10322,77 @@ function renderTeamFormStrip(t){
       <td>${r.wktsTaken}</td><td>${r.runsConc}</td></tr>`).join('')||'<tr><td colspan="6" class="muted">No completed team matches yet</td></tr>'}
     </tbody></table></div></div>`;
 }
+
+const MVP_VIS_ITEMS = [
+  { key:'s6', label:'6s & Max Sixes', award:'s6', col:'s6', sortVal:'s6' },
+  { key:'s4', label:'4s Column', award:null, col:'s4', sortVal:null },
+  { key:'econ', label:'Best Economy', award:'econ', col:'econ', sortVal:'econ' },
+  { key:'sr', label:'Best Strike Rate', award:'sr', col:'sr', sortVal:'sr' },
+  { key:'highScore', label:'Highest Score', award:'highScore', col:null, sortVal:null },
+  { key:'bestBowl', label:'Best Bowling', award:'bestBowl', col:null, sortVal:null },
+  { key:'balls', label:'Balls Faced', award:null, col:'balls', sortVal:null },
+  { key:'runsConceded', label:'Runs Conceded', award:null, col:'runsConceded', sortVal:null }
+];
+function getHiddenMvpKeys(t){
+  return Array.isArray(t?.hiddenMvpStats) ? t.hiddenMvpStats : [];
+}
+function toggleMvpVisPanel(){
+  if(!isAdmin && !developerMode) return;
+  const p = document.getElementById('mvpVisAdminPanel');
+  if(p) p.classList.toggle('hidden');
+}
+function toggleMvpStatHidden(key){
+  if(!isAdmin && !developerMode) return;
+  const t = getActiveTournament(); if(!t) return;
+  const cur = new Set(getHiddenMvpKeys(t));
+  if(cur.has(key)) cur.delete(key);
+  else cur.add(key);
+  t.hiddenMvpStats = [...cur];
+  saveDB({ config: true });
+  renderAwardsAndLeaderboards(t);
+  showToast(cur.has(key) ? '🙈 Stat hidden from MVP page' : '👁️ Stat visible on MVP page', 'success');
+}
+function applyMvpStatsVisibility(t){
+  const hidden = new Set(getHiddenMvpKeys(t));
+  const canManage = !!(isAdmin || developerMode);
+  const btn = document.getElementById('btnMvpVisAdmin');
+  const panel = document.getElementById('mvpVisAdminPanel');
+  const grid = document.getElementById('mvpVisToggleGrid');
+  if(btn) btn.classList.toggle('hidden', !canManage);
+  if(panel && !canManage) panel.classList.add('hidden');
+  if(grid && canManage){
+    grid.innerHTML = MVP_VIS_ITEMS.map(item => {
+      const isVisible = !hidden.has(item.key);
+      return `<label class="mvp-vis-chip ${isVisible?'on':''}" onclick="toggleMvpStatHidden('${item.key}')">
+        <span>${isVisible ? '👁️' : '🚫'} ${esc(item.label)}</span>
+      </label>`;
+    }).join('');
+  }
+  // Hide/show Award Cards
+  document.querySelectorAll('#view_awards .award-card[data-award-key]').forEach(card => {
+    const k = card.getAttribute('data-award-key');
+    card.classList.toggle('hidden', hidden.has(k));
+  });
+  // Hide/show Table Header & Body Columns
+  document.querySelectorAll('#mvpStatsHeadRow th[data-mvp-col], #playerStatsBody td[data-mvp-col]').forEach(cell => {
+    const k = cell.getAttribute('data-mvp-col');
+    cell.classList.toggle('hidden', hidden.has(k));
+  });
+  // Hide/show Sort Dropdown options
+  const sel = document.getElementById('mvpSortSelect');
+  if(sel){
+    Array.from(sel.options).forEach(opt => {
+      const h = hidden.has(opt.value);
+      opt.hidden = h;
+      opt.disabled = h;
+    });
+    if(hidden.has(sel.value)){
+      statsSort.key = 'mvp';
+      sel.value = 'mvp';
+    }
+  }
+}
+
 function renderAwardsAndLeaderboards(t){
   const awardDefaults = [
     ['mvpPlayer','TBD'], ['orangePlayer','TBD'], ['purplePlayer','TBD'],
@@ -9897,20 +10496,21 @@ function renderAwardsAndLeaderboards(t){
     return `
       <tr>
         <td class="align-left" style="padding-left:14px"><div class="player-chip">${getAvatarHtml(p.name, 'team-avatar-sm')} <b>${esc(p.name)}</b></div></td>
-        <td class="align-center">${p.matches}</td>
-        <td class="align-center"><b>${p.runs}</b></td>
-        <td class="align-center">${p.balls}</td>
-        <td class="align-center">${p.s4 || 0}</td>
-        <td class="align-center"><b style="color:var(--pink)">${p.s6 || 0}</b></td>
-        <td class="align-center">${sr}</td>
-        <td class="align-center"><b style="color:var(--purple)">${p.wickets}</b></td>
-        <td class="align-center">${p.runsConceded}</td>
-        <td class="align-center">${ballsToOv(p.ballsBowled)}</td>
-        <td class="align-center">${econ}</td>
-        <td class="align-center"><b style="color:var(--gold)">${p.mvp}</b></td>
+        <td data-mvp-col="matches" class="align-center">${p.matches}</td>
+        <td data-mvp-col="runs" class="align-center"><b>${p.runs}</b></td>
+        <td data-mvp-col="balls" class="align-center">${p.balls}</td>
+        <td data-mvp-col="s4" class="align-center">${p.s4 || 0}</td>
+        <td data-mvp-col="s6" class="align-center"><b style="color:var(--pink)">${p.s6 || 0}</b></td>
+        <td data-mvp-col="sr" class="align-center">${sr}</td>
+        <td data-mvp-col="wickets" class="align-center"><b style="color:var(--purple)">${p.wickets}</b></td>
+        <td data-mvp-col="runsConceded" class="align-center">${p.runsConceded}</td>
+        <td data-mvp-col="overs" class="align-center">${ballsToOv(p.ballsBowled)}</td>
+        <td data-mvp-col="econ" class="align-center">${econ}</td>
+        <td data-mvp-col="mvp" class="align-center"><b style="color:var(--gold)">${p.mvp}</b></td>
       </tr>
     `;
   }).join('');
+  applyMvpStatsVisibility(t);
 }
 
 function maybeShowSuperOverForTie(forceCheck){
@@ -10333,6 +10933,7 @@ function eraseSelectedFixtureScore(){
   if(!target){showToast('Select a fixture first.','error');return;}
   if(confirm(`Erase scorecard / result for Match ${target.id}? Fixture stays in the schedule.`+(ref&&ref.stage?` (${ref.stage.name||('Stage '+ref.stage.stageNum)})`:''))){
     resetFixtureResultData(target);
+    markFixtureEdited(t, ref?.stage?.stageNum ?? window.scoreEntryStageNum ?? t.currentStage, target);
     try{
       document.querySelectorAll('#teamCaptainPairingPanel input[data-leg-r1],#teamCaptainPairingPanel input[data-leg-r2],#teamCaptainPairingPanel input[data-leg-o1],#teamCaptainPairingPanel input[data-leg-o2],#teamCaptainPairingPanel input[data-leg-w1],#teamCaptainPairingPanel input[data-leg-w2],#teamCaptainPairingPanel input[data-leg-smart]').forEach(el=>{ el.value=''; });
     }catch(e){}
@@ -10344,7 +10945,7 @@ function resetSelectedFixturePending(){
   if(!isAdmin){ alert('Admin PIN required.'); return; }
   const t=getActiveTournament(); const fid=parseInt(document.getElementById('scoreFixtureSelect')?.value,10); const target=findFixtureByIdAnyStage(t,fid);
   if(!target){showToast('Select a fixture first.','error');return;}
-  if(confirm(`Reset Match ${target.id} to pending and clear its result?`)){ resetFixtureResultData(target); saveDB(); clearScoreForm(); renderAll(); showToast('↩️ Match is pending again','success'); }
+  if(confirm(`Reset Match ${target.id} to pending and clear its result?`)){ resetFixtureResultData(target); markFixtureEdited(t, target.stageNum ?? t.currentStage, target); saveDB(); clearScoreForm(); renderAll(); showToast('↩️ Match is pending again','success'); }
 }
 
 function quickEraseFixture(id, stageNum){
@@ -10352,7 +10953,7 @@ function quickEraseFixture(id, stageNum){
   const t=getActiveTournament();
   const ref=findFixtureRefById(t,id, stageNum!=null?stageNum:null);
   const target=ref?ref.fixture:null;
-  if(target && confirm(`Erase all result data for Match ${target.id}?`+(ref&&ref.stage?` (${ref.stage.name||('Stage '+ref.stage.stageNum)})`:''))){ resetFixtureResultData(target); saveDB(); renderAll(); showToast('🗑️ Match erased and reset to pending','success'); }
+  if(target && confirm(`Erase all result data for Match ${target.id}?`+(ref&&ref.stage?` (${ref.stage.name||('Stage '+ref.stage.stageNum)})`:''))){ resetFixtureResultData(target); markFixtureEdited(t, ref?.stage?.stageNum ?? target.stageNum ?? t.currentStage, target); saveDB(); renderAll(); showToast('🗑️ Match erased and reset to pending','success'); }
 }
 
 function markMatchAsNoResult(){
@@ -10363,6 +10964,7 @@ function markMatchAsNoResult(){
   let target = (activeStage.fixtures || []).find(x=>x.id === fid);
   if(!target) return;
   target.completed = true; target.isNR = true; target.isForfeit = false;
+  markFixtureEdited(t, activeStage.stageNum, target);
   saveDB(); clearScoreForm(); renderAll(); showToast(`🌧️ Match marked as No Result`, 'success');
 }
 
@@ -10376,6 +10978,7 @@ function awardForfeitMatch(num){
   const winner = num === 1 ? target.p1 : target.p2;
   target.completed = true; target.isForfeit = true; target.isNR = false; target.winner = winner;
   handlePlayoffAdvancement(t, target);
+  markFixtureEdited(t, activeStage.stageNum, target);
   saveDB(); clearScoreForm(); renderAll(); routeAfterTournamentResultSave(t); showToast(`🏆 Walkover awarded to ${winner}`, 'success');
 }
 
@@ -10465,6 +11068,7 @@ function submitMatchScore(){
     if(!target){alert('Select a scheduled fixture first in this stage.');return;}
     if(target.stageNum!=null && activeStage.stageNum!=null && Number(target.stageNum)!==Number(activeStage.stageNum)){alert('Stage mismatch for this fixture.');return;}
     if(!submitTestMatchScore(t,target,p1,p2)) return;
+    markFixtureEdited(t, activeStage.stageNum, target);
     saveDB(); clearScoreForm(); renderAll(); routeAfterTournamentResultSave(t); showToast('✅ Test match result saved!','success');
   const toast = document.getElementById('appToast'); if(toast) toast.innerHTML += ` <span style="margin-left:12px;cursor:pointer;text-decoration:underline" onclick="undoLastMatchScore()">Undo</span>`; return;
   }
@@ -10531,6 +11135,7 @@ function submitMatchScore(){
   }
 
   handlePlayoffAdvancement(t, target);
+  markFixtureEdited(t, activeStage.stageNum, target);
   saveDB(); clearScoreForm(); renderAll(); routeAfterTournamentResultSave(t); showToast('✅ Score saved!', 'success');
   const toast = document.getElementById('appToast'); if(toast) toast.innerHTML += ` <span style="margin-left:12px;cursor:pointer;text-decoration:underline" onclick="undoLastMatchScore()">Undo</span>`;
 }
@@ -12013,6 +12618,7 @@ function saveTeamLegScore(fid, legIndex){
     if(!Array.isArray(leg.superOvers)) leg.superOvers=[];
   }
   computeTeamFixtureFromLegs(fixture);
+  markFixtureEdited(t, fixture.stageNum ?? t.currentStage, fixture);
   saveDB();
   renderCaptainPairingPanel(fixture);
   try{ renderFixtures(); }catch(e){}
@@ -12055,6 +12661,7 @@ function clearTeamLegScore(fid, legIndex){
   leg.r1=null; leg.r2=null; leg.o1=null; leg.o2=null; leg.w1=null; leg.w2=null;
   leg.a1=false; leg.a2=false; leg.needsSuperOver=false; leg.soR1=null; leg.soR2=null;
   computeTeamFixtureFromLegs(fixture);
+  markFixtureEdited(t, fixture.stageNum ?? t.currentStage, fixture);
   saveDB(); renderCaptainPairingPanel(fixture);
   try{ renderFixtures(); }catch(e){}
   try{ renderAll(); }catch(e){}
@@ -12583,6 +13190,11 @@ window.addEventListener('online', ()=>{
   if(isAdmin && (getDirtyTournamentIds().length || getDeletedDirtyIds().length)) queueCloudPush();
   fetchCloudData();
 });
+window.addEventListener('pagehide', ()=>{
+  if(isAdmin && !window.__cloudAuthWarned && (getDirtyTournamentIds().length || getDeletedDirtyIds().length)){
+    queueCloudPush();
+  }
+});
 </script>
  
 
@@ -13044,6 +13656,7 @@ window.addEventListener('online', ()=>{
     renderAll();
     switchNav('view_setup', 'nav_setup');
     showToast('🔓 Organizer access unlocked.', 'success');
+    setTimeout(()=>{ try{ fetchCloudData(); }catch(_){} }, 80);
   }
 
   
@@ -13591,7 +14204,7 @@ function createTestTournamentFromDev() {
     <div class="apex-glass-dock" id="apexGlassDock">
       <div class="apex-glass-lens" id="apexGlassLens"></div>
       <button type="button" class="apex-dock-btn active" data-idx="0" data-view="view_standings" data-nav="nav_standings"><span class="ico">🏆</span><span class="lbl">Table</span></button>
-      <button type="button" class="apex-dock-btn" data-idx="1" data-view="view_fixtures" data-nav="nav_fixtures"><span class="ico">📅</span><span class="lbl">Fixtures</span></button>
+      <button type="button" class="apex-dock-btn" data-idx="1" data-view="view_fixtures" data-nav="nav_fixtures"><span class="ico">🏏</span><span class="lbl">Fixtures</span></button>
       <button type="button" class="apex-dock-btn" data-idx="2" data-view="view_results" data-nav="nav_results"><span class="ico">📋</span><span class="lbl">Scores</span></button>
       <button type="button" class="apex-dock-btn" data-idx="3" data-view="view_awards" data-nav="nav_awards"><span class="ico">🎖️</span><span class="lbl">MVP</span></button>
       <button type="button" class="apex-dock-btn" data-idx="4" data-view="view_query" data-nav="nav_query"><span class="ico">🔎</span><span class="lbl">QI</span></button>
